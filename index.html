@@ -534,8 +534,8 @@
       </div>
       <div class="form-success" id="formSuccess">
         <div class="tick">✓</div>
-        <h4>Message Preparing!</h4>
-        <p>WhatsApp is opening with your details. We'll confirm your order shortly.<br><br><em>Your trust, our responsibility.</em></p>
+        <h4>We have received your</h4>
+        <p>We will contact you shortly<br><br><em>Your trust, our responsibility.</em></p>
       </div>
     </div>
   </div>
@@ -648,7 +648,7 @@ function submitForm() {
   fetch(scriptURL, { method: 'POST', body: formData })
     .then(response => {
       // 4. Once successfully logged to the sheet, trigger WhatsApp
-      const text = `Hello Soil Leaf! 🌿\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Product:* ${product}${qty ? '\n*Quantity:* ' + qty : ''}${type ? '\n*Order Type:* ' + type : ''}${msg ? '\n*Delivery/Msg:* ' + msg : ''}\n\nPlease confirm my order. Thank you!\n_— From Soil Leaf Website_`;
+      const text = `Hi Soil Leaf team!\n\nThis is ${name}, I need ${qty} of ${product}. Can I get the price for this?`;
       
       window.open(`https://wa.me/916360000986?text=${encodeURIComponent(text)}`, '_blank');
       
