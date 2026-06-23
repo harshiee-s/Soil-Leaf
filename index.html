@@ -45,14 +45,16 @@
   h1, h2, h3, h4, h5, .serif { font-family: 'Lora', serif; }
 
   /* 🌿 ALWAYS VISIBLE GLOBAL WATERMARK 🌿 */
+ /* 🌿 ALWAYS VISIBLE GLOBAL WATERMARK 🌿 */
   .global-watermark {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background: url('soil-leaf-logo.png') no-repeat center center;
     background-size: 50vmin; 
     opacity: 0.12; 
-    z-index: 50; 
+    z-index: 9999; /* Bumped priority */
     pointer-events: none; 
+    transform: translateZ(0); /* Hardware acceleration to prevent disappearing */
   }
 
   /* SCROLL ANIMATION STYLES */
@@ -201,6 +203,30 @@
   .form-success .tick { font-size: 3rem; margin-bottom: 12px; color: var(--leaf); }
   .form-success h4 { font-size: 1.4rem; color: var(--forest); margin-bottom: 8px; }
   .form-success p { color: var(--text-gray); font-size: 0.95rem; line-height: 1.6; }
+/* MAP OVERLAY BUTTON */
+/* MAP OVERLAY BUTTON - TOP LEFT */
+  .map-overlay-btn {
+    position: absolute;
+    top: 20px;   /* Positions it 20px from the top edge */
+    left: 20px;  /* Positions it 20px from the left edge */
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--forest);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    transition: all 0.25s ease;
+    z-index: 10;
+  }
+  .map-overlay-btn:hover {
+    background: var(--leaf);
+    color: #fff;
+    transform: translateY(-2px); /* Slight lift effect on hover */
+    box-shadow: 0 6px 20px rgba(27, 77, 46, 0.3);
+  }
 
   /* CONTACT */
   .contact { background: #0A1C11; padding: 80px 24px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 2; }
@@ -486,22 +512,33 @@
   </div>
 </section>
 
+<!-- LOCATION & FORM -->
 <section class="location-form" id="location">
   <div class="section-header reveal">
     <span class="section-eyebrow">Find Us & Place an Order</span>
     <h2>Visit Us or Send a Message</h2>
     <p>We're located in Bengaluru. Fill out the form and we'll confirm your order via WhatsApp.</p>
   </div>
+  
   <div class="lf-grid">
+    <!-- LEFT SIDE: MAP & ADDRESS -->
     <div class="reveal delay-1">
-      <div class="map-wrap">
-        <iframe src="https://maps.google.com/maps?q=849+3rd+Cross+Chennakeshava+Nagar+Hosa+Road+Pragathi+Nagar+Electronic+City+Bengaluru+Karnataka+560100&output=embed&hl=en&z=15" allowfullscreen loading="lazy" title="Soil Leaf Location"></iframe>
+      <div class="map-wrap" style="position: relative;">
+        <!-- Ensure your image name matches here -->
+        <img src="soil-leaf-map.png" alt="Soil Leaf Location Map" style="width: 100%; height: 350px; object-fit: cover; display: block;">
+        
+        <a href="https://www.google.com/maps/place/SOIL+LEAF+%E2%80%93+Banana+Leaf+%26+Coconut+Products/@12.8703754,77.6546607,17z/data=!3m1!4b1!4m6!3m5!1s0x3bae6d63970cdb83:0x4cdb8c8d25dbc53d!8m2!3d12.8703754!4d77.6546607!16s%2Fg%2F11mklpxnmd?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-overlay-btn">
+          📍 Open in Maps
+        </a>
+
         <div class="map-address">
           <strong>📍 Our Address</strong>
           <p>849, 3rd Cross, Chennakeshava Nagar, Hosa Road,<br>Pragathi Nagar, Electronic City,<br>Bengaluru, Karnataka 560100</p>
         </div>
       </div>
     </div>
+
+    <!-- RIGHT SIDE: FORM -->
     <div class="form-card reveal delay-2">
       <h3>Quick Order Form</h3>
       <p>Fill in your details and we'll confirm your order instantly.</p>
@@ -534,8 +571,8 @@
       </div>
       <div class="form-success" id="formSuccess">
         <div class="tick">✓</div>
-        <h4>We have received your</h4>
-        <p>We will contact you shortly<br><br><em>Your trust, our responsibility.</em></p>
+        <h4>We have received your enquiry</h4>
+        <p>We'll contact you shortly.<br><br><em>Your trust, our responsibility.</em></p>
       </div>
     </div>
   </div>
