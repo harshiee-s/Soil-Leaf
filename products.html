@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<title>Products | Soil Leaf – Eco-Friendly Products</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest: #1B4D2E;
+    --forest-dark: #0D2B17;
+    --leaf: #4CAF50;
+    --bright: #6DD85A;
+    --gold: #C8A96E;
+    --gold-light: #F0C96A;
+    
+    --bg-light: #FAFAFA;
+    --bg-soft: #F4F7F4;
+    --white: #FFFFFF;
+    
+    --text-dark: #2A2A2A;
+    --text-gray: #666666;
+    
+    --soft-shadow: 0 12px 40px rgba(27, 77, 46, 0.06);
+    --hover-shadow: 0 16px 50px rgba(27, 77, 46, 0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+  
+  body { 
+    font-family: 'Lato', sans-serif; 
+    background: var(--bg-light); 
+    color: var(--text-dark); 
+    margin: 0;
+    padding: 0;
+    padding-top: 104px; /* Prevents content from sliding under the fixed header */
+    overflow-x: hidden; 
+  }
+
+  h1, h2, h3, h4, h5 { font-family: 'Lora', serif; }
+
+  /* GLOBAL WATERMARK */
+  .global-watermark {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: url('soil-leaf-logo.png') no-repeat center center;
+    background-size: 50vmin; opacity: 0.08; z-index: -1;
+    pointer-events: none;
+  }
+
+  /* =========================================================
+     STRICTLY FIXED HEADER (Will never bounce or detach)
+     ========================================================= */
+  .main-header {
+    position: fixed; /* Locked to the screen glass */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.15); 
+    background: rgba(13,27,17,1); /* Ensures seamless color */
+  }
+
+  /* TOP ANNOUNCEMENT BAR */
+  .top-bar {
+    background: var(--leaf); color: #fff; text-align: center; font-size: 0.8rem; font-weight: 700;
+    padding: 8px 16px; letter-spacing: 1px; display: flex; align-items: center; justify-content: center;
+  }
+
+  /* NAVBAR */
+  nav {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    padding: 14px 48px; background: rgba(13,27,17,1); border-bottom: 1px solid rgba(77,175,80,0.25);
+  }
+  
+  .nav-left { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+  .mobile-menu-btn { display: none; background: transparent; border: none; color: #fff; font-size: 1.6rem; cursor: pointer; }
+  
+  /* LOGO STYLES */
+  .logo-link { display: inline-flex; align-items: center; text-decoration: none; }
+  .custom-logo-img { height: 45px; width: auto; object-fit: contain; display: block; }
+  .logo-fallback { display: none; color: #fff; font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 700; letter-spacing: 0.5px; }
+  .logo-fallback span { color: var(--leaf); }
+  
+  /* SEARCH BAR */
+  .nav-search {
+    flex-grow: 1; max-width: 550px; min-width: 150px; display: flex; align-items: center;
+    background: #fff; border-radius: 6px; overflow: hidden; height: 42px;
+  }
+  .nav-search input {
+    flex-grow: 1; border: none; padding: 0 16px; font-family: 'Lato'; font-size: 0.95rem;
+    outline: none; color: var(--text-dark); height: 100%; min-width: 0;
+  }
+  .nav-search button {
+    background: var(--gold-light); border: none; padding: 0 20px; height: 100%; cursor: pointer;
+    font-size: 1.1rem; transition: background 0.2s; display: flex; align-items: center; justify-content: center;
+  }
+  .nav-search button:hover { background: var(--gold); }
+
+  .nav-right { display: flex; align-items: center; gap: 32px; flex-shrink: 0; }
+  .nav-links { list-style: none; display: flex; gap: 24px; align-items: center; margin: 0; padding: 0;}
+  .nav-links a { text-decoration: none; color: rgba(249,244,232,0.8); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--leaf); }
+  
+  /* CART BUTTON */
+  .cart-btn {
+    background: transparent; color: #fff; padding: 8px 16px; border-radius: 6px; font-weight: 700; 
+    display: flex; align-items: center; gap: 8px; cursor: pointer; border: 1px solid var(--leaf); font-size: 0.95rem; transition: all 0.2s; 
+  }
+  .cart-btn:hover { background: var(--leaf); color: #fff; }
+  .cart-count { background: var(--gold-light); color: var(--forest-dark); border-radius: 50%; padding: 2px 8px; font-size: 0.8rem; font-weight: 900; }
+
+  /* SHOP LAYOUT */
+  .shop-layout {
+    display: flex; max-width: 1400px; margin: 30px auto; padding: 0 24px; gap: 40px; min-height: 80vh; position: relative;
+  }
+
+  /* SIDEBAR */
+  .sidebar { 
+    width: 260px; flex-shrink: 0; position: sticky; 
+    top: 130px; 
+    height: fit-content; max-height: calc(100vh - 150px); 
+    overflow-y: auto; background: var(--white); padding: 24px; border-radius: 16px; box-shadow: var(--soft-shadow);
+    border: 1px solid rgba(27,77,46,0.05);
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(77, 175, 80, 0.3); border-radius: 4px; }
+  .sidebar h3 { font-size: 1.2rem; color: var(--forest-dark); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--leaf); }
+  .category-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .category-list a { 
+    text-decoration: none; color: var(--text-gray); font-size: 0.95rem; font-weight: 700; 
+    display: block; padding: 10px 14px; border-radius: 8px; border-left: 3px solid transparent; transition: all 0.2s;
+  }
+  .category-list a:hover { background: rgba(77,175,80,0.05); color: var(--forest); border-left-color: rgba(77,175,80,0.5); }
+  .category-list a.active { background: rgba(77,175,80,0.1); color: var(--forest-dark); border-left-color: var(--forest); }
+
+  /* PRODUCT AREA */
+  .product-area { flex-grow: 1; }
+  
+  .category-section { margin-bottom: 80px; scroll-margin-top: 130px; }
+  .category-section h2 { font-size: 2rem; color: var(--forest-dark); margin-bottom: 24px; border-bottom: 1px solid #EFEFEF; padding-bottom: 12px;}
+  
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
+
+  /* PRODUCT CARD */
+  .card {
+    background: var(--white); border: 1px solid rgba(27,77,46,0.08); border-radius: 12px;
+    overflow: hidden; box-shadow: var(--soft-shadow); display: flex; flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; height: 100%;
+  }
+  .card:hover { transform: translateY(-6px); box-shadow: var(--hover-shadow); border-color: var(--leaf); }
+  
+  .img-placeholder {
+    height: 220px; background: #F8F9F8; display: flex; align-items: center; justify-content: center;
+    color: var(--text-gray); font-family: 'Lora', serif; font-style: italic; text-align: center; padding: 20px;
+    border-bottom: 3px solid var(--leaf);
+  }
+  
+  .card-body { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
+  .card-title { font-family: 'Lato', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--forest-dark); margin-bottom: 16px; line-height: 1.3;}
+  
+  .variant-group { margin-bottom: 20px; }
+  .variant-group label { font-size: 0.75rem; color: var(--text-gray); display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;}
+  .variant-select { 
+    width: 100%; padding: 10px 14px; border: 1px solid rgba(27,77,46,0.15); border-radius: 8px; font-family: 'Lato'; outline: none; background: var(--bg-soft); color: var(--text-dark); cursor: pointer; transition: border-color 0.2s;
+  }
+  .variant-select:focus { border-color: var(--leaf); }
+
+  /* ADD TO CART ACTION */
+  .action-row { display: flex; gap: 12px; margin-top: auto; }
+  .qty-input {
+    width: 75px; padding: 12px; border: 1px solid rgba(27,77,46,0.15); border-radius: 8px; font-family: 'Lato'; text-align: center; font-weight: 700; outline: none; font-size: 1rem; color: var(--forest-dark); transition: border-color 0.2s;
+  }
+  .qty-input:focus { border-color: var(--leaf); }
+  .add-btn {
+    flex-grow: 1; background: var(--bg-soft); color: var(--forest); border: 1px solid rgba(27,77,46,0.2); border-radius: 50px;
+    font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; font-family: 'Lato'; display: flex; align-items: center; justify-content: center;
+  }
+  .add-btn:hover { background: var(--forest); color: #fff; border-color: var(--forest); }
+  .add-btn.success { background: var(--leaf); border-color: var(--leaf); color: #fff; }
+
+  /* NO RESULTS MESSAGE */
+  #no-results-msg {
+    display: none; text-align: center; padding: 60px 20px; color: var(--text-gray);
+    font-size: 1.2rem; font-family: 'Lora', serif; font-style: italic; width: 100%;
+  }
+
+  /* MOBILE APP BOTTOM CART BAR */
+  .mobile-bottom-cart {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--white);
+    padding: 12px 20px; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 1000;
+    justify-content: space-between; align-items: center; border-top: 1px solid #EFEFEF;
+  }
+  .mobile-bottom-cart .cart-summary { display: flex; flex-direction: column; }
+  .mobile-bottom-cart .cart-summary span { font-weight: 700; color: var(--forest-dark); font-size: 1.1rem; }
+  .mobile-bottom-cart .cart-summary small { font-size: 0.75rem; color: var(--text-gray); }
+  .mobile-checkout-btn {
+    background: var(--leaf); color: #fff; border: none; padding: 12px 24px; border-radius: 50px; font-weight: 700;
+    font-family: 'Lato'; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(77, 175, 80, 0.3);
+  }
+
+  /* =========================================================
+     APP-STYLE MOBILE RESPONSIVE REWORK
+     ========================================================= */
+  @media (max-width: 900px) {
+    .shop-layout { flex-direction: column; margin-top: 0; padding-top: 10px; padding-bottom: 80px; }
+    
+    .sidebar { 
+      position: sticky; top: 110px; z-index: 90; width: calc(100% + 48px); margin-left: -24px; padding: 10px 24px;
+      display: flex; flex-direction: row; align-items: center; overflow-x: auto; 
+      border-radius: 0; border-left: none; border-right: none; border-top: none;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none; background: rgba(255,255,255,0.98); border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .sidebar::-webkit-scrollbar { display: none; }
+    .sidebar h3 { display: none; } 
+    
+    .category-list { flex-direction: row; flex-wrap: nowrap; gap: 8px; }
+    .category-list a { 
+      border-left: none; border: 1px solid #E0E0E0; border-radius: 30px; 
+      white-space: nowrap; padding: 8px 16px; background: var(--bg-light); color: var(--text-dark);
+      font-size: 0.85rem; font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .category-list a.active { border-color: var(--leaf); background: rgba(77,175,80,0.1); color: var(--forest-dark); border-left: none; font-weight: 700; }
+  }
+
+  @media (max-width: 600px) {
+    body { padding-top: 115px; } /* Adjust dynamic clearance for stacked mobile header */
+    
+    .top-bar { font-size: 0.7rem; padding: 6px 10px; }
+    
+    nav { 
+      flex-direction: column; align-items: stretch; padding: 12px 16px; gap: 12px;
+    }
+    .nav-left { justify-content: space-between; }
+    .mobile-menu-btn { display: block; }
+    .logo-fallback { font-size: 1.4rem; }
+    .custom-logo-img { height: 35px; }
+    .nav-right { display: none; } 
+    
+    .nav-search { max-width: 100%; border-radius: 4px; height: 38px; }
+    .nav-search input { padding: 0 12px; font-size: 0.9rem; }
+    .nav-search button { padding: 0 16px; }
+    
+    .mobile-bottom-cart { display: flex; }
+    
+    .shop-layout { padding: 0 10px 80px 10px; gap: 20px; }
+    .sidebar { top: 110px; width: calc(100% + 20px); margin-left: -10px; padding: 10px 10px; }
+    
+    .category-section { margin-bottom: 40px; scroll-margin-top: 165px; }
+    .category-section h2 { font-size: 1.3rem; margin-bottom: 16px; padding-left: 4px; border-bottom: none; }
+    
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    
+    .card { border-radius: 8px; box-shadow: none; border: 1px solid #E5E5E5; }
+    .card:hover { transform: none; box-shadow: none; }
+    .img-placeholder { height: 130px; padding: 10px; font-size: 0.8rem; border-width: 2px; }
+    .card-body { padding: 12px; }
+    .card-title { font-size: 0.85rem; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.6em; }
+    
+    .variant-group { margin-bottom: 12px; }
+    .variant-group label { display: none; }
+    .variant-select { padding: 6px 8px; font-size: 0.75rem; border-radius: 6px; }
+    
+    .action-row { flex-direction: row; gap: 6px; align-items: stretch; }
+    .qty-input { width: 45px; padding: 6px; font-size: 0.85rem; border-radius: 6px; }
+    .add-btn { font-size: 0.8rem; padding: 6px; border-radius: 6px; background: var(--bg-soft); color: var(--forest); border: 1px solid #ccc; }
+  }
+</style>
+</head>
+<body>
+
+<div class="global-watermark"></div>
+
+<!-- UNIFIED HEADER - strictly fixed to top -->
+<header class="main-header">
+  <div class="top-bar">
+    🌿 BUY 4 GET 1 FREE ON ALL PRODUCTS | 📞 +91 63600 00986
+  </div>
+
+  <nav>
+    <div class="nav-left">
+      <button class="mobile-menu-btn" onclick="alert('Menu Context Hook')">☰</button>
+      <a href="index.html" class="logo-link">
+        <!-- Displays Image Logo -->
+        <img src="your-logo.png" alt="Soil Leaf Logo" class="custom-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <!-- Fallback Text Logo if image is missing -->
+        <div class="logo-fallback">Soil<span>Leaf</span></div>
+      </a>
+    </div>
+
+    <div class="nav-search">
+      <input type="text" id="searchInput" placeholder="Search banana leaves, plates, containers..." onkeyup="performSearch()">
+      <button onclick="performSearch()">🔍</button>
+    </div>
+
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#why">Why Us</a></li>
+        <li><a href="index.html#location">Contact</a></li>
+      </ul>
+      <button class="cart-btn" onclick="goToOrder()">
+        🛒 Cart <span class="cart-count" id="cart-count-badge">0</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div class="shop-layout">
+  
+  <aside class="sidebar" id="shop-sidebar">
+    <h3>Categories</h3>
+    <ul class="category-list">
+      <li><a href="#areca-bowls" class="nav-link active">Areca Bowls</a></li>
+      <li><a href="#areca-plates-round" class="nav-link">Plates (Round)</a></li>
+      <li><a href="#areca-plates-square" class="nav-link">Plates (Square)</a></li>
+      <li><a href="#areca-specialty" class="nav-link">Specialty</a></li>
+      <li><a href="#containers" class="nav-link">Containers</a></li>
+      <li><a href="#banana-leaves" class="nav-link">Banana Leaves</a></li>
+      <li><a href="#sal-leaves" class="nav-link">Sal Leaf Plates</a></li>
+    </ul>
+  </aside>
+
+  <!-- PRODUCT AREA -->
+  <main class="product-area">
+    
+    <div id="no-results-msg">
+      No products found matching your search. Please try another term.
+    </div>
+
+    <!-- 1. Areca Bowls -->
+    <section class="category-section" id="areca-bowls">
+      <h2>Areca Bowls</h2>
+      <div class="grid">
+        <div class="card" data-product="5 Inch Areca Bowl" data-keywords="5 inch areca bowl bowls plates cup cups mini small small round organic packaging">
+          <div class="img-placeholder">[ Image: 5" Areca Bowl ]</div>
+          <div class="card-body">
+            <div class="card-title">5" Areca Bowl</div>
+            <div class="variant-group">
+              <select class="variant-select">
+                <option value="" disabled selected>Select Quality</option>
+                <option>Domestic</option>
+                <option>Premium</option>
+              </select>
+            </div>
+            <div class="action-row">
+              <input type="number" min="1" placeholder="Qty" class="qty-input">
+              <button class="add-btn" onclick="addToCart(this)">Add</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-product="6 Inch Areca Bowl" data-keywords="6 inch areca bowl bowls plates cup cups medium round organic packaging">
+          <div class="img-placeholder">[ Image: 6" Areca Bowl ]</div>
+          <div class="card-body">
+            <div class="card-title">6" Areca Bowl</div>
+            <div class="variant-group">
+              <select class="variant-select">
+                <option value="" disabled selected>Select Quality</option>
+                <option>Domestic</option>
+                <option>Premium</option>
+              </select>
+            </div>
+            <div class="action-row">
+              <input type="number" min="1" placeholder="Qty" class="qty-input">
+              <button class="add-btn" onclick="addToCart(this)">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Areca Plates - Round -->
+    <section class="category-section" id="areca-plates-round">
+      <h2>Areca Plates - Round</h2>
+      <div class="grid">
+        <script>
+          const roundPlates = ["6\" Round", "8\" Round", "10\" Round", "12\" Round"];
+          roundPlates.forEach(size => {
+            const cleanSize = size.replace('\\"', ' inch');
+            document.write(`
+              <div class="card" data-product="${size} Areca Plate" data-keywords="${cleanSize.toLowerCase()} round circular areca plate plates leaf leafs leaves dinner traditional catering dinner custom">
+                <div class="img-placeholder">[ Image: ${size} Plate ]</div>
+                <div class="card-body">
+                  <div class="card-title">${size} Areca Plate</div>
+                  <div class="variant-group">
+                    <select class="variant-select">
+                      <option value="" disabled selected>Select Quality</option>
+                      <option>Domestic</option><option>Premium</option>
+                    </select>
+                  </div>
+                  <div class="action-row">
+                    <input type="number" min="1" placeholder="Qty" class="qty-input">
+                    <button class="add-btn" onclick="addToCart(this)">Add</button>
+                  </div>
+                </div>
+              </div>
+            `);
+          });
+        </script>
+      </div>
+    </section>
+
+    <!-- 3. Areca Plates - Square -->
+    <section class="category-section" id="areca-plates-square">
+      <h2>Areca Plates - Square</h2>
+      <div class="grid">
+        <script>
+          const squarePlates = ["6\" Square", "7\" Square", "8\" Square", "10\" Square"];
+          squarePlates.forEach(size => {
+            const cleanSize = size.replace('\\"', ' inch');
+            document.write(`
+              <div class="card" data-product="${size} Areca Plate" data-keywords="${cleanSize.toLowerCase()} square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
+                <div class="img-placeholder">[ Image: ${size} Plate ]</div>
+                <div class="card-body">
+                  <div class="card-title">${size} Areca Plate</div>
+                  <div class="variant-group">
+                    <select class="variant-select">
+                      <option value="" disabled selected>Select Quality</option>
+                      <option>Domestic</option><option>Premium</option>
+                    </select>
+                  </div>
+                  <div class="action-row">
+                    <input type="number" min="1" placeholder="Qty" class="qty-input">
+                    <button class="add-btn" onclick="addToCart(this)">Add</button>
+                  </div>
+                </div>
+              </div>
+            `);
+          });
+        </script>
+      </div>
+    </section>
+
+    <!-- 4. Areca Specialty -->
+    <section class="category-section" id="areca-specialty">
+      <h2>Oval & Specialty</h2>
+      <div class="grid">
+        <script>
+          const specialty = ["5\" Oval Areca", "5\" Heart Shaped Areca"];
+          specialty.forEach(item => {
+            document.write(`
+              <div class="card" data-product="${item}" data-keywords="${item.toLowerCase()} oval heart shaped fancy areca plate plates bowl bowls leaf leafs leaves specialty love shape custom event wedding function designer">
+                <div class="img-placeholder">[ Image: ${item} ]</div>
+                <div class="card-body">
+                  <div class="card-title">${item}</div>
+                  <div class="variant-group">
+                    <select class="variant-select">
+                      <option value="" disabled selected>Select Quality</option>
+                      <option>Domestic</option><option>Premium</option>
+                    </select>
+                  </div>
+                  <div class="action-row">
+                    <input type="number" min="1" placeholder="Qty" class="qty-input">
+                    <button class="add-btn" onclick="addToCart(this)">Add</button>
+                  </div>
+                </div>
+              </div>
+            `);
+          });
+        </script>
+      </div>
+    </section>
+
+    <!-- 5. Containers -->
+    <section class="category-section" id="containers">
+      <h2>Food Containers</h2>
+      <div class="grid">
+        <script>
+          const containers = ["1 Kg Container", "3/4 Kg Container", "Half Kg Container", "1/4 Kilo Container"];
+          containers.forEach(item => {
+            document.write(`
+              <div class="card" data-product="${item}" data-keywords="${item.toLowerCase()} container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
+                <div class="img-placeholder">[ Image: ${item} ]</div>
+                <div class="card-body">
+                  <div class="card-title">${item}</div>
+                  <div class="variant-group">
+                    <select class="variant-select">
+                      <option value="" disabled selected>Material</option>
+                      <option>Areca Leaf</option><option>Plastic</option>
+                    </select>
+                  </div>
+                  <div class="action-row">
+                    <input type="number" min="1" placeholder="Qty" class="qty-input">
+                    <button class="add-btn" onclick="addToCart(this)">Add</button>
+                  </div>
+                </div>
+              </div>
+            `);
+          });
+        </script>
+      </div>
+    </section>
+
+    <!-- 6. Banana Leaves -->
+    <section class="category-section" id="banana-leaves">
+      <h2>Banana Leaves</h2>
+      <div class="grid">
+        <script>
+          const bLeaves = ["Actual Banana Leaf", "Round Cut Banana Leaf", "Square Cut Banana Leaf"];
+          bLeaves.forEach(item => {
+            document.write(`
+              <div class="card" data-product="${item}" data-keywords="${item.toLowerCase()} banana leaf leafs leaves green organic natural actual precision cut round square circular meals food wrapping packaging custom catering traditional bulk wholesale retail">
+                <div class="img-placeholder">[ Image: ${item} ]</div>
+                <div class="card-body">
+                  <div class="card-title">${item}</div>
+                  <div class="action-row" style="margin-top:auto;">
+                    <input type="number" min="1" placeholder="Qty" class="qty-input">
+                    <button class="add-btn" onclick="addToCart(this)">Add</button>
+                  </div>
+                </div>
+              </div>
+            `);
+          });
+        </script>
+      </div>
+    </section>
+
+    <!-- 7. Sal Leaf Plates -->
+    <section class="category-section" id="sal-leaves">
+      <h2>Sal Leaf Plates</h2>
+      <div class="grid">
+        <script>
+          const sLeaves = ["Round Large Sal Leaf Plate", "Square Sal Leaf Plate"];
+          sLeaves.forEach(item => {
+            document.write(`
+              <div class="card" data-product="${item}" data-keywords="${item.toLowerCase()} sal leaf plate plates leafs leaves round large square dinner disposable item buffet traditional handmade natural organic eco standard">
+                <div class="img-placeholder">[ Image: ${item} ]</div>
+                <div class="card-body">
+                  <div class="card-title">${item}</div>
+                  <div class="action-row" style="margin-top:auto;">
+                    <input type="number" min="1" placeholder="Qty" class="qty-input">
+                    <button class="add-btn" onclick="addToCart(this)">Add</button>
+                  </div>
+                </div>
+              </div>
+            `);
+          });
+        </script>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- APP-STYLE BOTTOM CART BAR -->
+<div class="mobile-bottom-cart">
+  <div class="cart-summary">
+    <small>Cart Total</small>
+    <span id="mobile-cart-items">0 Items</span>
+  </div>
+  <button class="mobile-checkout-btn" onclick="goToOrder()">
+    Proceed to Order ➔
+  </button>
+</div>
+
+<script>
+  // --- Enhanced Live Filtering Engine ---
+  function performSearch() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+    
+    const normalizedSearch = searchTerm
+      .replace(/leaves/g, 'leaf')
+      .replace(/leafs/g, 'leaf')
+      .replace(/plates/g, 'plate')
+      .replace(/bowls/g, 'bowl')
+      .replace(/containers/g, 'container')
+      .replace(/inches/g, 'inch');
+
+    const sections = document.querySelectorAll('.category-section');
+    let totalVisibleCards = 0;
+
+    sections.forEach(section => {
+      let hasVisibleCardsInSection = false;
+      const cards = section.querySelectorAll('.card');
+
+      cards.forEach(card => {
+        const productName = card.getAttribute('data-product').toLowerCase();
+        const keywords = card.getAttribute('data-keywords').toLowerCase();
+        
+        if (
+          productName.includes(searchTerm) || 
+          keywords.includes(searchTerm) ||
+          productName.includes(normalizedSearch) ||
+          keywords.includes(normalizedSearch)
+        ) {
+          card.style.display = 'flex';
+          hasVisibleCardsInSection = true;
+          totalVisibleCards++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (hasVisibleCardsInSection) {
+        section.style.display = 'block';
+      } else {
+        section.style.display = 'none';
+      }
+    });
+
+    const noResultsMsg = document.getElementById('no-results-msg');
+    if (totalVisibleCards === 0) {
+      noResultsMsg.style.display = 'block';
+    } else {
+      noResultsMsg.style.display = 'none';
+    }
+  }
+
+  // --- Cart Functionality ---
+  let cart = JSON.parse(localStorage.getItem('soilLeafCart')) || [];
+  updateCartBadge();
+
+  function addToCart(button) {
+    const card = button.closest('.card');
+    const productName = card.getAttribute('data-product');
+    const qtyInput = card.querySelector('.qty-input');
+    const variantSelect = card.querySelector('.variant-select');
+    
+    const qty = parseInt(qtyInput.value);
+
+    if (isNaN(qty) || qty <= 0) {
+      alert("Please enter a valid quantity.");
+      qtyInput.focus();
+      return;
+    }
+
+    let variant = "";
+    if (variantSelect) {
+      if(variantSelect.value === "") {
+        alert("Please select a variant option first.");
+        variantSelect.focus();
+        return;
+      }
+      variant = variantSelect.value;
+    }
+
+    const existingItemIndex = cart.findIndex(item => item.name === productName && item.variant === variant);
+
+    if (existingItemIndex > -1) {
+      cart[existingItemIndex].quantity += qty;
+    } else {
+      cart.push({ name: productName, variant: variant, quantity: qty });
+    }
+
+    localStorage.setItem('soilLeafCart', JSON.stringify(cart));
+    updateCartBadge();
+    qtyInput.value = '';
+
+    const originalText = button.innerHTML;
+    button.innerHTML = "✓";
+    button.classList.add("success");
+    
+    setTimeout(() => {
+      button.innerHTML = originalText;
+      button.classList.remove("success");
+    }, 1500);
+  }
+
+  function updateCartBadge() {
+    document.getElementById('cart-count-badge').innerText = cart.length; 
+    const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById('mobile-cart-items').innerText = `${cart.length} Items (${totalQty} Qty)`;
+  }
+
+  function goToOrder() {
+    if (cart.length === 0) {
+      alert("Your cart is empty. Please choose some eco-products first!");
+      return;
+    }
+    window.location.href = 'order.html';
+  }
+
+  // --- Re-Calibrated Scroll Tracking Observer ---
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.category-section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const isMobile = window.innerWidth <= 900;
+    const trackingTopMargin = isMobile ? -170 : -130;
+
+    const observerOptions = {
+      root: null,
+      rootMargin: `${trackingTopMargin}px 0px -65% 0px`, 
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          
+          const activeId = entry.target.getAttribute('id');
+          const activeLink = document.querySelector(`.nav-link[href="#${activeId}"]`);
+          
+          if (activeLink) {
+            activeLink.classList.add('active');
+            if (isMobile) {
+              activeLink.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  });
+</script>
+
+</body>
+</html>

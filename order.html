@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<title>Checkout | Soil Leaf – Eco-Friendly Products</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest: #1B4D2E;
+    --forest-dark: #0D2B17;
+    --leaf: #4CAF50;
+    --bright: #6DD85A;
+    --gold: #C8A96E;
+    --gold-light: #F0C96A;
+    --bg-light: #FAFAFA;
+    --bg-soft: #F4F7F4;
+    --white: #FFFFFF;
+    --text-dark: #2A2A2A;
+    --text-gray: #666666;
+    --soft-shadow: 0 12px 40px rgba(27, 77, 46, 0.06);
+  }
+
+  body { 
+    font-family: 'Lato', sans-serif; 
+    background: var(--bg-light); 
+    color: var(--text-dark); 
+    margin: 0;
+    padding-top: 90px; 
+  }
+
+  h1, h2, h3, h4 { font-family: 'Lora', serif; }
+
+  /* GLOBAL WATERMARK */
+  .global-watermark {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: url('soil-leaf-logo.png') no-repeat center center;
+    background-size: 50vmin; opacity: 0.08; z-index: -1;
+    pointer-events: none;
+  }
+
+  /* STRICTLY FIXED HEADER */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: var(--forest-dark);
+    padding: 16px 48px;
+    text-align: center;
+    border-bottom: 3px solid var(--leaf);
+    box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+  }
+  
+  /* LOGO STYLES */
+  .logo-link { display: inline-block; text-decoration: none; }
+  .custom-logo-img { height: 45px; width: auto; object-fit: contain; display: block; margin: 0 auto; }
+  .logo-fallback { display: none; color: #fff; font-family: 'Lora', serif; font-size: 1.8rem; font-weight: 700; letter-spacing: 0.5px; }
+  .logo-fallback span { color: var(--leaf); }
+
+  /* LAYOUT */
+  .checkout-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ORDER SUMMARY (LEFT) */
+  .order-summary {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: var(--soft-shadow);
+    border: 1px solid rgba(27,77,46,0.08);
+  }
+  .order-summary h2 { color: var(--forest-dark); margin-bottom: 24px; font-size: 1.6rem; border-bottom: 2px solid var(--bg-soft); padding-bottom: 12px; }
+  
+  #cart-items-list { list-style: none; margin-bottom: 24px; }
+  .cart-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 0; border-bottom: 1px solid #EFEFEF;
+  }
+  .item-info h4 { font-family: 'Lato', sans-serif; font-size: 1rem; color: var(--forest-dark); margin-bottom: 4px; }
+  .item-info p { font-size: 0.8rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+  .item-qty { font-weight: 700; color: var(--forest); background: var(--bg-soft); padding: 6px 12px; border-radius: 6px; }
+
+  .cart-total { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700; color: var(--forest-dark); padding-top: 16px; }
+  
+  .back-link { display: inline-block; margin-top: 20px; color: var(--forest); font-weight: 700; text-decoration: none; font-size: 0.95rem; }
+  .back-link:hover { color: var(--leaf); text-decoration: underline; }
+
+  /* CONTACT FORM (RIGHT) */
+  .form-card {
+    background: var(--bg-soft);
+    border-radius: 16px;
+    padding: 32px;
+    border: 1px solid rgba(27,77,46,0.08);
+    box-shadow: var(--soft-shadow);
+  }
+  .form-card h2 { color: var(--forest-dark); margin-bottom: 8px; font-size: 1.6rem; }
+  .form-card > p { color: var(--text-gray); font-size: 0.95rem; margin-bottom: 24px; line-height: 1.6; }
+
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--forest); font-weight: 700; margin-bottom: 8px; }
+  .form-group input, .form-group select, .form-group textarea { 
+    width: 100%; background: var(--white); border: 1px solid rgba(27,77,46,0.15); border-radius: 8px; 
+    padding: 14px 16px; color: var(--text-dark); font-family: 'Lato', sans-serif; font-size: 1rem; transition: all 0.2s; outline: none; 
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--leaf); box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .form-submit {
+    width: 100%; background: var(--leaf); color: #fff; border: none; border-radius: 50px; 
+    padding: 16px 24px; font-family: 'Lato', sans-serif; font-size: 1.05rem; font-weight: 700; 
+    cursor: pointer; transition: all 0.25s; box-shadow: 0 8px 24px rgba(76, 175, 80, 0.3); margin-top: 12px;
+  }
+  .form-submit:hover { background: var(--forest); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(27, 77, 46, 0.2); }
+
+  /* EMPTY CART STATE */
+  #empty-cart-msg { display: none; text-align: center; padding: 40px 0; }
+  #empty-cart-msg h3 { color: var(--forest); margin-bottom: 12px; }
+  #empty-cart-msg a { display: inline-block; background: var(--forest); color: white; padding: 10px 24px; border-radius: 50px; text-decoration: none; margin-top: 16px; font-weight: 700; }
+
+  @media (max-width: 900px) {
+    .checkout-container { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    header { padding: 16px; }
+    body { padding-top: 75px; }
+    .checkout-container { padding: 0 16px; margin: 24px auto; }
+    .order-summary, .form-card { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="global-watermark"></div>
+
+<header>
+  <a href="index.html" class="logo-link">
+    <!-- Displays Image Logo -->
+    <img src="your-logo.png" alt="Soil Leaf Logo" class="custom-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <!-- Fallback Text Logo if image is missing -->
+    <div class="logo-fallback">Soil<span>Leaf</span></div>
+  </a>
+</header>
+
+<div class="checkout-container" id="checkout-content">
+  
+  <!-- LEFT: ORDER SUMMARY -->
+  <div class="order-summary">
+    <h2>Your Order Summary</h2>
+    
+    <div id="empty-cart-msg">
+      <h3>Your cart is empty!</h3>
+      <p>Looks like you haven't added any products yet.</p>
+      <a href="products.html">← Back to Products</a>
+    </div>
+
+    <div id="cart-content">
+      <ul id="cart-items-list">
+        <!-- Cart items will be injected here via JS -->
+      </ul>
+      <div class="cart-total">
+        <span>Total Items:</span>
+        <span id="total-qty-display">0</span>
+      </div>
+      <a href="products.html" class="back-link">← Add more products</a>
+    </div>
+  </div>
+
+  <!-- RIGHT: CONTACT FORM -->
+  <div class="form-card" id="checkout-form-container">
+    <h2>Delivery Details</h2>
+    <p>Fill in your details below. Your order will be sent securely to our WhatsApp for final confirmation.</p>
+    
+    <form id="orderForm" onsubmit="submitOrder(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fname">Your Name *</label>
+          <input type="text" id="fname" required placeholder="e.g. Ravi Kumar">
+        </div>
+        <div class="form-group">
+          <label for="fphone">Phone Number *</label>
+          <input type="tel" id="fphone" required placeholder="e.g. 98765 43210">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="ftype">Order Type *</label>
+        <select id="ftype" required>
+          <option value="" disabled selected>Select an option</option>
+          <option>For My Home (Retail)</option>
+          <option>For My Business (Wholesale)</option>
+          <option>Event / Wedding</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="fmsg">Delivery Address & Date *</label>
+        <textarea id="fmsg" required placeholder="Please provide your full delivery address and required delivery date..."></textarea>
+      </div>
+
+      <button type="submit" class="form-submit" id="submitBtn">Confirm Order via WhatsApp →</button>
+    </form>
+  </div>
+
+</div>
+
+<script>
+  let cart = [];
+  let totalQuantity = 0;
+
+  // 1. Load Cart Data on Page Load
+  document.addEventListener('DOMContentLoaded', () => {
+    cart = JSON.parse(localStorage.getItem('soilLeafCart')) || [];
+    
+    if (cart.length === 0) {
+      document.getElementById('cart-content').style.display = 'none';
+      document.getElementById('checkout-form-container').style.display = 'none';
+      document.getElementById('empty-cart-msg').style.display = 'block';
+      return;
+    }
+
+    renderCartItems();
+  });
+
+  // 2. Render Cart Items to the DOM
+  function renderCartItems() {
+    const listElement = document.getElementById('cart-items-list');
+    listElement.innerHTML = '';
+    totalQuantity = 0;
+
+    cart.forEach(item => {
+      totalQuantity += item.quantity;
+      const variantHtml = item.variant ? `<p>Variant: ${item.variant}</p>` : '';
+      
+      const li = document.createElement('li');
+      li.className = 'cart-item';
+      li.innerHTML = `
+        <div class="item-info">
+          <h4>${item.name}</h4>
+          ${variantHtml}
+        </div>
+        <div class="item-qty">Qty: ${item.quantity}</div>
+      `;
+      listElement.appendChild(li);
+    });
+
+    document.getElementById('total-qty-display').innerText = totalQuantity;
+  }
+
+  // 3. Handle Form Submission, Google Sheets, & WhatsApp Redirect
+  function submitOrder(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('fname').value.trim();
+    const phone = document.getElementById('fphone').value.trim();
+    const type = document.getElementById('ftype').value;
+    const msg = document.getElementById('fmsg').value.trim();
+
+    // UI Feedback
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.innerHTML = 'Processing Order... ⏳';
+    submitBtn.disabled = true;
+
+    // Build the Product strings for Sheets & WhatsApp
+    let sheetsProductString = "";
+    let whatsappProductString = "";
+
+    cart.forEach(item => {
+      const variantText = item.variant ? ` (${item.variant})` : "";
+      
+      sheetsProductString += `${item.quantity}x ${item.name}${variantText}, `;
+      whatsappProductString += `\n- ${item.quantity}x ${item.name}${variantText}`;
+    });
+
+    sheetsProductString = sheetsProductString.replace(/, $/, "");
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('phone', phone);
+    formData.append('product', sheetsProductString); 
+    formData.append('qty', totalQuantity.toString());
+    formData.append('type', type);
+    formData.append('msg', msg);
+
+    const waText = `Hi Soil Leaf team, ${whatsappProductString}\n\nCan I get more info on this?`;
+    const waUrl = `https://wa.me/916360000986?text=${encodeURIComponent(waText)}`;
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwe7YpMMip9R83cdP524Mc4OhY6P98_ET0HuJkW4UFjvDNhZaiB0TMMrNbKFOpPMrI3/exec';
+
+    fetch(scriptURL, { method: 'POST', body: formData })
+      .then(response => {
+        completeOrderAndRedirect(waUrl);
+      })
+      .catch(error => {
+        console.error('Sheet logging failed, but proceeding to WhatsApp:', error);
+        completeOrderAndRedirect(waUrl);
+      });
+  }
+
+  // 4. Clear Cart and Redirect
+  function completeOrderAndRedirect(waUrl) {
+    localStorage.removeItem('soilLeafCart');
+    window.location.href = waUrl;
+  }
+</script>
+
+</body>
+</html>
