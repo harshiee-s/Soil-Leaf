@@ -287,10 +287,8 @@
 </head>
 <body>
 
-<!-- GLOBAL WATERMARK -->
 <div class="global-watermark"></div>
 
-<!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">
     <img src="your-logo.png" alt="Soil Leaf Logo" class="custom-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -307,7 +305,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg-leaf">🍃</div>
   <div class="hero-inner">
@@ -358,7 +355,6 @@
   </div>
 </section>
 
-<!-- OFFER BANNER -->
 <div class="offer-banner reveal">
   <div class="offer-badge">BUY 4 GET 1 FREE</div>
   <div>
@@ -367,7 +363,6 @@
   </div>
 </div>
 
-<!-- PRODUCTS -->
 <section class="products" id="products">
   <div class="section-header reveal">
     <span class="section-eyebrow">What We Offer</span>
@@ -410,7 +405,6 @@
   </div>
 </section>
 
-<!-- USE CASES -->
 <section class="usecases" id="usecases">
   <div class="section-header reveal">
     <span class="section-eyebrow">Who We Serve</span>
@@ -425,7 +419,6 @@
   </div>
 </section>
 
-<!-- WHY US -->
 <section class="why" id="why">
   <div class="section-header reveal">
     <span class="section-eyebrow">Why Choose Soil Leaf</span>
@@ -441,7 +434,6 @@
   </div>
 </section>
 
-<!-- MARQUEE REVIEWS -->
 <section class="reviews reveal" id="reviews">
   <div class="section-header">
     <span class="section-eyebrow">Customer Stories</span>
@@ -470,7 +462,6 @@
         <div class="review-author"><div class="review-avatar">L</div><div><div class="review-name">Lakshmi N.</div><div class="review-role">Retail Customer</div></div></div>
       </div>
       
-      <!-- Duplicate for looping -->
       <div class="review-card">
         <div class="review-stars">★★★★★</div>
         <p class="review-text">"The banana leaves are always fresh and delivered on time for our catering business. Highly recommended for bulk orders!"</p>
@@ -495,7 +486,6 @@
   </div>
 </section>
 
-<!-- LOCATION & FORM -->
 <section class="location-form" id="location">
   <div class="section-header reveal">
     <span class="section-eyebrow">Find Us & Place an Order</span>
@@ -551,12 +541,8 @@
   </div>
 </section>
 
-
-
-<!-- TAGLINE BAR -->
 <div class="tagline-bar"><p>Choose Nature  •  Choose Health  •  Choose Soil Leaf</p></div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
@@ -571,13 +557,12 @@
       <div class="footer-col"><h5>Contact</h5><a href="tel:06360000986">063600 00986</a><a href="tel:9788566461">9788566461</a><p style="margin-top: 10px;">Electronic City, Bengaluru<br>Karnataka 560100</p></div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Soil Leaf. All rights reserved.</p>
+      <p>© 2024 Soil Leaf. All rights reserved.</p>
       <span class="footer-motto">Your Trust, Our Responsibility</span>
     </div>
   </div>
 </footer>
 
-<!-- FLOATING WHATSAPP -->
 <a href="https://wa.me/916360000986" target="_blank" class="fab-whatsapp" aria-label="Chat on WhatsApp">
   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
     <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
@@ -626,7 +611,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Form Submission Logic
+// Form Submission Logic - Integrated with Google Sheets
 function submitForm() {
   const name = document.getElementById('fname').value.trim();
   const phone = document.getElementById('fphone').value.trim();
@@ -635,16 +620,54 @@ function submitForm() {
   const type = document.getElementById('ftype').value;
   const msg = document.getElementById('fmsg').value.trim();
 
+  // Basic Validation
   if (!name || !phone || !product) {
     alert('Please fill in your name, phone number, and the product you require.');
     return;
   }
 
-  const text = `Hello Soil Leaf! 🌿\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Product:* ${product}${qty ? '\n*Quantity:* ' + qty : ''}${type ? '\n*Order Type:* ' + type : ''}${msg ? '\n*Delivery/Msg:* ' + msg : ''}\n\nPlease confirm my order. Thank you!\n_— From Soil Leaf Website_`;
+  // 1. UI update: Show a loading state to prevent double clicks
+  const submitBtn = document.querySelector('.form-submit');
+  const originalBtnText = submitBtn.innerHTML;
+  submitBtn.innerHTML = 'Sending Details... ⏳';
+  submitBtn.disabled = true;
 
-  window.open(`https://wa.me/916360000986?text=${encodeURIComponent(text)}`, '_blank');
-  document.getElementById('contactForm').style.display = 'none';
-  document.getElementById('formSuccess').style.display = 'block';
+  // 2. Prepare the data for Google Sheets
+  const formData = new FormData();
+  formData.append('name', name);
+  formData.append('phone', phone);
+  formData.append('product', product);
+  formData.append('qty', qty || 'N/A');
+  formData.append('type', type || 'N/A');
+  formData.append('msg', msg || 'N/A');
+
+  // YOUR PROVIDED GOOGLE APPS SCRIPT URL
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwe7YpMMip9R83cdP524Mc4OhY6P98_ET0HuJkW4UFjvDNhZaiB0TMMrNbKFOpPMrI3/exec';
+
+  // 3. Send data to Google Sheets
+  fetch(scriptURL, { method: 'POST', body: formData })
+    .then(response => {
+      // 4. Once successfully logged to the sheet, trigger WhatsApp
+      const text = `Hello Soil Leaf! 🌿\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Product:* ${product}${qty ? '\n*Quantity:* ' + qty : ''}${type ? '\n*Order Type:* ' + type : ''}${msg ? '\n*Delivery/Msg:* ' + msg : ''}\n\nPlease confirm my order. Thank you!\n_— From Soil Leaf Website_`;
+      
+      window.open(`https://wa.me/916360000986?text=${encodeURIComponent(text)}`, '_blank');
+      
+      // 5. Update the UI to show success
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    })
+    .catch(error => {
+      // Handle network errors
+      console.error('Error!', error.message);
+      alert('There was an error connecting to the server. Sending you directly to WhatsApp.');
+      
+      // Fallback: Still send to WhatsApp even if sheet fails
+      const text = `Hello Soil Leaf! 🌿\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Product:* ${product}\n\nPlease confirm my order. Thank you!`;
+      window.open(`https://wa.me/916360000986?text=${encodeURIComponent(text)}`, '_blank');
+      
+      submitBtn.innerHTML = originalBtnText;
+      submitBtn.disabled = false;
+    });
 }
 </script>
 </body>
