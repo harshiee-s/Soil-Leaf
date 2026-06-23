@@ -7,7 +7,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="soil-leaf-logo.png">
 <link rel="icon" type="image/png" sizes="16x16" href="soil-leaf-logo.png">
 <link rel="apple-touch-icon" sizes="180x180" href="soil-leaf-logo.png">
-<title>Soil Leaf – Banana Leaf & Coconut Products, Bengaluru</title>
+<title>Soil Leaf – Banana Leaf, Areca Plates & Eco Products, Bengaluru</title>
+<meta name="description" content="Soil Leaf supplies fresh banana leaves, areca leaf plates, containers and eco-friendly natural products in Bengaluru. Wholesale & retail. Farm-direct pricing. Buy 4 Get 1 Free daily offer.">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -45,16 +46,15 @@
   h1, h2, h3, h4, h5, .serif { font-family: 'Lora', serif; }
 
   /* 🌿 ALWAYS VISIBLE GLOBAL WATERMARK 🌿 */
- /* 🌿 ALWAYS VISIBLE GLOBAL WATERMARK 🌿 */
   .global-watermark {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background: url('soil-leaf-logo.png') no-repeat center center;
     background-size: 50vmin; 
     opacity: 0.12; 
-    z-index: 9999; /* Bumped priority */
+    z-index: 9999;
     pointer-events: none; 
-    transform: translateZ(0); /* Hardware acceleration to prevent disappearing */
+    transform: translateZ(0);
   }
 
   /* SCROLL ANIMATION STYLES */
@@ -133,16 +133,105 @@
   .section-header h2 { font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--forest-dark); margin-bottom: 16px; }
   .section-header p { max-width: 550px; margin: 0 auto; font-size: 1rem; line-height: 1.6; color: var(--text-gray); }
 
-  /* PRODUCTS */
+  /* =====================================================================
+     PRODUCTS SECTION — UPDATED
+     ===================================================================== */
   .products { background: var(--white); padding: 80px 24px; position: relative; z-index: 2; }
-  .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
-  .product-card { background: var(--white); border-radius: var(--leaf-radius); text-align: left; box-shadow: var(--soft-shadow); transition: all 0.3s cubic-bezier(0.5, 0, 0, 1); border: 1px solid rgba(27,77,46,0.05); position: relative; overflow: hidden; display: flex; flex-direction: column; }
-  .product-card.active:hover { transform: translateY(-8px); box-shadow: var(--hover-shadow); }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Standard product card */
+  .product-card {
+    background: var(--white);
+    border-radius: var(--leaf-radius);
+    text-align: left;
+    box-shadow: var(--soft-shadow);
+    transition: all 0.3s cubic-bezier(0.5, 0, 0, 1);
+    border: 1px solid rgba(27,77,46,0.05);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .product-card:hover { transform: translateY(-8px); box-shadow: var(--hover-shadow); }
   .product-img { width: 100%; height: 200px; background-size: cover; background-position: center; border-bottom: 3px solid var(--leaf); }
   .product-content { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; }
   .product-card h3 { font-size: 1.3rem; color: var(--forest); font-weight: 700; margin-bottom: 12px; }
   .product-card p { color: var(--text-gray); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
   .product-tag { display: inline-block; background: var(--bg-soft); color: var(--forest); font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 20px; font-weight: 700; align-self: flex-start; }
+
+  /* "And More" CTA card — special styling */
+  .product-card-more {
+    background: linear-gradient(145deg, var(--forest-dark) 0%, var(--forest) 60%, #266840 100%);
+    border-radius: var(--leaf-radius);
+    box-shadow: var(--soft-shadow);
+    transition: all 0.3s cubic-bezier(0.5, 0, 0, 1);
+    border: 1px solid rgba(77,175,80,0.25);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 28px;
+    text-decoration: none;
+    min-height: 340px;
+    cursor: pointer;
+  }
+  .product-card-more::before {
+    content: '🍃';
+    position: absolute;
+    font-size: 9rem;
+    opacity: 0.06;
+    bottom: -20px;
+    right: -20px;
+    line-height: 1;
+    pointer-events: none;
+    transition: transform 0.4s ease;
+  }
+  .product-card-more:hover { transform: translateY(-8px); box-shadow: 0 20px 56px rgba(27,77,46,0.22); border-color: var(--bright); }
+  .product-card-more:hover::before { transform: rotate(20deg) scale(1.1); }
+  .product-card-more:hover .more-arrow { transform: translateX(6px); }
+
+  .more-icon {
+    width: 72px; height: 72px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 22px;
+    transition: background 0.2s;
+  }
+  .product-card-more:hover .more-icon { background: rgba(109,216,90,0.2); border-color: var(--bright); }
+
+  .more-eyebrow {
+    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-light); font-weight: 700; margin-bottom: 10px; display: block;
+  }
+  .product-card-more h3 {
+    font-family: 'Lora', serif; font-size: 1.5rem; font-weight: 700;
+    color: #F9F4E8; margin-bottom: 12px; line-height: 1.3;
+  }
+  .product-card-more p {
+    font-size: 0.9rem; color: rgba(249,244,232,0.65); line-height: 1.6; margin-bottom: 26px;
+  }
+  .more-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--leaf); color: #fff;
+    padding: 12px 28px; border-radius: 50px;
+    font-family: 'Lato', sans-serif; font-size: 0.88rem; font-weight: 700;
+    letter-spacing: 0.5px; transition: background 0.2s;
+    box-shadow: 0 6px 20px rgba(77,175,80,0.35);
+  }
+  .product-card-more:hover .more-cta { background: var(--bright); color: #1A1A1A; }
+  .more-arrow { transition: transform 0.25s ease; display: inline-block; }
 
   /* USE CASES */
   .usecases { background: var(--bg-soft); padding: 80px 24px; position: relative; z-index: 2; }
@@ -191,7 +280,6 @@
   .form-card > p { color: var(--text-gray); font-size: 0.95rem; margin-bottom: 24px; line-height: 1.6; }
   .form-group { margin-bottom: 16px; }
   .form-group label { display: block; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--forest); font-weight: 700; margin-bottom: 8px; }
-  /* Font size explicitly 16px to prevent iOS auto-zoom */
   .form-group input, .form-group select, .form-group textarea { width: 100%; background: var(--white); border: 1px solid rgba(27,77,46,0.1); border-radius: 8px; padding: 14px 16px; color: var(--text-dark); font-family: 'Lato', sans-serif; font-size: 16px !important; transition: all 0.2s; outline: none; -webkit-appearance: none; }
   .form-group input::placeholder, .form-group textarea::placeholder { color: #aaa; }
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--leaf); box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1); }
@@ -203,12 +291,12 @@
   .form-success .tick { font-size: 3rem; margin-bottom: 12px; color: var(--leaf); }
   .form-success h4 { font-size: 1.4rem; color: var(--forest); margin-bottom: 8px; }
   .form-success p { color: var(--text-gray); font-size: 0.95rem; line-height: 1.6; }
-/* MAP OVERLAY BUTTON */
-/* MAP OVERLAY BUTTON - TOP LEFT */
+
+  /* MAP OVERLAY BUTTON - TOP LEFT */
   .map-overlay-btn {
     position: absolute;
-    top: 20px;   /* Positions it 20px from the top edge */
-    left: 20px;  /* Positions it 20px from the left edge */
+    top: 20px;
+    left: 20px;
     background: rgba(255, 255, 255, 0.95);
     color: var(--forest);
     padding: 10px 20px;
@@ -224,7 +312,7 @@
   .map-overlay-btn:hover {
     background: var(--leaf);
     color: #fff;
-    transform: translateY(-2px); /* Slight lift effect on hover */
+    transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(27, 77, 46, 0.3);
   }
 
@@ -272,19 +360,21 @@
   @media(min-width: 768px) { .fab-whatsapp { bottom: 30px; right: 30px; width: 60px; height: 60px; font-size: 32px; } }
 
   /* =========================================================================
-     MOBILE & TABLET RESPONSIVE RULES 
+     MOBILE & TABLET RESPONSIVE
      ========================================================================= */
-  
   @media (max-width: 900px) {
     .hero-inner { grid-template-columns: 1fr; }
-    .hero-right { display: none; } /* Kept exactly as original to prioritize primary CTA */
+    .hero-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
     .lf-grid { grid-template-columns: 1fr; }
     .marquee-wrapper::before, .marquee-wrapper::after { width: 40px; }
   }
 
   @media (max-width: 768px) {
     nav { padding: 12px 24px; }
-    /* Enable Hamburger Menu */
     .mobile-toggle { display: block; }
     nav ul {
       position: absolute; top: 100%; left: 0; right: 0;
@@ -303,11 +393,13 @@
     .hero-badge-row { justify-content: center; }
     .hero-buttons { justify-content: center; flex-direction: column; width: 100%; }
     .hero p { margin: 0 auto 36px; }
+    .hero-right { grid-template-columns: 1fr; }
+    .hero-feature { text-align: left; }
     
     .form-row { grid-template-columns: 1fr; }
     .usecases-grid { grid-template-columns: repeat(2, 1fr); }
-    
     .section-header h2 { font-size: 2rem; }
+    .product-card-more { min-height: 280px; padding: 32px 20px; }
   }
 </style>
 </head>
@@ -331,6 +423,7 @@
   </ul>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-bg-leaf">🍃</div>
   <div class="hero-inner">
@@ -339,7 +432,7 @@
         <span class="hero-badge badge-eco">100% Natural & Eco-Friendly</span>
         <span class="hero-badge badge-farm">From Farm to Family</span>
       </div>
-      <span class="hero-eyebrow">Banana Leaf & Coconut Products</span>
+      <span class="hero-eyebrow">Natural Leaf & Eco Products, Bengaluru</span>
       <h1>Premium Quality<br><em>Banana Leaf</em></h1>
       <div class="hero-sub">Pure • Natural • Eco-Friendly</div>
       <p>Sustainable choice for a better tomorrow. Fresh, hygienic, and 100% biodegradable — sourced directly from our farms to your table.</p>
@@ -381,6 +474,7 @@
   </div>
 </section>
 
+<!-- OFFER BANNER -->
 <div class="offer-banner reveal">
   <div class="offer-badge">BUY 4 GET 1 FREE</div>
   <div>
@@ -389,6 +483,9 @@
   </div>
 </div>
 
+<!-- =====================================================================
+     PRODUCTS SECTION — UPDATED
+     ===================================================================== -->
 <section class="products" id="products">
   <div class="section-header reveal">
     <span class="section-eyebrow">What We Offer</span>
@@ -396,41 +493,53 @@
     <p>Every leaf hand-picked and delivered fresh — keeping tradition and nature alive.</p>
   </div>
   <div class="products-grid">
+
+    <!-- 1. Banana Leaf -->
     <div class="product-card reveal delay-1">
       <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1629835948924-42f2eeec4247?auto=format&fit=crop&w=600&q=80');"></div>
       <div class="product-content">
         <h3>Banana Leaf</h3>
-        <p>Large, fresh banana leaves perfect for serving traditional meals, pujas, and natural food wrapping.</p>
+        <p>Large, fresh banana leaves perfect for serving traditional meals, pujas, and natural food wrapping. Available in full-size and PC-cut formats for retail and bulk orders.</p>
         <span class="product-tag">Best Seller</span>
       </div>
     </div>
+
+    <!-- 2. Areca Leaf Plates -->
     <div class="product-card reveal delay-2">
-      <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1596645391605-f351e22ce70e?auto=format&fit=crop&w=600&q=80');"></div>
+      <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?auto=format&fit=crop&w=600&q=80');"></div>
       <div class="product-content">
-        <h3>Round Leaf</h3>
-        <p>Naturally shaped, beautifully cut round leaves ideal for eco-friendly plating and festive occasions.</p>
+        <h3>Areca Leaf Plates</h3>
+        <p>Naturally fallen areca palm sheaths crafted into sturdy, elegant plates. 100% biodegradable, waterproof, and food-safe — a premium alternative to plastic or thermocol.</p>
         <span class="product-tag">Eco Friendly</span>
       </div>
     </div>
+
+    <!-- 3. Containers -->
     <div class="product-card reveal delay-3">
-      <div class="product-img" style="background-image: url();"></div>
+      <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80');"></div>
       <div class="product-content">
-        <h3>PC Banana Leaf</h3>
-        <p>Precision-cut banana leaf pieces for consistent sizing across bulk catering and restaurant needs.</p>
+        <h3>Containers</h3>
+        <p>Eco-friendly natural containers for packaging, takeaways, and gifting. Ideal for caterers and event organizers looking for a sustainable, chemical-free option.</p>
         <span class="product-tag">Bulk Orders</span>
       </div>
     </div>
-    <div class="product-card reveal delay-4">
-      <div class="product-img" style="background-image:"></div>
-      <div class="product-content">
-        <h3>Fresh Coconut</h3>
-        <p>Tender and mature coconuts sourced from partner farms — naturally fresh, hydrating, and healthy.</p>
-        <span class="product-tag">Farm Fresh</span>
-      </div>
-    </div>
+
+    <!-- 4. And More — CTA card linking to products page -->
+    <a href="products.html" class="product-card-more reveal delay-4">
+      <div class="more-icon">🌿</div>
+      <span class="more-eyebrow">Explore Full Range</span>
+      <h3>And Much More</h3>
+      <p>Fresh coconuts, round leaves, specialty items & seasonal products. Discover our complete catalogue.</p>
+      <span class="more-cta">
+        View All Products
+        <span class="more-arrow">→</span>
+      </span>
+    </a>
+
   </div>
 </section>
 
+<!-- USE CASES -->
 <section class="usecases" id="usecases">
   <div class="section-header reveal">
     <span class="section-eyebrow">Who We Serve</span>
@@ -445,6 +554,7 @@
   </div>
 </section>
 
+<!-- WHY -->
 <section class="why" id="why">
   <div class="section-header reveal">
     <span class="section-eyebrow">Why Choose Soil Leaf</span>
@@ -460,6 +570,7 @@
   </div>
 </section>
 
+<!-- REVIEWS -->
 <section class="reviews reveal" id="reviews">
   <div class="section-header">
     <span class="section-eyebrow">Customer Stories</span>
@@ -487,7 +598,7 @@
         <p class="review-text">"Prompt delivery and the Buy 4 Get 1 Free offer is fantastic for our daily home needs. So glad I found Soil Leaf."</p>
         <div class="review-author"><div class="review-avatar">L</div><div><div class="review-name">Lakshmi N.</div><div class="review-role">Retail Customer</div></div></div>
       </div>
-      
+      <!-- Duplicated for seamless marquee loop -->
       <div class="review-card">
         <div class="review-stars">★★★★★</div>
         <p class="review-text">"The banana leaves are always fresh and delivered on time for our catering business. Highly recommended for bulk orders!"</p>
@@ -524,13 +635,10 @@
     <!-- LEFT SIDE: MAP & ADDRESS -->
     <div class="reveal delay-1">
       <div class="map-wrap" style="position: relative;">
-        <!-- Ensure your image name matches here -->
         <img src="soil-leaf-map.png" alt="Soil Leaf Location Map" style="width: 100%; height: 350px; object-fit: cover; display: block;">
-        
         <a href="https://www.google.com/maps/place/SOIL+LEAF+%E2%80%93+Banana+Leaf+%26+Coconut+Products/@12.8703754,77.6546607,17z/data=!3m1!4b1!4m6!3m5!1s0x3bae6d63970cdb83:0x4cdb8c8d25dbc53d!8m2!3d12.8703754!4d77.6546607!16s%2Fg%2F11mklpxnmd?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-overlay-btn">
           📍 Open in Maps
         </a>
-
         <div class="map-address">
           <strong>📍 Our Address</strong>
           <p>849, 3rd Cross, Chennakeshava Nagar, Hosa Road,<br>Pragathi Nagar, Electronic City,<br>Bengaluru, Karnataka 560100</p>
@@ -544,29 +652,31 @@
       <p>Fill in your details and we'll confirm your order instantly.</p>
       <div id="contactForm">
         <div class="form-row">
-          <div class="form-group"><label>Your Name</label><input type="text" id="fname" placeholder="e.g. Ravi Kumar"></div>
-          <div class="form-group"><label>Phone Number</label><input type="tel" id="fphone" placeholder="e.g. 98765 43210"></div>
+          <div class="form-group"><label for="fname">Your Name</label><input type="text" id="fname" name="fname" placeholder="e.g. Ravi Kumar"></div>
+          <div class="form-group"><label for="fphone">Phone Number</label><input type="tel" id="fphone" name="fphone" placeholder="e.g. 98765 43210"></div>
         </div>
         <div class="form-group">
-          <label>Product Required</label>
-          <select id="fproduct">
+          <label for="fproduct">Product Required</label>
+          <select id="fproduct" name="fproduct">
             <option value="" disabled selected>Select a product</option>
-            <option>Banana Leaf</option><option>Round Leaf</option>
-            <option>PC Banana Leaf</option><option>Fresh Coconut</option>
+            <option>Banana Leaf</option>
+            <option>Areca Leaf Plates</option>
+            <option>Containers</option>
             <option>Multiple Products</option>
+            <option>Other</option>
           </select>
         </div>
         <div class="form-row">
-          <div class="form-group"><label>Quantity</label><input type="text" id="fqty" placeholder="e.g. 100 pieces"></div>
+          <div class="form-group"><label for="fqty">Quantity</label><input type="text" id="fqty" name="fqty" placeholder="e.g. 100 pieces"></div>
           <div class="form-group">
-            <label>Order Type</label>
-            <select id="ftype">
+            <label for="ftype">Order Type</label>
+            <select id="ftype" name="ftype">
               <option value="" disabled selected>Select</option>
               <option>For My Home (Retail)</option><option>For My Business (Wholesale)</option><option>Event / Wedding</option>
             </select>
           </div>
         </div>
-        <div class="form-group"><label>Delivery Address / Message</label><textarea id="fmsg" placeholder="Delivery address, event date, or any special requirements..."></textarea></div>
+        <div class="form-group"><label for="fmsg">Delivery Address / Message</label><textarea id="fmsg" name="fmsg" placeholder="Delivery address, event date, or any special requirements..."></textarea></div>
         <button class="form-submit" onclick="submitForm()">Send Order via WhatsApp →</button>
       </div>
       <div class="form-success" id="formSuccess">
@@ -589,12 +699,18 @@
         <div style="font-size: 0.75rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold);">Farmer Growth Together</div>
         <p>100% Natural, Eco-Friendly banana leaf and coconut products. From farm to family, sustainably grown.</p>
       </div>
-      <div class="footer-col"><h5>Products</h5><a href="#products">Banana Leaf</a><a href="#products">Round Leaf</a><a href="#products">PC Banana Leaf</a><a href="#products">Fresh Coconut</a></div>
+      <div class="footer-col">
+        <h5>Products</h5>
+        <a href="#products">Banana Leaf</a>
+        <a href="#products">Areca Leaf Plates</a>
+        <a href="#products">Containers</a>
+        <a href="products.html">View All Products</a>
+      </div>
       <div class="footer-col"><h5>We Serve</h5><a href="#usecases">Restaurants & Hotels</a><a href="#usecases">Weddings & Functions</a><a href="#usecases">Temples & Pujas</a><a href="#usecases">Retail & Wholesale</a></div>
       <div class="footer-col"><h5>Contact</h5><a href="tel:06360000986">063600 00986</a><a href="tel:9788566461">9788566461</a><p style="margin-top: 10px;">Electronic City, Bengaluru<br>Karnataka 560100</p></div>
     </div>
     <div class="footer-bottom">
-      <p>© 2024 Soil Leaf. All rights reserved.</p>
+      <p>© 2026 Soil Leaf. All rights reserved.</p>
       <span class="footer-motto">Your Trust, Our Responsibility</span>
     </div>
   </div>
@@ -657,19 +773,16 @@ function submitForm() {
   const type = document.getElementById('ftype').value;
   const msg = document.getElementById('fmsg').value.trim();
 
-  // Basic Validation
   if (!name || !phone || !product) {
     alert('Please fill in your name, phone number, and the product you require.');
     return;
   }
 
-  // 1. UI update: Show a loading state to prevent double clicks
   const submitBtn = document.querySelector('.form-submit');
   const originalBtnText = submitBtn.innerHTML;
   submitBtn.innerHTML = 'Sending Details... ⏳';
   submitBtn.disabled = true;
 
-  // 2. Prepare the data for Google Sheets
   const formData = new FormData();
   formData.append('name', name);
   formData.append('phone', phone);
@@ -678,30 +791,20 @@ function submitForm() {
   formData.append('type', type || 'N/A');
   formData.append('msg', msg || 'N/A');
 
-  // YOUR PROVIDED GOOGLE APPS SCRIPT URL
   const scriptURL = 'https://script.google.com/macros/s/AKfycbwe7YpMMip9R83cdP524Mc4OhY6P98_ET0HuJkW4UFjvDNhZaiB0TMMrNbKFOpPMrI3/exec';
 
-  // 3. Send data to Google Sheets
   fetch(scriptURL, { method: 'POST', body: formData })
     .then(response => {
-      // 4. Once successfully logged to the sheet, trigger WhatsApp
       const text = `Hi Soil Leaf team!\n\nThis is ${name}, I need ${qty} of ${product}. Can I get the price for this?`;
-      
       window.open(`https://wa.me/916360000986?text=${encodeURIComponent(text)}`, '_blank');
-      
-      // 5. Update the UI to show success
       document.getElementById('contactForm').style.display = 'none';
       document.getElementById('formSuccess').style.display = 'block';
     })
     .catch(error => {
-      // Handle network errors
       console.error('Error!', error.message);
       alert('There was an error connecting to the server. Sending you directly to WhatsApp.');
-      
-      // Fallback: Still send to WhatsApp even if sheet fails
       const text = `Hello Soil Leaf! 🌿\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Product:* ${product}\n\nPlease confirm my order. Thank you!`;
       window.open(`https://wa.me/916360000986?text=${encodeURIComponent(text)}`, '_blank');
-      
       submitBtn.innerHTML = originalBtnText;
       submitBtn.disabled = false;
     });
