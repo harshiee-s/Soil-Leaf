@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="soil-leaf-logo.png">
+<link rel="icon" type="image/png" sizes="16x16" href="soil-leaf-logo.png">
+<link rel="apple-touch-icon" sizes="180x180" href="soil-leaf-logo.png">
+<title>Soil Leaf – Banana Leaf & Coconut Products, Bengaluru</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest: #1B4D2E;
+    --forest-dark: #0D2B17;
+    --leaf: #4CAF50;
+    --bright: #6DD85A;
+    --gold: #C8A96E;
+    --gold-light: #F0C96A;
+    
+    --bg-light: #FAFAFA;
+    --bg-soft: #F4F7F4;
+    --white: #FFFFFF;
+    
+    --text-dark: #2A2A2A;
+    --text-gray: #666666;
+    
+    --leaf-radius: 40px 4px 40px 4px;
+    --soft-shadow: 0 12px 40px rgba(27, 77, 46, 0.06);
+    --hover-shadow: 0 16px 50px rgba(27, 77, 46, 0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+  body { 
+    font-family: 'Lato', sans-serif; 
+    background: var(--bg-light); 
+    color: var(--text-dark); 
+    overflow-x: hidden; 
+    position: relative;
+    width: 100%;
+  }
+
+  h1, h2, h3, h4, h5, .serif { font-family: 'Lora', serif; }
+
+  /* 🌿 ALWAYS VISIBLE GLOBAL WATERMARK 🌿 */
+  .global-watermark {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('soil-leaf-logo.png') no-repeat center center;
+    background-size: 50vmin; 
+    opacity: 0.12; 
+    z-index: 50; 
+    pointer-events: none; 
+  }
+
+  /* SCROLL ANIMATION STYLES */
+  .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+  .reveal.active { opacity: 1; transform: translateY(0); }
+  .delay-1 { transition-delay: 0.1s; }
+  .delay-2 { transition-delay: 0.2s; }
+  .delay-3 { transition-delay: 0.3s; }
+  .delay-4 { transition-delay: 0.4s; }
+
+  /* LOGO STYLES */
+  .custom-logo-img { height: 40px; width: auto; object-fit: contain; display: block; }
+  .footer-logo-img { height: 60px; width: auto; object-fit: contain; margin-bottom: 12px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 48px; background: rgba(13,27,17,0.95); backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(77,175,80,0.25);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  nav ul { list-style: none; display: flex; gap: 32px; align-items: center; transition: all 0.3s ease; }
+  nav ul a { text-decoration: none; color: rgba(249,244,232,0.8); font-size: 0.85rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; }
+  nav ul a:hover { color: var(--leaf); }
+  .nav-cta { background: var(--leaf) !important; color: #fff !important; padding: 10px 24px; border-radius: 30px; font-weight: 700 !important; transition: all 0.2s !important; }
+  .nav-cta:hover { background: var(--bright) !important; color: #1A1A1A !important; }
+  
+  /* Mobile Menu Toggle */
+  .mobile-toggle {
+    display: none; background: transparent; border: none; color: var(--gold-light); font-size: 1.8rem; cursor: pointer;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #061810 0%, #0d2b17 40%, #1B4D2E 80%, #0f3520 100%);
+    display: flex; align-items: center; position: relative; overflow: hidden; padding: 120px 48px 80px;
+  }
+  .hero-bg-leaf { position: absolute; right: -60px; top: -40px; font-size: clamp(15rem, 30vw, 28rem); opacity: 0.04; line-height: 1; animation: spinSlow 30s linear infinite; pointer-events: none; }
+  @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 2; }
+  .hero-badge-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; }
+  .hero-badge { font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; padding: 5px 14px; border-radius: 20px; border: 1px solid; background: transparent; }
+  .badge-eco { border-color: var(--leaf); color: var(--leaf); }
+  .badge-farm { border-color: var(--gold); color: var(--gold); }
+  .hero-eyebrow { font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-light); font-weight: 700; margin-bottom: 16px; display: block; }
+  .hero h1 { font-family: 'Lora', serif; font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 700; line-height: 1.15; color: #F9F4E8; margin-bottom: 12px; }
+  .hero h1 em { color: var(--leaf); font-style: normal; display: block; }
+  .hero-sub { font-size: 0.95rem; font-weight: 700; color: var(--gold-light); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+  .hero p { font-size: 1rem; font-weight: 300; color: rgba(249,244,232,0.7); max-width: 480px; line-height: 1.8; margin-bottom: 36px; }
+
+  .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero .btn-primary { background: var(--leaf); color: #fff; padding: 16px 36px; border-radius: 50px; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.5px; text-decoration: none; transition: all 0.25s; box-shadow: 0 8px 28px rgba(77,175,80,0.4); display: inline-block; text-align: center; flex: 1 1 auto; }
+  .hero .btn-primary:hover { background: var(--bright); transform: translateY(-2px); color: #1A1A1A; }
+  .hero .btn-secondary { border: 1px solid rgba(249,244,232,0.35); color: #F9F4E8; background: transparent; padding: 16px 36px; border-radius: 50px; font-size: 0.95rem; text-decoration: none; transition: all 0.25s; display: inline-block; text-align: center; flex: 1 1 auto; }
+  .hero .btn-secondary:hover { border-color: var(--leaf); color: var(--leaf); }
+
+  .hero-right { display: flex; flex-direction: column; gap: 16px; }
+  .hero-feature { background: rgba(255,255,255,0.05); border: 1px solid rgba(77,175,80,0.2); border-radius: 16px; padding: 20px 24px; display: flex; align-items: flex-start; gap: 16px; transition: border-color 0.2s, background 0.2s; }
+  .hero-feature:hover { border-color: var(--leaf); background: rgba(77,175,80,0.07); }
+  .hero-feature-icon { font-size: 1.8rem; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+  .hero-feature h4 { font-family: 'Lato', sans-serif; font-size: 0.9rem; font-weight: 700; color: #F9F4E8; letter-spacing: 0.5px; margin-bottom: 4px; text-transform: uppercase; }
+  .hero-feature p { font-size: 0.82rem; color: rgba(249,244,232,0.55); line-height: 1.5; margin-bottom: 0; }
+
+  /* BANNER */
+  .offer-banner { background: linear-gradient(135deg, var(--forest) 0%, var(--leaf) 100%); padding: 28px 24px; display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; text-align: center; }
+  .offer-badge { background: var(--gold-light); color: var(--forest-dark); padding: 12px 32px; border-radius: var(--leaf-radius); font-family: 'Lora', serif; font-size: 1.2rem; font-weight: 700; white-space: nowrap; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  .offer-text { font-size: 1.1rem; font-weight: 700; color: #fff; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .offer-sub { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 400; }
+
+  /* SECTIONS SHARED */
+  .section-header { text-align: center; margin-bottom: 50px; }
+  .section-eyebrow { font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; display: block; color: var(--leaf); }
+  .section-header h2 { font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--forest-dark); margin-bottom: 16px; }
+  .section-header p { max-width: 550px; margin: 0 auto; font-size: 1rem; line-height: 1.6; color: var(--text-gray); }
+
+  /* PRODUCTS */
+  .products { background: var(--white); padding: 80px 24px; position: relative; z-index: 2; }
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+  .product-card { background: var(--white); border-radius: var(--leaf-radius); text-align: left; box-shadow: var(--soft-shadow); transition: all 0.3s cubic-bezier(0.5, 0, 0, 1); border: 1px solid rgba(27,77,46,0.05); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .product-card.active:hover { transform: translateY(-8px); box-shadow: var(--hover-shadow); }
+  .product-img { width: 100%; height: 200px; background-size: cover; background-position: center; border-bottom: 3px solid var(--leaf); }
+  .product-content { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; }
+  .product-card h3 { font-size: 1.3rem; color: var(--forest); font-weight: 700; margin-bottom: 12px; }
+  .product-card p { color: var(--text-gray); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
+  .product-tag { display: inline-block; background: var(--bg-soft); color: var(--forest); font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 20px; font-weight: 700; align-self: flex-start; }
+
+  /* USE CASES */
+  .usecases { background: var(--bg-soft); padding: 80px 24px; position: relative; z-index: 2; }
+  .usecases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; max-width: 1100px; margin: 0 auto; }
+  .usecase-card { background: var(--white); border: 1px solid rgba(27,77,46,0.05); border-radius: var(--leaf-radius); padding: 30px 16px; text-align: center; transition: all 0.25s; box-shadow: var(--soft-shadow); }
+  .usecase-card.active:hover { border-color: var(--leaf); transform: translateY(-4px); }
+  .usecase-icon { font-size: 2rem; color: var(--forest); margin-bottom: 12px; display: block; font-weight: 300; }
+  .usecase-card h4 { font-family: 'Lato', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--forest-dark); text-transform: uppercase; letter-spacing: 1px; line-height: 1.4; }
+
+  /* WHY */
+  .why { background: var(--white); padding: 80px 24px; position: relative; z-index: 2; }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
+  .why-item { border: 1px solid rgba(27,77,46,0.1); border-radius: var(--leaf-radius); padding: 30px 24px; transition: border-color 0.2s; background: var(--bg-soft); }
+  .why-item:hover { border-color: var(--leaf); background: var(--white); box-shadow: var(--soft-shadow); }
+  .why-item h4 { font-family: 'Lato', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--forest-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .why-item h4::before { content: '✓'; color: var(--leaf); font-weight: 900; }
+  .why-item p { font-size: 0.95rem; color: var(--text-gray); line-height: 1.6; }
+
+  /* CUSTOMER REVIEWS MARQUEE */
+  .reviews { background: var(--bg-soft); padding: 80px 0; overflow: hidden; border-top: 1px solid rgba(27,77,46,0.05); border-bottom: 1px solid rgba(27,77,46,0.05); position: relative; z-index: 2; }
+  .marquee-wrapper { position: relative; width: 100%; display: flex; overflow: hidden; padding: 10px 0; }
+  .marquee-wrapper::before, .marquee-wrapper::after { content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none; }
+  .marquee-wrapper::before { left: 0; background: linear-gradient(to right, var(--bg-soft), transparent); }
+  .marquee-wrapper::after { right: 0; background: linear-gradient(to left, var(--bg-soft), transparent); }
+  .marquee-track { display: flex; gap: 20px; padding-left: 20px; animation: scroll-marquee 35s linear infinite; width: max-content; }
+  .marquee-wrapper:hover .marquee-track { animation-play-state: paused; }
+  @keyframes scroll-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .review-card { background: var(--white); border-radius: var(--leaf-radius); padding: 24px; width: 320px; box-shadow: var(--soft-shadow); border: 1px solid rgba(27,77,46,0.05); display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+  .review-stars { color: var(--gold-light); font-size: 1.2rem; letter-spacing: 2px; }
+  .review-text { font-family: 'Lora', serif; font-size: 1rem; font-style: italic; color: var(--text-dark); line-height: 1.6; flex-grow: 1; }
+  .review-author { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+  .review-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--forest); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; }
+  .review-name { font-weight: 700; color: var(--forest-dark); font-size: 0.95rem; }
+  .review-role { font-size: 0.8rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* LOCATION & FORM */
+  .location-form { background: var(--white); padding: 80px 24px; position: relative; z-index: 2; }
+  .lf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto; align-items: start; }
+  .map-wrap { border-radius: var(--leaf-radius); overflow: hidden; border: 1px solid rgba(27,77,46,0.1); box-shadow: var(--soft-shadow); background: var(--white); width: 100%;}
+  .map-wrap iframe { width: 100%; height: 350px; border: none; display: block; }
+  .map-address { padding: 24px; border-top: 1px solid rgba(27,77,46,0.05); }
+  .map-address p { font-size: 0.95rem; color: var(--text-gray); line-height: 1.6; }
+  .map-address strong { color: var(--forest); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 8px; font-weight: 700; }
+  .form-card { background: var(--bg-soft); border-radius: var(--leaf-radius); padding: 32px 24px; border: 1px solid rgba(27,77,46,0.08); box-shadow: var(--soft-shadow); }
+  .form-card h3 { font-size: 1.6rem; color: var(--forest-dark); margin-bottom: 8px; }
+  .form-card > p { color: var(--text-gray); font-size: 0.95rem; margin-bottom: 24px; line-height: 1.6; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--forest); font-weight: 700; margin-bottom: 8px; }
+  /* Font size explicitly 16px to prevent iOS auto-zoom */
+  .form-group input, .form-group select, .form-group textarea { width: 100%; background: var(--white); border: 1px solid rgba(27,77,46,0.1); border-radius: 8px; padding: 14px 16px; color: var(--text-dark); font-family: 'Lato', sans-serif; font-size: 16px !important; transition: all 0.2s; outline: none; -webkit-appearance: none; }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: #aaa; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--leaf); box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-submit { width: 100%; background: var(--leaf); color: #fff; border: none; border-radius: 50px; padding: 16px 24px; font-family: 'Lato', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.5px; cursor: pointer; transition: all 0.25s; box-shadow: 0 8px 24px rgba(76, 175, 80, 0.3); margin-top: 8px; }
+  .form-submit:hover { background: var(--forest); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(27, 77, 46, 0.2); }
+  .form-success { display: none; text-align: center; padding: 24px 0; }
+  .form-success .tick { font-size: 3rem; margin-bottom: 12px; color: var(--leaf); }
+  .form-success h4 { font-size: 1.4rem; color: var(--forest); margin-bottom: 8px; }
+  .form-success p { color: var(--text-gray); font-size: 0.95rem; line-height: 1.6; }
+
+  /* CONTACT */
+  .contact { background: #0A1C11; padding: 80px 24px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 2; }
+  .contact .section-eyebrow { color: var(--gold-light); }
+  .contact h2 { font-size: clamp(2rem, 3.5vw, 2.8rem); color: var(--white); font-weight: 700; margin-bottom: 16px; }
+  .contact p { color: rgba(255,255,255,0.7); max-width: 500px; margin: 0 auto 40px; line-height: 1.6; font-size: 1rem; }
+  .contact-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; max-width: 1000px; margin: 0 auto; }
+  .contact-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--leaf-radius); padding: 32px 24px; transition: background 0.2s; width: 100%;}
+  .contact-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+  .contact-card-icon { font-size: 1.8rem; margin-bottom: 12px; color: var(--leaf); }
+  .contact-card h4 { font-family: 'Lato', sans-serif; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .contact-card p, .contact-card a { font-size: 1rem; font-weight: 700; color: var(--white); text-decoration: none; display: block; line-height: 1.6; }
+  .contact-card a:hover { color: var(--bright); }
+  .contact-card .small { font-size: 0.85rem; font-weight: 400; color: rgba(255,255,255,0.5); margin-top: 6px; }
+
+  /* FOOTER */
+  footer { background: #06120B; padding: 60px 24px 40px; color: var(--white); position: relative; z-index: 2; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 24px; }
+  .footer-brand { grid-column: 1 / -1; }
+  @media (min-width: 768px) {
+    .footer-brand { grid-column: span 1; }
+    .footer-top { grid-template-columns: 2fr 1fr 1fr 1fr; }
+  }
+  .footer-brand p { font-size: 0.95rem; color: rgba(255,255,255,0.6); max-width: 300px; margin-top: 16px; line-height: 1.7; }
+  .footer-col h5 { font-family: 'Lato', sans-serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-light); margin-bottom: 20px; }
+  .footer-col p, .footer-col a { font-size: 0.95rem; color: rgba(255,255,255,0.6); line-height: 2; text-decoration: none; display: block; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--leaf); }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; text-align: center; }
+  .footer-bottom p { font-size: 0.85rem; color: rgba(255,255,255,0.4); width: 100%; }
+  @media(min-width: 640px) { .footer-bottom p { width: auto; } }
+  .footer-motto { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--leaf); font-weight: 700; width: 100%; }
+  @media(min-width: 640px) { .footer-motto { width: auto; } }
+
+  /* TAGLINE BAR */
+  .tagline-bar { background: var(--leaf); padding: 16px 24px; text-align: center; position: relative; z-index: 2; }
+  .tagline-bar p { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: #fff; }
+  @media(min-width: 640px){ .tagline-bar p { font-size: 0.85rem; letter-spacing: 3px; } }
+
+  /* FLOATING WHATSAPP */
+  .fab-whatsapp { position: fixed; bottom: 20px; right: 20px; z-index: 999; background: #25D366; color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 10px 24px rgba(37, 211, 102, 0.4); text-decoration: none; transition: transform 0.3s, box-shadow 0.3s; }
+  .fab-whatsapp:hover { transform: scale(1.1) rotate(-5deg); box-shadow: 0 14px 32px rgba(37, 211, 102, 0.5); }
+  @media(min-width: 768px) { .fab-whatsapp { bottom: 30px; right: 30px; width: 60px; height: 60px; font-size: 32px; } }
+
+  /* =========================================================================
+     MOBILE & TABLET RESPONSIVE RULES 
+     ========================================================================= */
+  
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-right { display: none; } /* Kept exactly as original to prioritize primary CTA */
+    .lf-grid { grid-template-columns: 1fr; }
+    .marquee-wrapper::before, .marquee-wrapper::after { width: 40px; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 12px 24px; }
+    /* Enable Hamburger Menu */
+    .mobile-toggle { display: block; }
+    nav ul {
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: rgba(13,27,17,0.98); border-bottom: 1px solid rgba(77,175,80,0.25);
+      flex-direction: column; padding: 24px; gap: 20px;
+      transform: translateY(-150%); opacity: 0; pointer-events: none;
+    }
+    nav ul.menu-open {
+      transform: translateY(0); opacity: 1; pointer-events: all;
+    }
+    .nav-cta { width: 100%; text-align: center; }
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 100px 24px 60px; text-align: center; }
+    .hero-badge-row { justify-content: center; }
+    .hero-buttons { justify-content: center; flex-direction: column; width: 100%; }
+    .hero p { margin: 0 auto 36px; }
+    
+    .form-row { grid-template-columns: 1fr; }
+    .usecases-grid { grid-template-columns: repeat(2, 1fr); }
+    
+    .section-header h2 { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- GLOBAL WATERMARK -->
+<div class="global-watermark"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="your-logo.png" alt="Soil Leaf Logo" class="custom-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <div style="display:none; color:var(--leaf); font-family: 'Lora', serif; font-size: 1.5rem; font-weight: 700;">Soil<span style="color:#F9F4E8;">Leaf</span></div>
+  </a>
+  <button class="mobile-toggle" aria-label="Toggle navigation">☰</button>
+  <ul id="nav-menu">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#usecases">We Serve</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#location">Find Us</a></li>
+    <li><a href="#contact" class="nav-cta">Order Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-leaf">🍃</div>
+  <div class="hero-inner">
+    <div class="hero-left reveal">
+      <div class="hero-badge-row">
+        <span class="hero-badge badge-eco">100% Natural & Eco-Friendly</span>
+        <span class="hero-badge badge-farm">From Farm to Family</span>
+      </div>
+      <span class="hero-eyebrow">Banana Leaf & Coconut Products</span>
+      <h1>Premium Quality<br><em>Banana Leaf</em></h1>
+      <div class="hero-sub">Pure • Natural • Eco-Friendly</div>
+      <p>Sustainable choice for a better tomorrow. Fresh, hygienic, and 100% biodegradable — sourced directly from our farms to your table.</p>
+      <div class="hero-buttons">
+        <a href="#location" class="btn-primary">📞 Order Now</a>
+        <a href="#products" class="btn-secondary">View Products</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-feature reveal delay-1">
+        <span class="hero-feature-icon">🌱</span>
+        <div>
+          <h4>Fresh & Hygienic</h4>
+          <p>Carefully selected and cleaned before every delivery.</p>
+        </div>
+      </div>
+      <div class="hero-feature reveal delay-2">
+        <span class="hero-feature-icon">🍃</span>
+        <div>
+          <h4>Premium Banana Leaves</h4>
+          <p>Ideal for meals, pujas, events & more.</p>
+        </div>
+      </div>
+      <div class="hero-feature reveal delay-3">
+        <span class="hero-feature-icon">🥥</span>
+        <div>
+          <h4>Quality Coconut Products</h4>
+          <p>Naturally sourced, pure & healthy.</p>
+        </div>
+      </div>
+      <div class="hero-feature reveal delay-4">
+        <span class="hero-feature-icon">♻️</span>
+        <div>
+          <h4>100% Natural & Biodegradable</h4>
+          <p>No chemicals. No plastic. 100% safe.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER BANNER -->
+<div class="offer-banner reveal">
+  <div class="offer-badge">BUY 4 GET 1 FREE</div>
+  <div>
+    <div class="offer-text">Special Daily Offer</div>
+    <div class="offer-sub">Available on all leaf products • Wholesale & Retail • All Sizes</div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">What We Offer</span>
+    <h2>Our Fresh Products</h2>
+    <p>Every leaf hand-picked and delivered fresh — keeping tradition and nature alive.</p>
+  </div>
+  <div class="products-grid">
+    <div class="product-card reveal delay-1">
+      <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1629835948924-42f2eeec4247?auto=format&fit=crop&w=600&q=80');"></div>
+      <div class="product-content">
+        <h3>Banana Leaf</h3>
+        <p>Large, fresh banana leaves perfect for serving traditional meals, pujas, and natural food wrapping.</p>
+        <span class="product-tag">Best Seller</span>
+      </div>
+    </div>
+    <div class="product-card reveal delay-2">
+      <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1596645391605-f351e22ce70e?auto=format&fit=crop&w=600&q=80');"></div>
+      <div class="product-content">
+        <h3>Round Leaf</h3>
+        <p>Naturally shaped, beautifully cut round leaves ideal for eco-friendly plating and festive occasions.</p>
+        <span class="product-tag">Eco Friendly</span>
+      </div>
+    </div>
+    <div class="product-card reveal delay-3">
+      <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?auto=format&fit=crop&w=600&q=80');"></div>
+      <div class="product-content">
+        <h3>PC Banana Leaf</h3>
+        <p>Precision-cut banana leaf pieces for consistent sizing across bulk catering and restaurant needs.</p>
+        <span class="product-tag">Bulk Orders</span>
+      </div>
+    </div>
+    <div class="product-card reveal delay-4">
+      <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1526318585698-42289658ec35?auto=format&fit=crop&w=600&q=80');"></div>
+      <div class="product-content">
+        <h3>Fresh Coconut</h3>
+        <p>Tender and mature coconuts sourced from partner farms — naturally fresh, hydrating, and healthy.</p>
+        <span class="product-tag">Farm Fresh</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="usecases" id="usecases">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">Who We Serve</span>
+    <h2>Perfect For Every Occasion</h2>
+    <p>From daily restaurant needs to grand celebrations — we supply all sizes, retail & wholesale.</p>
+  </div>
+  <div class="usecases-grid">
+    <div class="usecase-card reveal delay-1"><span class="usecase-icon">🍽️</span><h4>Restaurants & Hotels</h4></div>
+    <div class="usecase-card reveal delay-2"><span class="usecase-icon">💍</span><h4>Weddings & Functions</h4></div>
+    <div class="usecase-card reveal delay-3"><span class="usecase-icon">🛕</span><h4>Temples & Pujas</h4></div>
+    <div class="usecase-card reveal delay-4"><span class="usecase-icon">🛒</span><h4>Retail & Wholesale</h4></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">Why Choose Soil Leaf</span>
+    <h2>Nature's Choice for Sustainable Living</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-item reveal delay-1"><h4>Fresh & Premium Quality</h4><p>Hand-selected leaves delivered at peak freshness every single day.</p></div>
+    <div class="why-item reveal delay-2"><h4>On-Time Delivery</h4><p>Reliable and punctual logistics — your orders arrive exactly when you need them.</p></div>
+    <div class="why-item reveal delay-3"><h4>Affordable Pricing</h4><p>Farm-direct pricing with no middlemen, plus our Buy 4 Get 1 Free daily offer.</p></div>
+    <div class="why-item reveal delay-1"><h4>Eco-Friendly & Sustainable</h4><p>100% biodegradable. No chemicals. No plastic. Pure, natural, and safe.</p></div>
+    <div class="why-item reveal delay-2"><h4>Customer Satisfaction</h4><p>Your trust, our responsibility — guaranteed satisfaction on every single order.</p></div>
+    <div class="why-item reveal delay-3"><h4>Farmer Growth Together</h4><p>Supporting local farming communities and building a better future with every sale.</p></div>
+  </div>
+</section>
+
+<!-- MARQUEE REVIEWS -->
+<section class="reviews reveal" id="reviews">
+  <div class="section-header">
+    <span class="section-eyebrow">Customer Stories</span>
+    <h2>What Our Clients Say</h2>
+  </div>
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The banana leaves are always fresh and delivered on time for our catering business. Highly recommended for bulk orders!"</p>
+        <div class="review-author"><div class="review-avatar">R</div><div><div class="review-name">Ramesh K.</div><div class="review-role">Caterer</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Best quality tender coconuts and round leaves for our temple pujas. Very reliable and their communication is great."</p>
+        <div class="review-author"><div class="review-avatar">P</div><div><div class="review-name">Priya S.</div><div class="review-role">Event Organizer</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"We order PC banana leaves in bulk for our restaurant. The standard size and cleanliness are absolutely perfect."</p>
+        <div class="review-author"><div class="review-avatar">D</div><div><div class="review-name">Darshini Foods</div><div class="review-role">Restaurant Partner</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Prompt delivery and the Buy 4 Get 1 Free offer is fantastic for our daily home needs. So glad I found Soil Leaf."</p>
+        <div class="review-author"><div class="review-avatar">L</div><div><div class="review-name">Lakshmi N.</div><div class="review-role">Retail Customer</div></div></div>
+      </div>
+      
+      <!-- Duplicate for looping -->
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The banana leaves are always fresh and delivered on time for our catering business. Highly recommended for bulk orders!"</p>
+        <div class="review-author"><div class="review-avatar">R</div><div><div class="review-name">Ramesh K.</div><div class="review-role">Caterer</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Best quality tender coconuts and round leaves for our temple pujas. Very reliable and their communication is great."</p>
+        <div class="review-author"><div class="review-avatar">P</div><div><div class="review-name">Priya S.</div><div class="review-role">Event Organizer</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"We order PC banana leaves in bulk for our restaurant. The standard size and cleanliness are absolutely perfect."</p>
+        <div class="review-author"><div class="review-avatar">D</div><div><div class="review-name">Darshini Foods</div><div class="review-role">Restaurant Partner</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Prompt delivery and the Buy 4 Get 1 Free offer is fantastic for our daily home needs. So glad I found Soil Leaf."</p>
+        <div class="review-author"><div class="review-avatar">L</div><div><div class="review-name">Lakshmi N.</div><div class="review-role">Retail Customer</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION & FORM -->
+<section class="location-form" id="location">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">Find Us & Place an Order</span>
+    <h2>Visit Us or Send a Message</h2>
+    <p>We're located in Bengaluru. Fill out the form and we'll confirm your order via WhatsApp.</p>
+  </div>
+  <div class="lf-grid">
+    <div class="reveal delay-1">
+      <div class="map-wrap">
+        <iframe src="https://maps.google.com/maps?q=849+3rd+Cross+Chennakeshava+Nagar+Hosa+Road+Pragathi+Nagar+Electronic+City+Bengaluru+Karnataka+560100&output=embed&hl=en&z=15" allowfullscreen loading="lazy" title="Soil Leaf Location"></iframe>
+        <div class="map-address">
+          <strong>📍 Our Address</strong>
+          <p>849, 3rd Cross, Chennakeshava Nagar, Hosa Road,<br>Pragathi Nagar, Electronic City,<br>Bengaluru, Karnataka 560100</p>
+        </div>
+      </div>
+    </div>
+    <div class="form-card reveal delay-2">
+      <h3>Quick Order Form</h3>
+      <p>Fill in your details and we'll confirm your order instantly.</p>
+      <div id="contactForm">
+        <div class="form-row">
+          <div class="form-group"><label>Your Name</label><input type="text" id="fname" placeholder="e.g. Ravi Kumar"></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" id="fphone" placeholder="e.g. 98765 43210"></div>
+        </div>
+        <div class="form-group">
+          <label>Product Required</label>
+          <select id="fproduct">
+            <option value="" disabled selected>Select a product</option>
+            <option>Banana Leaf</option><option>Round Leaf</option>
+            <option>PC Banana Leaf</option><option>Fresh Coconut</option>
+            <option>Multiple Products</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Quantity</label><input type="text" id="fqty" placeholder="e.g. 100 pieces"></div>
+          <div class="form-group">
+            <label>Order Type</label>
+            <select id="ftype">
+              <option value="" disabled selected>Select</option>
+              <option>For My Home (Retail)</option><option>For My Business (Wholesale)</option><option>Event / Wedding</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group"><label>Delivery Address / Message</label><textarea id="fmsg" placeholder="Delivery address, event date, or any special requirements..."></textarea></div>
+        <button class="form-submit" onclick="submitForm()">Send Order via WhatsApp →</button>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="tick">✓</div>
+        <h4>Message Preparing!</h4>
+        <p>WhatsApp is opening with your details. We'll confirm your order shortly.<br><br><em>Your trust, our responsibility.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- TAGLINE BAR -->
+<div class="tagline-bar"><p>Choose Nature  •  Choose Health  •  Choose Soil Leaf</p></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="soil-leaf-logo.png" alt="Soil Leaf Logo" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div style="display:none; color:var(--leaf); font-family: 'Lora', serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 8px;">Soil<span style="color:#FFF;">Leaf</span></div>
+        <div style="font-size: 0.75rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold);">Farmer Growth Together</div>
+        <p>100% Natural, Eco-Friendly banana leaf and coconut products. From farm to family, sustainably grown.</p>
+      </div>
+      <div class="footer-col"><h5>Products</h5><a href="#products">Banana Leaf</a><a href="#products">Round Leaf</a><a href="#products">PC Banana Leaf</a><a href="#products">Fresh Coconut</a></div>
+      <div class="footer-col"><h5>We Serve</h5><a href="#usecases">Restaurants & Hotels</a><a href="#usecases">Weddings & Functions</a><a href="#usecases">Temples & Pujas</a><a href="#usecases">Retail & Wholesale</a></div>
+      <div class="footer-col"><h5>Contact</h5><a href="tel:06360000986">063600 00986</a><a href="tel:9788566461">9788566461</a><p style="margin-top: 10px;">Electronic City, Bengaluru<br>Karnataka 560100</p></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Soil Leaf. All rights reserved.</p>
+      <span class="footer-motto">Your Trust, Our Responsibility</span>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/916360000986" target="_blank" class="fab-whatsapp" aria-label="Chat on WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+  </svg>
+</a>
+
+<script>
+// Mobile Navigation Toggle
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.querySelector('.mobile-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  const navLinks = document.querySelectorAll('#nav-menu a');
+
+  toggleBtn.addEventListener('click', () => {
+    navMenu.classList.toggle('menu-open');
+    toggleBtn.textContent = navMenu.classList.contains('menu-open') ? '✕' : '☰';
+  });
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('menu-open');
+      toggleBtn.textContent = '☰';
+    });
+  });
+});
+
+// Scroll Animation Logic (Intersection Observer)
+document.addEventListener('DOMContentLoaded', () => {
+  const reveals = document.querySelectorAll('.reveal');
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    root: null,
+    threshold: 0.15,
+    rootMargin: "0px 0px -50px 0px"
+  });
+
+  reveals.forEach(reveal => {
+    revealObserver.observe(reveal);
+  });
+});
+
+// Form Submission Logic
+function submitForm() {
+  const name = document.getElementById('fname').value.trim();
+  const phone = document.getElementById('fphone').value.trim();
+  const product = document.getElementById('fproduct').value;
+  const qty = document.getElementById('fqty').value.trim();
+  const type = document.getElementById('ftype').value;
+  const msg = document.getElementById('fmsg').value.trim();
+
+  if (!name || !phone || !product) {
+    alert('Please fill in your name, phone number, and the product you require.');
+    return;
+  }
+
+  const text = `Hello Soil Leaf! 🌿\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Product:* ${product}${qty ? '\n*Quantity:* ' + qty : ''}${type ? '\n*Order Type:* ' + type : ''}${msg ? '\n*Delivery/Msg:* ' + msg : ''}\n\nPlease confirm my order. Thank you!\n_— From Soil Leaf Website_`;
+
+  window.open(`https://wa.me/916360000986?text=${encodeURIComponent(text)}`, '_blank');
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+</script>
+</body>
+</html>
