@@ -437,8 +437,8 @@
       <div class="hero-sub">Pure • Natural • Eco-Friendly</div>
       <p>Sustainable choice for a better tomorrow. Fresh, hygienic, and 100% biodegradable — sourced directly from our farms to your table.</p>
       <div class="hero-buttons">
-        <a href="products.html" class="btn-primary">📞 Order Now</a>
-        <a href="products.html" class="btn-secondary">View Products</a>
+        <a href="#location" class="btn-primary">📞 Order Now</a>
+        <a href="#products" class="btn-secondary">View Products</a>
       </div>
     </div>
     <div class="hero-right">
@@ -673,11 +673,22 @@
             <label for="ftype">Order Type</label>
             <select id="ftype" name="ftype">
               <option value="" disabled selected>Select</option>
-              <option>For My Home (Retail)</option><option>For My Business (Wholesale)</option><option>Event / Wedding</option>
+              <option>For My Home</option><option>For My Business (Wholesale)</option><option>Event / Wedding</option><option>Hotels</option>
             </select>
           </div>
         </div>
-        <div class="form-group"><label for="fmsg">Delivery Address / Message</label><textarea id="fmsg" name="fmsg" placeholder="Delivery address, event date, or any special requirements..."></textarea></div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fpincode">Delivery Pincode</label>
+            <input type="text" id="fpincode" placeholder="e.g. 560100" maxlength="6" pattern="\d{6}">
+          </div>
+          <div class="form-group">
+            <label for="fdate">Delivery Date</label>
+            <input type="date" id="fdate">
+          </div>
+        </div>
+        <div class="form-group"><label for="fmsg">Delivery Address / Message</label><textarea id="fmsg" name="fmsg" placeholder="Delivery address or any special requirements..."></textarea></div>
         <button class="form-submit" onclick="submitForm()">Send Order via WhatsApp →</button>
       </div>
       <div class="form-success" id="formSuccess">
@@ -766,12 +777,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Form Submission Logic - Integrated with Google Sheets
+// Updated submitForm() for the MAIN PAGE
 function submitForm() {
   const name = document.getElementById('fname').value.trim();
   const phone = document.getElementById('fphone').value.trim();
   const product = document.getElementById('fproduct').value;
   const qty = document.getElementById('fqty').value.trim();
   const type = document.getElementById('ftype').value;
+  const pincode = document.getElementById('fpincode').value.trim(); // Grab Pincode
+  const date = document.getElementById('fdate').value; // Grab Date
   const msg = document.getElementById('fmsg').value.trim();
 
   if (!name || !phone || !product) {
@@ -790,13 +804,17 @@ function submitForm() {
   formData.append('product', product);
   formData.append('qty', qty || 'N/A');
   formData.append('type', type || 'N/A');
+  formData.append('pincode', pincode || 'N/A'); // Send Pincode to Sheet
+  formData.append('date', date || 'N/A');       // Send Date to Sheet
   formData.append('msg', msg || 'N/A');
+  formData.append('source', 'Main Page Enquiry'); // Specifies "Main Page Enquiry" inside Column J
 
   const scriptURL = 'https://script.google.com/macros/s/AKfycbwe7YpMMip9R83cdP524Mc4OhY6P98_ET0HuJkW4UFjvDNhZaiB0TMMrNbKFOpPMrI3/exec';
 
   fetch(scriptURL, { method: 'POST', body: formData })
     .then(response => {
-      const text = `Hi Soil Leaf team!\n\nThis is ${name}, I need ${qty} of ${product}. Can I get the price for this?`;
+      // Updated WhatsApp template string with Date and Pincode
+      const text = `Hi Soil Leaf team!\n\nThis is ${name}, I need ${qty || 'some'} of ${product}.\n\n*Delivery Date:* ${date || 'N/A'}\n*Delivery Pincode:* ${pincode || 'N/A'}\n\nCan I get the price for this?`;
       window.open(`https://wa.me/916360000986?text=${encodeURIComponent(text)}`, '_blank');
       document.getElementById('contactForm').style.display = 'none';
       document.getElementById('formSuccess').style.display = 'block';
@@ -804,12 +822,12 @@ function submitForm() {
     .catch(error => {
       console.error('Error!', error.message);
       alert('There was an error connecting to the server. Sending you directly to WhatsApp.');
-      const text = `Hello Soil Leaf! 🌿\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Product:* ${product}\n\nPlease confirm my order. Thank you!`;
+      // Updated fallback template string
+      const text = `Hello Soil Leaf! \n\n*Name:* ${name}\n*Phone:* ${phone}\n*Product:* ${product}\n*Quantity:* ${qty}\n*Delivery Date:* ${date}\n*Pincode:* ${pincode}\n\nPlease confirm my order. Thank you!`;
       window.open(`https://wa.me/916360000986?text=${encodeURIComponent(text)}`, '_blank');
       submitBtn.innerHTML = originalBtnText;
       submitBtn.disabled = false;
     });
-}
-</script>
+}</script>
 </body>
 </html>
