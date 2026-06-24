@@ -38,7 +38,7 @@
     color: var(--text-dark); 
     margin: 0;
     padding: 0;
-    padding-top: 104px; /* Prevents content from sliding under the fixed header */
+    padding-top: 104px;
     overflow-x: hidden; 
   }
 
@@ -53,25 +53,20 @@
   }
 
   /* =========================================================
-     STRICTLY FIXED HEADER (Will never bounce or detach)
+     HEADER SECTION
      ========================================================= */
   .main-header {
-    position: fixed; /* Locked to the screen glass */
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
+    position: fixed; 
+    top: 0; left: 0; right: 0; z-index: 9999;
     box-shadow: 0 4px 25px rgba(0,0,0,0.15); 
-    background: rgba(13,27,17,1); /* Ensures seamless color */
+    background: rgba(13,27,17,1); 
   }
 
-  /* TOP ANNOUNCEMENT BAR */
   .top-bar {
     background: var(--leaf); color: #fff; text-align: center; font-size: 0.8rem; font-weight: 700;
     padding: 8px 16px; letter-spacing: 1px; display: flex; align-items: center; justify-content: center;
   }
 
-  /* NAVBAR */
   nav {
     display: flex; align-items: center; justify-content: space-between; gap: 24px;
     padding: 14px 48px; background: rgba(13,27,17,1); border-bottom: 1px solid rgba(77,175,80,0.25);
@@ -80,13 +75,11 @@
   .nav-left { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
   .mobile-menu-btn { display: none; background: transparent; border: none; color: #fff; font-size: 1.6rem; cursor: pointer; }
   
-  /* LOGO STYLES */
   .logo-link { display: inline-flex; align-items: center; text-decoration: none; }
   .custom-logo-img { height: 45px; width: auto; object-fit: contain; display: block; }
   .logo-fallback { display: none; color: #fff; font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 700; letter-spacing: 0.5px; }
   .logo-fallback span { color: var(--leaf); }
   
-  /* SEARCH BAR */
   .nav-search {
     flex-grow: 1; max-width: 550px; min-width: 150px; display: flex; align-items: center;
     background: #fff; border-radius: 6px; overflow: hidden; height: 42px;
@@ -106,7 +99,6 @@
   .nav-links a { text-decoration: none; color: rgba(249,244,232,0.8); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; transition: color 0.2s; }
   .nav-links a:hover { color: var(--leaf); }
   
-  /* CART BUTTON */
   .cart-btn {
     background: transparent; color: #fff; padding: 8px 16px; border-radius: 6px; font-weight: 700; 
     display: flex; align-items: center; gap: 8px; cursor: pointer; border: 1px solid var(--leaf); font-size: 0.95rem; transition: all 0.2s; 
@@ -114,39 +106,37 @@
   .cart-btn:hover { background: var(--leaf); color: #fff; }
   .cart-count { background: var(--gold-light); color: var(--forest-dark); border-radius: 50%; padding: 2px 8px; font-size: 0.8rem; font-weight: 900; }
 
-  /* SHOP LAYOUT */
+  /* =========================================================
+     SHOP LAYOUT & PREMIUM SIDEBAR DESIGN
+     ========================================================= */
   .shop-layout {
     display: flex; max-width: 1400px; margin: 30px auto; padding: 0 24px; gap: 40px; min-height: 80vh; position: relative;
   }
 
-  /* SIDEBAR */
   .sidebar { 
-    width: 260px; flex-shrink: 0; position: sticky; 
+    width: 280px; flex-shrink: 0; position: sticky; 
     top: 130px; 
     height: fit-content; max-height: calc(100vh - 150px); 
-    overflow-y: auto; background: var(--white); padding: 24px; border-radius: 16px; box-shadow: var(--soft-shadow);
-    border: 1px solid rgba(27,77,46,0.05);
+    overflow-y: auto; background: var(--white); padding: 26px; border-radius: 16px; box-shadow: var(--soft-shadow);
+    border: 1px solid rgba(27,77,46,0.06);
   }
-  .sidebar::-webkit-scrollbar { width: 4px; }
-  .sidebar::-webkit-scrollbar-thumb { background: rgba(77, 175, 80, 0.3); border-radius: 4px; }
-  .sidebar h3 { font-size: 1.2rem; color: var(--forest-dark); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--leaf); }
-  .category-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-  .category-list a { 
-    text-decoration: none; color: var(--text-gray); font-size: 0.95rem; font-weight: 700; 
-    display: block; padding: 10px 14px; border-radius: 8px; border-left: 3px solid transparent; transition: all 0.2s;
-  }
-  .category-list a:hover { background: rgba(77,175,80,0.05); color: var(--forest); border-left-color: rgba(77,175,80,0.5); }
-  .category-list a.active { background: rgba(77,175,80,0.1); color: var(--forest-dark); border-left-color: var(--forest); }
-
-  /* PRODUCT AREA */
-  .product-area { flex-grow: 1; }
+  .sidebar h3 { font-size: 1.15rem; color: var(--forest-dark); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid var(--leaf); text-transform: uppercase; letter-spacing: 0.5px;}
   
+  .category-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .category-list a { 
+    text-decoration: none; color: var(--text-gray); font-size: 0.95rem; font-weight: 600; 
+    display: block; padding: 11px 16px; border-radius: 8px; border-left: 4px solid transparent; transition: all 0.25s ease;
+  }
+  .category-list a:hover { background: rgba(77,175,80,0.04); color: var(--forest); border-left-color: rgba(77,175,80,0.4); padding-left: 20px; }
+  .category-list a.active { background: rgba(77,175,80,0.08); color: var(--forest-dark); border-left-color: var(--forest); font-weight: 700; }
+
+  /* PRODUCT CONTAINER AREA */
+  .product-area { flex-grow: 1; }
   .category-section { margin-bottom: 80px; scroll-margin-top: 130px; }
   .category-section h2 { font-size: 2rem; color: var(--forest-dark); margin-bottom: 24px; border-bottom: 1px solid #EFEFEF; padding-bottom: 12px;}
-  
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
 
-  /* PRODUCT CARD */
+  /* CARDS */
   .card {
     background: var(--white); border: 1px solid rgba(27,77,46,0.08); border-radius: 12px;
     overflow: hidden; box-shadow: var(--soft-shadow); display: flex; flex-direction: column;
@@ -154,23 +144,24 @@
   }
   .card:hover { transform: translateY(-6px); box-shadow: var(--hover-shadow); border-color: var(--leaf); }
   
-  .img-placeholder {
-    height: 220px; background: #F8F9F8; display: flex; align-items: center; justify-content: center;
-    color: var(--text-gray); font-family: 'Lora', serif; font-style: italic; text-align: center; padding: 20px;
+  .product-img {
+    height: 240px; 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
     border-bottom: 3px solid var(--leaf);
+    background-color: #F8F9F8;
   }
   
   .card-body { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
   .card-title { font-family: 'Lato', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--forest-dark); margin-bottom: 16px; line-height: 1.3;}
   
   .variant-group { margin-bottom: 20px; }
-  .variant-group label { font-size: 0.75rem; color: var(--text-gray); display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;}
   .variant-select { 
     width: 100%; padding: 10px 14px; border: 1px solid rgba(27,77,46,0.15); border-radius: 8px; font-family: 'Lato'; outline: none; background: var(--bg-soft); color: var(--text-dark); cursor: pointer; transition: border-color 0.2s;
   }
   .variant-select:focus { border-color: var(--leaf); }
 
-  /* ADD TO CART ACTION */
   .action-row { display: flex; gap: 12px; margin-top: auto; }
   .qty-input {
     width: 75px; padding: 12px; border: 1px solid rgba(27,77,46,0.15); border-radius: 8px; font-family: 'Lato'; text-align: center; font-weight: 700; outline: none; font-size: 1rem; color: var(--forest-dark); transition: border-color 0.2s;
@@ -183,13 +174,11 @@
   .add-btn:hover { background: var(--forest); color: #fff; border-color: var(--forest); }
   .add-btn.success { background: var(--leaf); border-color: var(--leaf); color: #fff; }
 
-  /* NO RESULTS MESSAGE */
   #no-results-msg {
     display: none; text-align: center; padding: 60px 20px; color: var(--text-gray);
     font-size: 1.2rem; font-family: 'Lora', serif; font-style: italic; width: 100%;
   }
 
-  /* MOBILE APP BOTTOM CART BAR */
   .mobile-bottom-cart {
     display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--white);
     padding: 12px 20px; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 1000;
@@ -203,9 +192,7 @@
     font-family: 'Lato'; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(77, 175, 80, 0.3);
   }
 
-  /* =========================================================
-     CART MODAL SETTINGS (NEWLY ADDED)
-     ========================================================= */
+  /* CART EDIT MODAL */
   .cart-modal-overlay {
     display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.6); z-index: 10000; align-items: center; justify-content: center;
@@ -224,33 +211,60 @@
   .close-modal-btn { background: transparent; border: none; color: #fff; font-size: 2rem; cursor: pointer; line-height: 1; }
   .cart-modal-body { padding: 20px 24px; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; gap: 16px; }
   .cart-modal-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid #EFEFEF; }
-  .cart-modal-item:last-child { border-bottom: none; padding-bottom: 0; }
   .cart-item-info { flex-grow: 1; }
   .cart-item-title { font-weight: 700; color: var(--forest-dark); margin-bottom: 4px; font-size: 1rem;}
   .cart-item-variant { font-size: 0.85rem; color: var(--text-gray); }
   .cart-item-actions { display: flex; align-items: center; gap: 16px; }
   .qty-control { display: flex; align-items: center; border: 1px solid #EFEFEF; border-radius: 8px; overflow: hidden; }
-  .qty-control button { background: var(--bg-soft); border: none; padding: 8px 12px; cursor: pointer; font-weight: bold; color: var(--forest); transition: 0.2s; font-size: 1.1rem;}
-  .qty-control button:hover { background: #E0E0E0; }
+  .qty-control button { background: var(--bg-soft); border: none; padding: 8px 12px; cursor: pointer; font-weight: bold; color: var(--forest); font-size: 1.1rem;}
   .qty-control span { padding: 0 12px; font-weight: 700; font-size: 1rem; min-width: 35px; text-align: center; }
-  .remove-item-btn { background: transparent; border: none; color: #E74C3C; cursor: pointer; font-size: 1.2rem; padding: 4px; transition: transform 0.2s; }
-  .remove-item-btn:hover { transform: scale(1.1); }
+  .remove-item-btn { background: transparent; border: none; color: #E74C3C; cursor: pointer; font-size: 1.2rem; padding: 4px; }
   .cart-modal-footer { padding: 20px 24px; border-top: 1px solid #EFEFEF; background: var(--bg-soft); }
-  .checkout-btn { width: 100%; background: var(--leaf); color: #fff; border: none; padding: 14px; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; font-family: 'Lato'; transition: background 0.2s; box-shadow: 0 4px 15px rgba(77, 175, 80, 0.3); }
-  .checkout-btn:hover { background: var(--forest); }
+  .checkout-btn { width: 100%; background: var(--leaf); color: #fff; border: none; padding: 14px; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; font-family: 'Lato'; }
   .empty-cart-msg { text-align: center; color: var(--text-gray); font-style: italic; padding: 40px 0; font-size: 1.1rem;}
 
   /* =========================================================
-     APP-STYLE MOBILE RESPONSIVE REWORK
+     FIXED: OPTIMIZED MOBILE DRAWER AND HORIZONTAL NAVBAR
      ========================================================= */
+  .mobile-menu-drawer {
+    position: fixed; top: 0; left: -310px; width: 300px; height: 100vh;
+    background: var(--white); z-index: 10005; box-shadow: 5px 0 25px rgba(0,0,0,0.15);
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column;
+  }
+  .mobile-menu-drawer.open { left: 0; }
+  .mobile-menu-header { padding: 20px; background: rgba(13,27,17,1); display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--leaf); }
+  .mobile-menu-header img { height: 40px; width: auto; object-fit: contain; }
+  .close-drawer-btn { background: transparent; color: #fff; border: none; font-size: 2.2rem; cursor: pointer; line-height: 1; }
+  
+  .mobile-drawer-body { flex-grow: 1; overflow-y: auto; padding: 20px 0; display: flex; flex-direction: column; gap: 24px; }
+  
+  /* Navigation Sections Inside Drawer */
+  .drawer-nav-group h4 { font-family: 'Lato', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-gray); padding: 0 24px 8px 24px; border-bottom: 1px solid #F0F0F0; margin-bottom: 8px;}
+  .mobile-drawer-links { list-style: none; display: flex; flex-direction: column; }
+  .mobile-drawer-links li a { display: block; padding: 12px 24px; text-decoration: none; font-size: 1.1rem; font-weight: 700; color: var(--forest-dark); transition: background 0.2s; }
+  .mobile-drawer-links li a:hover { background: var(--bg-soft); }
+
+  /* Connected Product Categories in Menu */
+  .mobile-drawer-categories { list-style: none; display: flex; flex-direction: column; }
+  .mobile-drawer-categories li a { display: block; padding: 10px 24px 10px 36px; text-decoration: none; font-size: 0.95rem; font-weight: 600; color: var(--text-dark); border-left: 3px solid transparent; }
+  .mobile-drawer-categories li a:hover, .mobile-drawer-categories li a.active { background: rgba(77,175,80,0.06); color: var(--forest); border-left-color: var(--leaf); }
+
+  .mobile-drawer-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.5); z-index: 10004; opacity: 0; transition: opacity 0.3s ease;
+  }
+  .mobile-drawer-overlay.open { display: block; opacity: 1; }
+
+  /* RESPONSIVE SUB-DECK */
   @media (max-width: 900px) {
     .shop-layout { flex-direction: column; margin-top: 0; padding-top: 10px; padding-bottom: 80px; }
     
+    /* Top horizontal slider remaining for quick category navigation on body layout */
     .sidebar { 
-      position: sticky; top: 110px; z-index: 90; width: calc(100% + 48px); margin-left: -24px; padding: 10px 24px;
+      position: sticky; top: 110px; z-index: 90; width: calc(100% + 48px); margin-left: -24px; padding: 12px 24px;
       display: flex; flex-direction: row; align-items: center; overflow-x: auto; 
-      border-radius: 0; border-left: none; border-right: none; border-top: none;
-      -webkit-overflow-scrolling: touch; scrollbar-width: none; background: rgba(255,255,255,0.98); border-bottom: 1px solid rgba(0,0,0,0.05);
+      border-radius: 0; border-left: none; border-right: none; border-top: none; border-bottom: 1px solid rgba(0,0,0,0.05);
+      background: rgba(255,255,255,0.98); scrollbar-width: none;
     }
     .sidebar::-webkit-scrollbar { display: none; }
     .sidebar h3 { display: none; } 
@@ -261,17 +275,14 @@
       white-space: nowrap; padding: 8px 16px; background: var(--bg-light); color: var(--text-dark);
       font-size: 0.85rem; font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }
+    .category-list a:hover { padding-left: 16px; }
     .category-list a.active { border-color: var(--leaf); background: rgba(77,175,80,0.1); color: var(--forest-dark); border-left: none; font-weight: 700; }
   }
 
   @media (max-width: 600px) {
-    body { padding-top: 115px; } /* Adjust dynamic clearance for stacked mobile header */
-    
+    body { padding-top: 115px; }
     .top-bar { font-size: 0.7rem; padding: 6px 10px; }
-    
-    nav { 
-      flex-direction: column; align-items: stretch; padding: 12px 16px; gap: 12px;
-    }
+    nav { flex-direction: column; align-items: stretch; padding: 12px 16px; gap: 12px; }
     .nav-left { justify-content: space-between; }
     .mobile-menu-btn { display: block; }
     .logo-fallback { font-size: 1.4rem; }
@@ -294,12 +305,11 @@
     
     .card { border-radius: 8px; box-shadow: none; border: 1px solid #E5E5E5; }
     .card:hover { transform: none; box-shadow: none; }
-    .img-placeholder { height: 130px; padding: 10px; font-size: 0.8rem; border-width: 2px; }
+    .product-img { height: 160px; border-width: 2px; }
     .card-body { padding: 12px; }
     .card-title { font-size: 0.85rem; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.6em; }
     
     .variant-group { margin-bottom: 12px; }
-    .variant-group label { display: none; }
     .variant-select { padding: 6px 8px; font-size: 0.75rem; border-radius: 6px; }
     
     .action-row { flex-direction: row; gap: 6px; align-items: stretch; }
@@ -312,7 +322,43 @@
 
 <div class="global-watermark"></div>
 
-<!-- UNIFIED HEADER - strictly fixed to top -->
+<!-- ==========================================
+     FIXED: MOBILE MENU DRAWER CONTAINING CATEGORIES
+     ========================================== -->
+<div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="closeMobileMenu()"></div>
+<div class="mobile-menu-drawer" id="mobileMenuDrawer">
+  <div class="mobile-menu-header">
+    <img src="soil-leaf-logo.png" alt="Soil Leaf" onerror="this.style.display='none';">
+    <button class="close-drawer-btn" onclick="closeMobileMenu()">&times;</button>
+  </div>
+  <div class="mobile-drawer-body">
+    <!-- Main Links Section -->
+    <div class="drawer-nav-group">
+      <h4>Navigation</h4>
+      <ul class="mobile-drawer-links">
+        <li><a href="https://harshiee-s.github.io/Soil-Leaf/" onclick="closeMobileMenu()">Home</a></li>
+        <li><a href="https://harshiee-s.github.io/Soil-Leaf/#why" onclick="closeMobileMenu()">Why Us</a></li>
+        <li><a href="https://harshiee-s.github.io/Soil-Leaf/#location" onclick="closeMobileMenu()">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Product Category Section Inside Drawer Mobile Optimization -->
+    <div class="drawer-nav-group">
+      <h4>Product Categories</h4>
+      <ul class="mobile-drawer-categories">
+        <li><a href="#areca-bowls" class="drawer-cat-link active" onclick="closeMobileMenu()">Areca Bowls</a></li>
+        <li><a href="#areca-plates-round" class="drawer-cat-link" onclick="closeMobileMenu()">Plates (Round)</a></li>
+        <li><a href="#areca-plates-square" class="drawer-cat-link" onclick="closeMobileMenu()">Plates (Square)</a></li>
+        <li><a href="#areca-specialty" class="drawer-cat-link" onclick="closeMobileMenu()">Specialty</a></li>
+        <li><a href="#containers" class="drawer-cat-link" onclick="closeMobileMenu()">Food Containers</a></li>
+        <li><a href="#banana-leaves" class="drawer-cat-link" onclick="closeMobileMenu()">Banana Leaves</a></li>
+        <li><a href="#sal-leaves" class="drawer-cat-link" onclick="closeMobileMenu()">Sal Leaf Plates</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- UNIFIED FIXED HEADER -->
 <header class="main-header">
   <div class="top-bar">
     🌿 BUY 4 GET 1 FREE ON ALL PRODUCTS | 📞 +91 63600 00986
@@ -320,11 +366,9 @@
 
   <nav>
     <div class="nav-left">
-      <button class="mobile-menu-btn" onclick="alert('Menu Context Hook')">☰</button>
+      <button class="mobile-menu-btn" onclick="openMobileMenu()">☰</button>
       <a href="https://harshiee-s.github.io/Soil-Leaf/" class="logo-link">
-        <!-- Displays Image Logo -->
-        <img src="your-logo.png" alt="Soil Leaf Logo" class="custom-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-        <!-- Fallback Text Logo if image is missing -->
+        <img src="soil-leaf-logo.png" alt="Soil Leaf Logo" class="custom-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
         <div class="logo-fallback">Soil<span>Leaf</span></div>
       </a>
     </div>
@@ -373,29 +417,26 @@
     <section class="category-section" id="areca-bowls">
       <h2>Areca Bowls</h2>
      <div class="grid">
-  <div class="card" data-product="5 Inch Areca Bowl" data-keywords="5 inch areca bowl bowls plates cup cups mini small small round organic packaging">
-    <div class="img-placeholder">
-      <img src="5inc Arece Bowl.png" alt="5 Inch Areca Bowl" style="width: 100%; height: auto;">
-    </div>
-    <div class="card-body">
-      <div class="card-title">5" Areca Bowl</div>
-      <div class="variant-group">
-        <select class="variant-select">
-          <option value="" disabled selected>Select Quality</option>
-          <option>Domestic</option>
-          <option>Premium</option>
-        </select>
-      </div>
+        <div class="card" data-product="5 Inch Areca Bowl" data-keywords="5 inch areca bowl bowls plates cup cups mini small small round organic packaging">
+          <div class="product-img" style="background-image: url('5inc Arece Bowl.png');" title="5 Inch Areca Bowl"></div>
+          <div class="card-body">
+            <div class="card-title">5" Areca Bowl</div>
+            <div class="variant-group">
+              <select class="variant-select">
+                <option value="" disabled selected>Select Quality</option>
+                <option>Domestic</option>
+                <option>Premium</option>
+              </select>
+            </div>
             <div class="action-row">
               <input type="number" min="1" placeholder="Qty" class="qty-input">
               <button class="add-btn" onclick="addToCart(this)">Add</button>
             </div>
           </div>
         </div>
+        
         <div class="card" data-product="6 Inch Areca Bowl" data-keywords="6 inch areca bowl bowls plates cup cups medium round organic packaging">
-          <div class="img-placeholder">
-<img src="6inc Arece Bowl.png" alt="6 Inch Areca Bowl" style="width: 100%; height: auto;">
-</div>
+          <div class="product-img" style="background-image: url('6inc Arece Bowl.png');" title="6 Inch Areca Bowl"></div>
           <div class="card-body">
             <div class="card-title">6" Areca Bowl</div>
             <div class="variant-group">
@@ -419,11 +460,8 @@
   <h2>Areca Plates - Round</h2>
   <div class="grid">
     
-    <!-- PRODUCT 1: 6 Inch Plate -->
     <div class="card" data-product="6 Inch Areca Plate" data-keywords="6 inch areca plate plates small round organic packaging">
-      <div class="img-placeholder">
-        <img src="6inc Round Plate.png" alt="6 Inch Round Areca Plate" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('6inc Round Plate.png');" title="6 Inch Round Areca Plate"></div>
       <div class="card-body">
         <div class="card-title">6" Areca Plate</div>
         <div class="variant-group">
@@ -440,11 +478,8 @@
       </div>
     </div>
 
-    <!-- PRODUCT 2: 8 Inch Plate -->
     <div class="card" data-product="8 Inch Areca Plate" data-keywords="8 inch areca plate plates medium round organic packaging">
-      <div class="img-placeholder">
-        <img src="8inc Round Plate.png" alt="8 Inch Round Areca Plate" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('8inc Round Plate.png');" title="8 Inch Round Areca Plate"></div>
       <div class="card-body">
         <div class="card-title">8" Areca Plate</div>
         <div class="variant-group">
@@ -461,11 +496,8 @@
       </div>
     </div>
 
-    <!-- PRODUCT 3: 10 Inch Plate -->
     <div class="card" data-product="10 Inch Areca Plate" data-keywords="10 inch areca plate plates large round organic dinner packaging">
-      <div class="img-placeholder">
-        <img src="10inc Round Plate.png" alt="10 Inch Round Areca Plate" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('10inc Round Plate.png');" title="10 Inch Round Areca Plate"></div>
       <div class="card-body">
         <div class="card-title">10" Areca Plate</div>
         <div class="variant-group">
@@ -482,11 +514,8 @@
       </div>
     </div>
 
-    <!-- PRODUCT 4: 12 Inch Plate -->
     <div class="card" data-product="12 Inch Areca Plate" data-keywords="12 inch areca plate plates extra large round organic dinner packaging">
-      <div class="img-placeholder">
-        <img src="12inc Round Plate.png" alt="12 Inch Round Areca Plate" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('12inc Round Plate.png');" title="12 Inch Round Areca Plate"></div>
       <div class="card-body">
         <div class="card-title">12" Areca Plate</div>
         <div class="variant-group">
@@ -511,11 +540,8 @@
   <h2>Areca Plates - Square</h2>
   <div class="grid">
     
-    <!-- PRODUCT 1: 6 Inch Square Plate -->
     <div class="card" data-product="6 Inch Square Areca Plate" data-keywords="6 inch square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
-      <div class="img-placeholder">
-        <img src="6inc Square Plate.png" alt="6 Inch Square Areca Plate" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('6inc Square Plate.png');" title="6 Inch Square Areca Plate"></div>
       <div class="card-body">
         <div class="card-title">6" Square Areca Plate</div>
         <div class="variant-group">
@@ -532,11 +558,8 @@
       </div>
     </div>
 
-    <!-- PRODUCT 2: 7 Inch Square Plate -->
     <div class="card" data-product="7 Inch Square Areca Plate" data-keywords="7 inch square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
-      <div class="img-placeholder">
-        <img src="7inc Square Plate.png" alt="7 Inch Square Areca Plate" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('7inc Square Plate.png');" title="7 Inch Square Areca Plate"></div>
       <div class="card-body">
         <div class="card-title">7" Square Areca Plate</div>
         <div class="variant-group">
@@ -553,11 +576,8 @@
       </div>
     </div>
 
-    <!-- PRODUCT 3: 8 Inch Square Plate -->
     <div class="card" data-product="8 Inch Square Areca Plate" data-keywords="8 inch square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
-      <div class="img-placeholder">
-        <img src="8inc Square Plate.png" alt="8 Inch Square Areca Plate" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('8inc Square Plate.png');" title="8 Inch Square Areca Plate"></div>
       <div class="card-body">
         <div class="card-title">8" Square Areca Plate</div>
         <div class="variant-group">
@@ -574,11 +594,8 @@
       </div>
     </div>
 
-    <!-- PRODUCT 4: 10 Inch Square Plate -->
     <div class="card" data-product="10 Inch Square Areca Plate" data-keywords="10 inch square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
-      <div class="img-placeholder">
-        <img src="10inc Square Plate.png" alt="10 Inch Square Areca Plate" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('10inc Square Plate.png');" title="10 Inch Square Areca Plate"></div>
       <div class="card-body">
         <div class="card-title">10" Square Areca Plate</div>
         <div class="variant-group">
@@ -603,11 +620,8 @@
   <h2>Oval & Specialty</h2>
   <div class="grid">
     
-    <!-- PRODUCT 1: 5 Inch Oval Areca -->
     <div class="card" data-product="5 Inch Oval Areca" data-keywords="5 inch oval fancy areca plate plates bowl bowls leaf leafs leaves specialty love shape custom event wedding function designer">
-      <div class="img-placeholder">
-        <img src="5inc Oval Areca.png" alt="5 Inch Oval Areca" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('5inc Oval Areca.png');" title="5 Inch Oval Areca"></div>
       <div class="card-body">
         <div class="card-title">5" Oval Areca</div>
         <div class="variant-group">
@@ -624,11 +638,8 @@
       </div>
     </div>
 
-    <!-- PRODUCT 2: 5 Inch Heart Shaped Areca -->
     <div class="card" data-product="5 Inch Heart Shaped Areca" data-keywords="5 inch heart shaped fancy areca plate plates bowl bowls leaf leafs leaves specialty love shape custom event wedding function designer">
-      <div class="img-placeholder">
-        <img src="5inc Heart Shaped Areca.png" alt="5 Inch Heart Shaped Areca" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('5inc Heart Shaped Areca.png');" title="5 Inch Heart Shaped Areca"></div>
       <div class="card-body">
         <div class="card-title">5" Heart Shaped Areca</div>
         <div class="variant-group">
@@ -653,11 +664,8 @@
   <h2>Food Containers</h2>
   <div class="grid">
     
-    <!-- PRODUCT 1: 1 Kg Container -->
     <div class="card" data-product="1 Kg Container" data-keywords="1 kg container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
-      <div class="img-placeholder">
-        <img src="1 Kg Container.png" alt="1 Kg Container" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('1 Kg Container.png');" title="1 Kg Container"></div>
       <div class="card-body">
         <div class="card-title">1 Kg Container</div>
         <div class="variant-group">
@@ -674,11 +682,8 @@
       </div>
     </div>
 
-    <!-- PRODUCT 2: 3/4 Kg Container -->
     <div class="card" data-product="3/4 Kg Container" data-keywords="3/4 kg container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
-      <div class="img-placeholder">
-        <img src="3-4 Kg Container.png" alt="3/4 Kg Container" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('3-4 Kg Container.png');" title="3/4 Kg Container"></div>
       <div class="card-body">
         <div class="card-title">3/4 Kg Container</div>
         <div class="variant-group">
@@ -695,11 +700,8 @@
       </div>
     </div>
 
-    <!-- PRODUCT 3: Half Kg Container -->
     <div class="card" data-product="Half Kg Container" data-keywords="half kg container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
-      <div class="img-placeholder">
-        <img src="Half Kg Container.png" alt="Half Kg Container" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('Half Kg Container.png');" title="Half Kg Container"></div>
       <div class="card-body">
         <div class="card-title">Half Kg Container</div>
         <div class="variant-group">
@@ -716,11 +718,8 @@
       </div>
     </div>
 
-    <!-- PRODUCT 4: 1/4 Kg Container -->
     <div class="card" data-product="1/4 Kilo Container" data-keywords="1/4 kg container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
-      <div class="img-placeholder">
-        <img src="1-4 Kilo Container.png" alt="1/4 Kg Container" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('1-4 Kilo Container.png');" title="1/4 Kg Container"></div>
       <div class="card-body">
         <div class="card-title">1/4 Kg Container</div>
         <div class="variant-group">
@@ -745,11 +744,8 @@
   <h2>Banana Leaves</h2>
   <div class="grid">
     
-    <!-- PRODUCT 1: Actual Banana Leaf -->
     <div class="card" data-product="Actual Banana Leaf" data-keywords="actual banana leaf banana leaf leafs leaves green organic natural actual precision cut round square circular meals food wrapping packaging custom catering traditional bulk wholesale retail">
-      <div class="img-placeholder">
-        <img src="Actual Banana Leaf.png" alt="Actual Banana Leaf" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('Actual Banana Leaf.png');" title="Actual Banana Leaf"></div>
       <div class="card-body">
         <div class="card-title">Actual Banana Leaf</div>
         <div class="action-row" style="margin-top:auto;">
@@ -759,11 +755,8 @@
       </div>
     </div>
 
-    <!-- PRODUCT 2: Round Cut Banana Leaf -->
     <div class="card" data-product="Round Cut Banana Leaf" data-keywords="round cut banana leaf banana leaf leafs leaves green organic natural actual precision cut round square circular meals food wrapping packaging custom catering traditional bulk wholesale retail">
-      <div class="img-placeholder">
-        <img src="Round Cut Banana Leaf.png" alt="Round Cut Banana Leaf" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('Round Cut Banana Leaf.png');" title="Round Cut Banana Leaf"></div>
       <div class="card-body">
         <div class="card-title">Round Cut Banana Leaf</div>
         <div class="action-row" style="margin-top:auto;">
@@ -773,11 +766,8 @@
       </div>
     </div>
 
-    <!-- PRODUCT 3: Square Cut Banana Leaf -->
     <div class="card" data-product="Square Cut Banana Leaf" data-keywords="square cut banana leaf banana leaf leafs leaves green organic natural actual precision cut round square circular meals food wrapping packaging custom catering traditional bulk wholesale retail">
-      <div class="img-placeholder">
-        <img src="Square Cut Banana Leaf.png" alt="Square Cut Banana Leaf" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('Square Cut Banana Leaf.png');" title="Square Cut Banana Leaf"></div>
       <div class="card-body">
         <div class="card-title">Square Cut Banana Leaf</div>
         <div class="action-row" style="margin-top:auto;">
@@ -795,11 +785,8 @@
   <h2>Sal Leaf Plates</h2>
   <div class="grid">
     
-    <!-- PRODUCT 1: Round Large Sal Leaf Plate -->
     <div class="card" data-product="Round Large Sal Leaf Plate" data-keywords="round large sal leaf plate sal leaf plate plates leafs leaves round large square dinner disposable item buffet traditional handmade natural organic eco standard">
-      <div class="img-placeholder">
-        <img src="Round Large Sal Leaf Plate.png" alt="Round Large Sal Leaf Plate" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('Round Large Sal Leaf Plate.png');" title="Round Large Sal Leaf Plate"></div>
       <div class="card-body">
         <div class="card-title">Round Large Sal Leaf Plate</div>
         <div class="action-row" style="margin-top:auto;">
@@ -809,11 +796,8 @@
       </div>
     </div>
 
-    <!-- PRODUCT 2: Square Sal Leaf Plate -->
     <div class="card" data-product="Square Sal Leaf Plate" data-keywords="square sal leaf plate sal leaf plate plates leafs leaves round large square dinner disposable item buffet traditional handmade natural organic eco standard">
-      <div class="img-placeholder">
-        <img src="Square Sal Leaf Plate.png" alt="Square Sal Leaf Plate" style="width: 100%; height: auto;">
-      </div>
+      <div class="product-img" style="background-image: url('Square Sal Leaf Plate.png');" title="Square Sal Leaf Plate"></div>
       <div class="card-body">
         <div class="card-title">Square Sal Leaf Plate</div>
         <div class="action-row" style="margin-top:auto;">
@@ -829,7 +813,7 @@
   </main>
 </div>
 
-<!-- APP-STYLE BOTTOM CART BAR -->
+<!-- BOTTOM BAR MOBILE -->
 <div class="mobile-bottom-cart">
   <div class="cart-summary">
     <small>Cart Total</small>
@@ -840,18 +824,14 @@
   </button>
 </div>
 
-<!-- ==========================================
-     CART EDIT MODAL (NEW ADDITION)
-     ========================================== -->
+<!-- CART MODAL -->
 <div class="cart-modal-overlay" id="cartModalOverlay">
   <div class="cart-modal">
     <div class="cart-modal-header">
       <h3>Your Cart</h3>
       <button class="close-modal-btn" onclick="closeCartModal()">&times;</button>
     </div>
-    <div class="cart-modal-body" id="cartModalBody">
-      <!-- Cart items injected here via JS -->
-    </div>
+    <div class="cart-modal-body" id="cartModalBody"></div>
     <div class="cart-modal-footer">
       <button class="checkout-btn" onclick="proceedToCheckoutPage()">Proceed to Order ➔</button>
     </div>
@@ -859,7 +839,18 @@
 </div>
 
 <script>
-  // --- Enhanced Live Filtering Engine ---
+  // --- Mobile Side Menu Open/Close Handling ---
+  function openMobileMenu() {
+    document.getElementById('mobileMenuDrawer').classList.add('open');
+    document.getElementById('mobileDrawerOverlay').classList.add('open');
+  }
+
+  function closeMobileMenu() {
+    document.getElementById('mobileMenuDrawer').classList.remove('open');
+    document.getElementById('mobileDrawerOverlay').classList.remove('open');
+  }
+
+  // --- Live Sorting Filter ---
   function performSearch() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
     
@@ -911,7 +902,7 @@
     }
   }
 
-  // --- Cart Functionality ---
+  // --- Cart Core Engine ---
   let cart = JSON.parse(localStorage.getItem('soilLeafCart')) || [];
   updateCartBadge();
 
@@ -967,15 +958,10 @@
     document.getElementById('mobile-cart-items').innerText = `${cart.length} Items (${totalQty} Qty)`;
   }
 
-  // --- REVISED: Opens Modal instead of directly leaving page ---
   function goToOrder() {
     openCartModal();
   }
 
-  // ==========================================
-  // CART EDIT MODAL LOGIC (NEW ADDITION)
-  // ==========================================
-  
   function openCartModal() {
     document.getElementById('cartModalOverlay').style.display = 'flex';
     renderCartItems();
@@ -1000,7 +986,6 @@
     cart.forEach((item, index) => {
       const itemDiv = document.createElement('div');
       itemDiv.className = 'cart-modal-item';
-      
       let variantHtml = item.variant ? `<div class="cart-item-variant">Variant: ${item.variant}</div>` : '';
 
       itemDiv.innerHTML = `
@@ -1014,7 +999,7 @@
             <span>${item.quantity}</span>
             <button onclick="updateCartItemQty(${index}, 1)">+</button>
           </div>
-          <button class="remove-item-btn" onclick="removeCartItem(${index})" title="Remove Item">🗑️</button>
+          <button class="remove-item-btn" onclick="removeCartItem(${index})">🗑️</button>
         </div>
       `;
       body.appendChild(itemDiv);
@@ -1025,7 +1010,7 @@
     if (cart[index].quantity + change > 0) {
       cart[index].quantity += change;
     } else {
-      cart.splice(index, 1); // Remove if drops to 0
+      cart.splice(index, 1);
     }
     localStorage.setItem('soilLeafCart', JSON.stringify(cart));
     updateCartBadge();
@@ -1043,16 +1028,15 @@
     window.location.href = 'order.html';
   }
   
-  // Close modal when clicking the dark overlay outside the box
   document.getElementById('cartModalOverlay').addEventListener('click', function(e) {
     if(e.target === this) closeCartModal();
   });
 
-
-  // --- Re-Calibrated Scroll Tracking Observer ---
+  // --- Two-Way Linked Scroll Position Sync Engine ---
   document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.category-section');
     const navLinks = document.querySelectorAll('.nav-link');
+    const drawerLinks = document.querySelectorAll('.drawer-cat-link');
 
     const isMobile = window.innerWidth <= 900;
     const trackingTopMargin = isMobile ? -170 : -130;
@@ -1067,15 +1051,20 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           navLinks.forEach(link => link.classList.remove('active'));
+          drawerLinks.forEach(link => link.classList.remove('active'));
           
           const activeId = entry.target.getAttribute('id');
           const activeLink = document.querySelector(`.nav-link[href="#${activeId}"]`);
+          const activeDrawerLink = document.querySelector(`.drawer-cat-link[href="#${activeId}"]`);
           
           if (activeLink) {
             activeLink.classList.add('active');
             if (isMobile) {
               activeLink.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
+          }
+          if (activeDrawerLink) {
+            activeDrawerLink.classList.add('active');
           }
         }
       });
