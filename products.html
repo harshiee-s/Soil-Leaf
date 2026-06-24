@@ -151,6 +151,7 @@
     background-repeat: no-repeat;
     border-bottom: 3px solid var(--leaf);
     background-color: #F8F9F8;
+    cursor: zoom-in; /* Indicates the image is clickable */
   }
   
   .card-body { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
@@ -191,6 +192,27 @@
     background: var(--leaf); color: #fff; border: none; padding: 12px 24px; border-radius: 50px; font-weight: 700;
     font-family: 'Lato'; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(77, 175, 80, 0.3);
   }
+
+  /* IMAGE ZOOM MODAL */
+  .img-zoom-overlay {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85); z-index: 10005; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px); cursor: zoom-out; opacity: 0; transition: opacity 0.3s ease;
+  }
+  .img-zoom-overlay.show { display: flex; opacity: 1; }
+  .zoomed-img {
+    max-width: 90%; max-height: 90vh; border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5); object-fit: contain;
+    transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .img-zoom-overlay.show .zoomed-img { transform: scale(1); }
+  .close-zoom-btn {
+    position: absolute; top: 20px; right: 30px; background: rgba(0,0,0,0.5);
+    color: white; border: none; font-size: 2rem; width: 45px; height: 45px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.2s; line-height: 1;
+  }
+  .close-zoom-btn:hover { background: rgba(0,0,0,0.8); }
 
   /* CART EDIT MODAL */
   .cart-modal-overlay {
@@ -322,9 +344,6 @@
 
 <div class="global-watermark"></div>
 
-<!-- ==========================================
-     FIXED: MOBILE MENU DRAWER CONTAINING CATEGORIES
-     ========================================== -->
 <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="closeMobileMenu()"></div>
 <div class="mobile-menu-drawer" id="mobileMenuDrawer">
   <div class="mobile-menu-header">
@@ -332,7 +351,6 @@
     <button class="close-drawer-btn" onclick="closeMobileMenu()">&times;</button>
   </div>
   <div class="mobile-drawer-body">
-    <!-- Main Links Section -->
     <div class="drawer-nav-group">
       <h4>Navigation</h4>
       <ul class="mobile-drawer-links">
@@ -342,7 +360,6 @@
       </ul>
     </div>
 
-    <!-- Product Category Section Inside Drawer Mobile Optimization -->
     <div class="drawer-nav-group">
       <h4>Product Categories</h4>
       <ul class="mobile-drawer-categories">
@@ -358,7 +375,6 @@
   </div>
 </div>
 
-<!-- UNIFIED FIXED HEADER -->
 <header class="main-header">
   <div class="top-bar">
     🌿 BUY 4 GET 1 FREE ON ALL PRODUCTS | 📞 +91 63600 00986
@@ -406,14 +422,12 @@
     </ul>
   </aside>
 
-  <!-- PRODUCT AREA -->
   <main class="product-area">
     
     <div id="no-results-msg">
       No products found matching your search. Please try another term.
     </div>
 
-    <!-- 1. Areca Bowls -->
     <section class="category-section" id="areca-bowls">
       <h2>Areca Bowls</h2>
      <div class="grid">
@@ -455,7 +469,6 @@
       </div>
     </section>
 
-    <!-- 2. Areca Plates - Round -->
     <section class="category-section" id="areca-plates-round">
   <h2>Areca Plates - Round</h2>
   <div class="grid">
@@ -535,8 +548,7 @@
   </div>
 </section>
 
-   <!-- 3. Areca Plates - Square -->
-<section class="category-section" id="areca-plates-square">
+   <section class="category-section" id="areca-plates-square">
   <h2>Areca Plates - Square</h2>
   <div class="grid">
     
@@ -615,7 +627,6 @@
   </div>
 </section>
 
-<!-- 4. Areca Specialty -->
 <section class="category-section" id="areca-specialty">
   <h2>Oval & Specialty</h2>
   <div class="grid">
@@ -659,7 +670,6 @@
   </div>
 </section>
 
-<!-- 5. Containers -->
 <section class="category-section" id="containers">
   <h2>Food Containers</h2>
   <div class="grid">
@@ -739,8 +749,7 @@
   </div>
 </section>
 
-   <!-- 6. Banana Leaves -->
-<section class="category-section" id="banana-leaves">
+   <section class="category-section" id="banana-leaves">
   <h2>Banana Leaves</h2>
   <div class="grid">
     
@@ -780,8 +789,7 @@
   </div>
 </section>
 
-   <!-- 7. Sal Leaf Plates -->
-<section class="category-section" id="sal-leaves">
+   <section class="category-section" id="sal-leaves">
   <h2>Sal Leaf Plates</h2>
   <div class="grid">
     
@@ -813,7 +821,6 @@
   </main>
 </div>
 
-<!-- BOTTOM BAR MOBILE -->
 <div class="mobile-bottom-cart">
   <div class="cart-summary">
     <small>Cart Total</small>
@@ -824,7 +831,11 @@
   </button>
 </div>
 
-<!-- CART MODAL -->
+<div class="img-zoom-overlay" id="imgZoomOverlay" onclick="closeImageZoom()">
+  <button class="close-zoom-btn" onclick="closeImageZoom()">&times;</button>
+  <img src="" alt="Zoomed Product" class="zoomed-img" id="zoomedImage" onclick="event.stopPropagation()">
+</div>
+
 <div class="cart-modal-overlay" id="cartModalOverlay">
   <div class="cart-modal">
     <div class="cart-modal-header">
@@ -839,6 +850,33 @@
 </div>
 
 <script>
+  // --- Image Zoom Logic ---
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.product-img').forEach(img => {
+      img.addEventListener('click', function() {
+        const bgImage = this.style.backgroundImage;
+        // Extract the URL from the background-image CSS property
+        const url = bgImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+        
+        if(url && url !== 'none') {
+          document.getElementById('zoomedImage').src = url;
+          const overlay = document.getElementById('imgZoomOverlay');
+          overlay.style.display = 'flex';
+          
+          // Slight timeout to allow transition to trigger properly
+          setTimeout(() => overlay.classList.add('show'), 10);
+        }
+      });
+    });
+  });
+
+  function closeImageZoom() {
+    const overlay = document.getElementById('imgZoomOverlay');
+    overlay.classList.remove('show');
+    // Wait for the scale/opacity transition before completely hiding
+    setTimeout(() => { overlay.style.display = 'none'; }, 300);
+  }
+
   // --- Mobile Side Menu Open/Close Handling ---
   function openMobileMenu() {
     document.getElementById('mobileMenuDrawer').classList.add('open');
