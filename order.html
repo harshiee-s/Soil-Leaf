@@ -128,11 +128,86 @@
     cursor: pointer; transition: all 0.25s; box-shadow: 0 8px 24px rgba(76, 175, 80, 0.3); margin-top: 12px;
   }
   .form-submit:hover { background: var(--forest); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(27, 77, 46, 0.2); }
+  .form-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
   /* EMPTY CART STATE */
   #empty-cart-msg { display: none; text-align: center; padding: 40px 0; }
   #empty-cart-msg h3 { color: var(--forest); margin-bottom: 12px; }
   #empty-cart-msg a { display: inline-block; background: var(--forest); color: white; padding: 10px 24px; border-radius: 50px; text-decoration: none; margin-top: 16px; font-weight: 700; }
+
+  /* ===================== */
+  /* SUCCESS OVERLAY       */
+  /* ===================== */
+  #success-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(13, 43, 23, 0.7);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+  }
+  #success-overlay.visible {
+    display: flex;
+  }
+  .success-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 48px 40px;
+    max-width: 460px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+    animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+  .success-icon {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, var(--leaf), var(--forest));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+  }
+  .success-icon svg { width: 38px; height: 38px; }
+  .success-card h2 {
+    color: var(--forest-dark);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+  }
+  .success-card p {
+    color: var(--text-gray);
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+  .success-card .redirect-note {
+    font-size: 0.85rem;
+    color: var(--leaf);
+    font-weight: 700;
+    margin-top: 20px;
+  }
+  .success-progress {
+    height: 4px;
+    background: var(--bg-soft);
+    border-radius: 99px;
+    margin-top: 16px;
+    overflow: hidden;
+  }
+  .success-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--leaf), var(--forest));
+    border-radius: 99px;
+    transition: width linear;
+  }
 
   @media (max-width: 900px) {
     .checkout-container { grid-template-columns: 1fr; }
@@ -143,6 +218,7 @@
     body { padding-top: 75px; }
     .checkout-container { padding: 0 16px; margin: 24px auto; }
     .order-summary, .form-card { padding: 24px; }
+    .success-card { padding: 36px 24px; }
   }
 </style>
 </head>
@@ -152,12 +228,28 @@
 
 <header>
   <a href="https://harshiee-s.github.io/Soil-Leaf" class="logo-link">
-    <!-- Displays Image Logo -->
     <img src="your-logo.png" alt="Soil Leaf Logo" class="custom-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-    <!-- Fallback Text Logo if image is missing -->
     <div class="logo-fallback">Soil<span>Leaf</span></div>
   </a>
 </header>
+
+<!-- SUCCESS OVERLAY -->
+<div id="success-overlay">
+  <div class="success-card">
+    <div class="success-icon">
+      <!-- Checkmark SVG -->
+      <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 19.5L15.5 27L30 12" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2>Order Received! 🌿</h2>
+    <p>Thanks, we have received your order.<br>Our team will contact you shortly.</p>
+    <p class="redirect-note">Redirecting you to WhatsApp for confirmation…</p>
+    <div class="success-progress">
+      <div class="success-progress-bar" id="progress-bar"></div>
+    </div>
+  </div>
+</div>
 
 <div class="checkout-container" id="checkout-content">
   
@@ -264,7 +356,27 @@
     document.getElementById('total-qty-display').innerText = totalQuantity;
   }
 
-  // 3. Handle Form Submission, Google Sheets, & WhatsApp Redirect
+  // 3. Show success overlay with a progress bar, then redirect
+  function showSuccessAndRedirect(waUrl) {
+    const overlay = document.getElementById('success-overlay');
+    const bar = document.getElementById('progress-bar');
+    const DELAY = 3000; // 3 seconds
+
+    overlay.classList.add('visible');
+
+    // Animate the progress bar over DELAY ms
+    requestAnimationFrame(() => {
+      bar.style.transition = `width ${DELAY}ms linear`;
+      bar.style.width = '100%';
+    });
+
+    setTimeout(() => {
+      localStorage.removeItem('soilLeafCart');
+      window.location.href = waUrl;
+    }, DELAY);
+  }
+
+  // 4. Handle Form Submission & Google Sheets logging
   function submitOrder(e) {
     e.preventDefault();
 
@@ -275,16 +387,15 @@
 
     // UI Feedback
     const submitBtn = document.getElementById('submitBtn');
-    submitBtn.innerHTML = 'Processing Order... ⏳';
+    submitBtn.innerHTML = 'Processing Order… ⏳';
     submitBtn.disabled = true;
 
-    // Build the Product strings for Sheets & WhatsApp
+    // Build the product strings
     let sheetsProductString = "";
     let whatsappProductString = "";
 
     cart.forEach(item => {
       const variantText = item.variant ? ` (${item.variant})` : "";
-      
       sheetsProductString += `${item.quantity}x ${item.name}${variantText}, `;
       whatsappProductString += `\n- ${item.quantity}x ${item.name}${variantText}`;
     });
@@ -305,19 +416,13 @@
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwe7YpMMip9R83cdP524Mc4OhY6P98_ET0HuJkW4UFjvDNhZaiB0TMMrNbKFOpPMrI3/exec';
 
     fetch(scriptURL, { method: 'POST', body: formData })
-      .then(response => {
-        completeOrderAndRedirect(waUrl);
+      .then(() => {
+        showSuccessAndRedirect(waUrl);
       })
       .catch(error => {
-        console.error('Sheet logging failed, but proceeding to WhatsApp:', error);
-        completeOrderAndRedirect(waUrl);
+        console.error('Sheet logging failed, but proceeding:', error);
+        showSuccessAndRedirect(waUrl);
       });
-  }
-
-  // 4. Clear Cart and Redirect
-  function completeOrderAndRedirect(waUrl) {
-    localStorage.removeItem('soilLeafCart');
-    window.location.href = waUrl;
   }
 </script>
 
