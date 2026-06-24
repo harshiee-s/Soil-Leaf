@@ -6,7 +6,8 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="soil-leaf-logo.png">
 <link rel="icon" type="image/png" sizes="16x16" href="soil-leaf-logo.png">
-<link rel="apple-touch-icon" sizes="180x180" href="soil-leaf-logo.png"><title>Checkout | Soil Leaf – Eco-Friendly Products</title>
+<link rel="apple-touch-icon" sizes="180x180" href="soil-leaf-logo.png">
+<title>Checkout | Soil Leaf – Eco-Friendly Products</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -233,11 +234,9 @@
   </a>
 </header>
 
-<!-- SUCCESS OVERLAY -->
 <div id="success-overlay">
   <div class="success-card">
     <div class="success-icon">
-      <!-- Checkmark SVG -->
       <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8 19.5L15.5 27L30 12" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -253,7 +252,6 @@
 
 <div class="checkout-container" id="checkout-content">
   
-  <!-- LEFT: ORDER SUMMARY -->
   <div class="order-summary">
     <h2>Your Order Summary</h2>
     
@@ -265,8 +263,7 @@
 
     <div id="cart-content">
       <ul id="cart-items-list">
-        <!-- Cart items will be injected here via JS -->
-      </ul>
+        </ul>
       <div class="cart-total">
         <span>Total Items:</span>
         <span id="total-qty-display">0</span>
@@ -275,7 +272,6 @@
     </div>
   </div>
 
-  <!-- RIGHT: CONTACT FORM -->
   <div class="form-card" id="checkout-form-container">
     <h2>Delivery Details</h2>
     <p>Fill in your details below. Your order will be sent securely to our WhatsApp for final confirmation.</p>
@@ -292,19 +288,33 @@
         </div>
       </div>
       
-      <div class="form-group">
-        <label for="ftype">Order Type *</label>
-        <select id="ftype" required>
-          <option value="" disabled selected>Select an option</option>
-          <option>For My Home (Retail)</option>
-          <option>For My Business (Wholesale)</option>
-          <option>Event / Wedding</option>
-        </select>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="ftype">Order Type *</label>
+          <select id="ftype" required>
+            <option value="" disabled selected>Select an option</option>
+            <option>For My Home</option>
+            <option>For My Business (Wholesale)</option>
+            <option>Event / Wedding</option>
+            <option>Hotels</option>
+            <option>Others</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="fdate">Delivery Date *</label>
+          <input type="date" id="fdate" required>
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="fmsg">Delivery Address & Date *</label>
-        <textarea id="fmsg" required placeholder="Please provide your full delivery address and required delivery date..."></textarea>
+        <label for="fpincode">Delivery Pincode *</label>
+        <input type="text" id="fpincode" required placeholder="e.g. 560100" maxlength="6" pattern="\d{6}">
+      </div>
+
+      <div class="form-group">
+        <label for="fmsg">Full Delivery Address *</label>
+        <textarea id="fmsg" required placeholder="House No, Building, Street, Area..."></textarea>
       </div>
 
       <button type="submit" class="form-submit" id="submitBtn">Confirm Order via WhatsApp →</button>
@@ -383,6 +393,8 @@
     const name = document.getElementById('fname').value.trim();
     const phone = document.getElementById('fphone').value.trim();
     const type = document.getElementById('ftype').value;
+    const date = document.getElementById('fdate').value; // Grab Date
+    const pincode = document.getElementById('fpincode').value.trim(); // Grab Pincode
     const msg = document.getElementById('fmsg').value.trim();
 
     // UI Feedback
@@ -408,9 +420,13 @@
     formData.append('product', sheetsProductString); 
     formData.append('qty', totalQuantity.toString());
     formData.append('type', type);
+    formData.append('pincode', pincode); // Send Pincode
+    formData.append('date', date); // Send Date
     formData.append('msg', msg);
+    formData.append('source', 'Order Page Enquiry');
 
-    const waText = `Hi Soil Leaf team, ${whatsappProductString}\n\nCan I get more info on this?`;
+    // Updated WhatsApp message to include Date and Pincode
+    const waText = `Hi Soil Leaf team, ${whatsappProductString}\n\n*Delivery Date:* ${date}\n*Delivery Pincode:* ${pincode}\n\nCan I get more info on this?`;
     const waUrl = `https://wa.me/916360000986?text=${encodeURIComponent(waText)}`;
 
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwe7YpMMip9R83cdP524Mc4OhY6P98_ET0HuJkW4UFjvDNhZaiB0TMMrNbKFOpPMrI3/exec';
