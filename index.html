@@ -159,7 +159,7 @@
     flex-direction: column;
   }
   .product-card:hover { transform: translateY(-8px); box-shadow: var(--hover-shadow); }
-  .product-img { width: 100%; height: 200px; background-size: cover; background-position: center; border-bottom: 3px solid var(--leaf); }
+  .product-img { width: 100%; height: 200px; background-size: cover; background-position: center; border-bottom: 3px solid var(--leaf); cursor: zoom-in; }
   .product-content { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; }
   .product-card h3 { font-size: 1.3rem; color: var(--forest); font-weight: 700; margin-bottom: 12px; }
   .product-card p { color: var(--text-gray); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
@@ -359,6 +359,27 @@
   .fab-whatsapp:hover { transform: scale(1.1) rotate(-5deg); box-shadow: 0 14px 32px rgba(37, 211, 102, 0.5); }
   @media(min-width: 768px) { .fab-whatsapp { bottom: 30px; right: 30px; width: 60px; height: 60px; font-size: 32px; } }
 
+  /* IMAGE ZOOM MODAL STYLES */
+  .img-zoom-overlay {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85); z-index: 10005; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px); cursor: zoom-out; opacity: 0; transition: opacity 0.3s ease;
+  }
+  .img-zoom-overlay.show { display: flex; opacity: 1; }
+  .zoomed-img {
+    max-width: 90%; max-height: 90vh; border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5); object-fit: contain;
+    transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .img-zoom-overlay.show .zoomed-img { transform: scale(1); }
+  .close-zoom-btn {
+    position: absolute; top: 20px; right: 30px; background: rgba(0,0,0,0.5);
+    color: white; border: none; font-size: 2rem; width: 45px; height: 45px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.2s; line-height: 1;
+  }
+  .close-zoom-btn:hover { background: rgba(0,0,0,0.8); }
+
   /* =========================================================================
      MOBILE & TABLET RESPONSIVE
      ========================================================================= */
@@ -423,7 +444,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg-leaf">🍃</div>
   <div class="hero-inner">
@@ -438,7 +458,7 @@
       <p>Sustainable choice for a better tomorrow. Fresh, hygienic, and 100% biodegradable — sourced directly from our farms to your table.</p>
       <div class="hero-buttons">
         <a href="products.html" class="btn-primary">📞 Order Now</a>
-        <a href="#products" class="btn-secondary">View Products</a>
+        <a href="products.html" class="btn-secondary">View Products</a>
       </div>
     </div>
     <div class="hero-right">
@@ -474,7 +494,6 @@
   </div>
 </section>
 
-<!-- OFFER BANNER -->
 <div class="offer-banner reveal">
   <div class="offer-badge">BUY 4 GET 1 FREE</div>
   <div>
@@ -483,9 +502,6 @@
   </div>
 </div>
 
-<!-- =====================================================================
-     PRODUCTS SECTION — UPDATED
-     ===================================================================== -->
 <section class="products" id="products">
   <div class="section-header reveal">
     <span class="section-eyebrow">What We Offer</span>
@@ -503,7 +519,6 @@
   </div>
 </div>
 
-    <!-- 2. Areca Leaf Plates -->
     <div class="product-card reveal delay-2">
         <div class="product-img" style="background-image: url('areca leafs.png');"></div>
 
@@ -514,7 +529,6 @@
       </div>
     </div>
 
-    <!-- 3. Containers -->
     <div class="product-card reveal delay-3">
               <div class="product-img" style="background-image: url('areca boxes.png');"></div>
 
@@ -525,7 +539,6 @@
       </div>
     </div>
 
-    <!-- 4. And More — CTA card linking to products page -->
     <a href="products.html" class="product-card-more reveal delay-4">
       <div class="more-icon">🌿</div>
       <span class="more-eyebrow">Explore Full Range</span>
@@ -540,7 +553,6 @@
   </div>
 </section>
 
-<!-- USE CASES -->
 <section class="usecases" id="usecases">
   <div class="section-header reveal">
     <span class="section-eyebrow">Who We Serve</span>
@@ -555,7 +567,6 @@
   </div>
 </section>
 
-<!-- WHY -->
 <section class="why" id="why">
   <div class="section-header reveal">
     <span class="section-eyebrow">Why Choose Soil Leaf</span>
@@ -571,7 +582,6 @@
   </div>
 </section>
 
-<!-- REVIEWS -->
 <section class="reviews reveal" id="reviews">
   <div class="section-header">
     <span class="section-eyebrow">Customer Stories</span>
@@ -599,7 +609,6 @@
         <p class="review-text">"Prompt delivery and the Buy 4 Get 1 Free offer is fantastic for our daily home needs. So glad I found Soil Leaf."</p>
         <div class="review-author"><div class="review-avatar">L</div><div><div class="review-name">Lakshmi N.</div><div class="review-role">Retail Customer</div></div></div>
       </div>
-      <!-- Duplicated for seamless marquee loop -->
       <div class="review-card">
         <div class="review-stars">★★★★★</div>
         <p class="review-text">"The banana leaves are always fresh and delivered on time for our catering business. Highly recommended for bulk orders!"</p>
@@ -624,7 +633,6 @@
   </div>
 </section>
 
-<!-- LOCATION & FORM -->
 <section class="location-form" id="location">
   <div class="section-header reveal">
     <span class="section-eyebrow">Find Us & Place an Order</span>
@@ -633,7 +641,6 @@
   </div>
   
   <div class="lf-grid">
-    <!-- LEFT SIDE: MAP & ADDRESS -->
     <div class="reveal delay-1">
       <div class="map-wrap" style="position: relative;">
         <img src="soil-leaf-map.png" alt="Soil Leaf Location Map" style="width: 100%; height: 350px; object-fit: cover; display: block;">
@@ -647,7 +654,6 @@
       </div>
     </div>
 
-    <!-- RIGHT SIDE: FORM -->
     <div class="form-card reveal delay-2">
       <h3>Quick Order Form</h3>
       <p>Fill in your details and we'll confirm your order instantly.</p>
@@ -673,7 +679,7 @@
             <label for="ftype">Order Type</label>
             <select id="ftype" name="ftype">
               <option value="" disabled selected>Select</option>
-              <option>For My Home</option><option>For My Business (Wholesale)</option><option>Event / Wedding</option><option>Hotels</option>
+              <option>For My Home</option><option>For My Business (Wholesale)</option><option>Event / Wedding</option><option>Hotels</option><option>Others</option>
             </select>
           </div>
         </div>
@@ -734,6 +740,11 @@
   </svg>
 </a>
 
+<div class="img-zoom-overlay" id="imgZoomOverlay" onclick="closeImageZoom()">
+  <button class="close-zoom-btn" onclick="closeImageZoom()">&times;</button>
+  <img src="" alt="Zoomed Product" class="zoomed-img" id="zoomedImage" onclick="event.stopPropagation()">
+</div>
+
 <script>
 // Mobile Navigation Toggle
 document.addEventListener('DOMContentLoaded', () => {
@@ -776,8 +787,32 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// --- Image Zoom Logic ---
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.product-img').forEach(img => {
+    img.addEventListener('click', function(e) {
+      e.preventDefault();
+      const bgImage = this.style.backgroundImage;
+      const url = bgImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+      
+      if(url && url !== 'none') {
+        document.getElementById('zoomedImage').src = url;
+        const overlay = document.getElementById('imgZoomOverlay');
+        overlay.style.display = 'flex';
+        
+        setTimeout(() => overlay.classList.add('show'), 10);
+      }
+    });
+  });
+});
+
+function closeImageZoom() {
+  const overlay = document.getElementById('imgZoomOverlay');
+  overlay.classList.remove('show');
+  setTimeout(() => { overlay.style.display = 'none'; }, 300);
+}
+
 // Form Submission Logic - Integrated with Google Sheets
-// Updated submitForm() for the MAIN PAGE
 function submitForm() {
   const name = document.getElementById('fname').value.trim();
   const phone = document.getElementById('fphone').value.trim();
@@ -828,6 +863,7 @@ function submitForm() {
       submitBtn.innerHTML = originalBtnText;
       submitBtn.disabled = false;
     });
-}</script>
+}
+</script>
 </body>
 </html>
