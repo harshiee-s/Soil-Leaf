@@ -204,6 +204,43 @@
   }
 
   /* =========================================================
+     CART MODAL SETTINGS (NEWLY ADDED)
+     ========================================================= */
+  .cart-modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6); z-index: 10000; align-items: center; justify-content: center;
+    backdrop-filter: blur(3px);
+  }
+  .cart-modal {
+    background: var(--white); width: 90%; max-width: 500px; max-height: 85vh;
+    border-radius: 16px; display: flex; flex-direction: column; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  }
+  .cart-modal-header {
+    padding: 20px 24px; border-bottom: 1px solid #EFEFEF; display: flex; justify-content: space-between; align-items: center;
+    background: var(--forest); color: #fff;
+  }
+  .cart-modal-header h3 { margin: 0; font-family: 'Lora', serif; font-size: 1.4rem; }
+  .close-modal-btn { background: transparent; border: none; color: #fff; font-size: 2rem; cursor: pointer; line-height: 1; }
+  .cart-modal-body { padding: 20px 24px; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; gap: 16px; }
+  .cart-modal-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid #EFEFEF; }
+  .cart-modal-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .cart-item-info { flex-grow: 1; }
+  .cart-item-title { font-weight: 700; color: var(--forest-dark); margin-bottom: 4px; font-size: 1rem;}
+  .cart-item-variant { font-size: 0.85rem; color: var(--text-gray); }
+  .cart-item-actions { display: flex; align-items: center; gap: 16px; }
+  .qty-control { display: flex; align-items: center; border: 1px solid #EFEFEF; border-radius: 8px; overflow: hidden; }
+  .qty-control button { background: var(--bg-soft); border: none; padding: 8px 12px; cursor: pointer; font-weight: bold; color: var(--forest); transition: 0.2s; font-size: 1.1rem;}
+  .qty-control button:hover { background: #E0E0E0; }
+  .qty-control span { padding: 0 12px; font-weight: 700; font-size: 1rem; min-width: 35px; text-align: center; }
+  .remove-item-btn { background: transparent; border: none; color: #E74C3C; cursor: pointer; font-size: 1.2rem; padding: 4px; transition: transform 0.2s; }
+  .remove-item-btn:hover { transform: scale(1.1); }
+  .cart-modal-footer { padding: 20px 24px; border-top: 1px solid #EFEFEF; background: var(--bg-soft); }
+  .checkout-btn { width: 100%; background: var(--leaf); color: #fff; border: none; padding: 14px; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; font-family: 'Lato'; transition: background 0.2s; box-shadow: 0 4px 15px rgba(77, 175, 80, 0.3); }
+  .checkout-btn:hover { background: var(--forest); }
+  .empty-cart-msg { text-align: center; color: var(--text-gray); font-style: italic; padding: 40px 0; font-size: 1.1rem;}
+
+  /* =========================================================
      APP-STYLE MOBILE RESPONSIVE REWORK
      ========================================================= */
   @media (max-width: 900px) {
@@ -335,18 +372,20 @@
     <!-- 1. Areca Bowls -->
     <section class="category-section" id="areca-bowls">
       <h2>Areca Bowls</h2>
-      <div class="grid">
-        <div class="card" data-product="5 Inch Areca Bowl" data-keywords="5 inch areca bowl bowls plates cup cups mini small small round organic packaging">
-          <div class="img-placeholder">[ Image: 5" Areca Bowl ]</div>
-          <div class="card-body">
-            <div class="card-title">5" Areca Bowl</div>
-            <div class="variant-group">
-              <select class="variant-select">
-                <option value="" disabled selected>Select Quality</option>
-                <option>Domestic</option>
-                <option>Premium</option>
-              </select>
-            </div>
+     <div class="grid">
+  <div class="card" data-product="5 Inch Areca Bowl" data-keywords="5 inch areca bowl bowls plates cup cups mini small small round organic packaging">
+    <div class="img-placeholder">
+      <img src="5inc Arece Bowl.png" alt="5 Inch Areca Bowl" style="width: 100%; height: auto;">
+    </div>
+    <div class="card-body">
+      <div class="card-title">5" Areca Bowl</div>
+      <div class="variant-group">
+        <select class="variant-select">
+          <option value="" disabled selected>Select Quality</option>
+          <option>Domestic</option>
+          <option>Premium</option>
+        </select>
+      </div>
             <div class="action-row">
               <input type="number" min="1" placeholder="Qty" class="qty-input">
               <button class="add-btn" onclick="addToCart(this)">Add</button>
@@ -354,7 +393,9 @@
           </div>
         </div>
         <div class="card" data-product="6 Inch Areca Bowl" data-keywords="6 inch areca bowl bowls plates cup cups medium round organic packaging">
-          <div class="img-placeholder">[ Image: 6" Areca Bowl ]</div>
+          <div class="img-placeholder">
+<img src="6inc Arece Bowl.png" alt="6 Inch Areca Bowl" style="width: 100%; height: auto;">
+</div>
           <div class="card-body">
             <div class="card-title">6" Areca Bowl</div>
             <div class="variant-group">
@@ -375,173 +416,415 @@
 
     <!-- 2. Areca Plates - Round -->
     <section class="category-section" id="areca-plates-round">
-      <h2>Areca Plates - Round</h2>
-      <div class="grid">
-        <script>
-          const roundPlates = ["6\" Round", "8\" Round", "10\" Round", "12\" Round"];
-          roundPlates.forEach(size => {
-            const cleanSize = size.replace('\\"', ' inch');
-            document.write(`
-              <div class="card" data-product="${size} Areca Plate" data-keywords="${cleanSize.toLowerCase()} round circular areca plate plates leaf leafs leaves dinner traditional catering dinner custom">
-                <div class="img-placeholder">[ Image: ${size} Plate ]</div>
-                <div class="card-body">
-                  <div class="card-title">${size} Areca Plate</div>
-                  <div class="variant-group">
-                    <select class="variant-select">
-                      <option value="" disabled selected>Select Quality</option>
-                      <option>Domestic</option><option>Premium</option>
-                    </select>
-                  </div>
-                  <div class="action-row">
-                    <input type="number" min="1" placeholder="Qty" class="qty-input">
-                    <button class="add-btn" onclick="addToCart(this)">Add</button>
-                  </div>
-                </div>
-              </div>
-            `);
-          });
-        </script>
+  <h2>Areca Plates - Round</h2>
+  <div class="grid">
+    
+    <!-- PRODUCT 1: 6 Inch Plate -->
+    <div class="card" data-product="6 Inch Areca Plate" data-keywords="6 inch areca plate plates small round organic packaging">
+      <div class="img-placeholder">
+        <img src="6inc Round Plate.png" alt="6 Inch Round Areca Plate" style="width: 100%; height: auto;">
       </div>
-    </section>
+      <div class="card-body">
+        <div class="card-title">6" Areca Plate</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Select Quality</option>
+            <option>Domestic</option>
+            <option>Premium</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
 
-    <!-- 3. Areca Plates - Square -->
-    <section class="category-section" id="areca-plates-square">
-      <h2>Areca Plates - Square</h2>
-      <div class="grid">
-        <script>
-          const squarePlates = ["6\" Square", "7\" Square", "8\" Square", "10\" Square"];
-          squarePlates.forEach(size => {
-            const cleanSize = size.replace('\\"', ' inch');
-            document.write(`
-              <div class="card" data-product="${size} Areca Plate" data-keywords="${cleanSize.toLowerCase()} square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
-                <div class="img-placeholder">[ Image: ${size} Plate ]</div>
-                <div class="card-body">
-                  <div class="card-title">${size} Areca Plate</div>
-                  <div class="variant-group">
-                    <select class="variant-select">
-                      <option value="" disabled selected>Select Quality</option>
-                      <option>Domestic</option><option>Premium</option>
-                    </select>
-                  </div>
-                  <div class="action-row">
-                    <input type="number" min="1" placeholder="Qty" class="qty-input">
-                    <button class="add-btn" onclick="addToCart(this)">Add</button>
-                  </div>
-                </div>
-              </div>
-            `);
-          });
-        </script>
+    <!-- PRODUCT 2: 8 Inch Plate -->
+    <div class="card" data-product="8 Inch Areca Plate" data-keywords="8 inch areca plate plates medium round organic packaging">
+      <div class="img-placeholder">
+        <img src="8inc Round Plate.png" alt="8 Inch Round Areca Plate" style="width: 100%; height: auto;">
       </div>
-    </section>
+      <div class="card-body">
+        <div class="card-title">8" Areca Plate</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Select Quality</option>
+            <option>Domestic</option>
+            <option>Premium</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
 
-    <!-- 4. Areca Specialty -->
-    <section class="category-section" id="areca-specialty">
-      <h2>Oval & Specialty</h2>
-      <div class="grid">
-        <script>
-          const specialty = ["5\" Oval Areca", "5\" Heart Shaped Areca"];
-          specialty.forEach(item => {
-            document.write(`
-              <div class="card" data-product="${item}" data-keywords="${item.toLowerCase()} oval heart shaped fancy areca plate plates bowl bowls leaf leafs leaves specialty love shape custom event wedding function designer">
-                <div class="img-placeholder">[ Image: ${item} ]</div>
-                <div class="card-body">
-                  <div class="card-title">${item}</div>
-                  <div class="variant-group">
-                    <select class="variant-select">
-                      <option value="" disabled selected>Select Quality</option>
-                      <option>Domestic</option><option>Premium</option>
-                    </select>
-                  </div>
-                  <div class="action-row">
-                    <input type="number" min="1" placeholder="Qty" class="qty-input">
-                    <button class="add-btn" onclick="addToCart(this)">Add</button>
-                  </div>
-                </div>
-              </div>
-            `);
-          });
-        </script>
+    <!-- PRODUCT 3: 10 Inch Plate -->
+    <div class="card" data-product="10 Inch Areca Plate" data-keywords="10 inch areca plate plates large round organic dinner packaging">
+      <div class="img-placeholder">
+        <img src="10inc Round Plate.png" alt="10 Inch Round Areca Plate" style="width: 100%; height: auto;">
       </div>
-    </section>
+      <div class="card-body">
+        <div class="card-title">10" Areca Plate</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Select Quality</option>
+            <option>Domestic</option>
+            <option>Premium</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
 
-    <!-- 5. Containers -->
-    <section class="category-section" id="containers">
-      <h2>Food Containers</h2>
-      <div class="grid">
-        <script>
-          const containers = ["1 Kg Container", "3/4 Kg Container", "Half Kg Container", "1/4 Kilo Container"];
-          containers.forEach(item => {
-            document.write(`
-              <div class="card" data-product="${item}" data-keywords="${item.toLowerCase()} container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
-                <div class="img-placeholder">[ Image: ${item} ]</div>
-                <div class="card-body">
-                  <div class="card-title">${item}</div>
-                  <div class="variant-group">
-                    <select class="variant-select">
-                      <option value="" disabled selected>Material</option>
-                      <option>Areca Leaf</option><option>Plastic</option>
-                    </select>
-                  </div>
-                  <div class="action-row">
-                    <input type="number" min="1" placeholder="Qty" class="qty-input">
-                    <button class="add-btn" onclick="addToCart(this)">Add</button>
-                  </div>
-                </div>
-              </div>
-            `);
-          });
-        </script>
+    <!-- PRODUCT 4: 12 Inch Plate -->
+    <div class="card" data-product="12 Inch Areca Plate" data-keywords="12 inch areca plate plates extra large round organic dinner packaging">
+      <div class="img-placeholder">
+        <img src="12inc Round Plate.png" alt="12 Inch Round Areca Plate" style="width: 100%; height: auto;">
       </div>
-    </section>
+      <div class="card-body">
+        <div class="card-title">12" Areca Plate</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Select Quality</option>
+            <option>Domestic</option>
+            <option>Premium</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
 
-    <!-- 6. Banana Leaves -->
-    <section class="category-section" id="banana-leaves">
-      <h2>Banana Leaves</h2>
-      <div class="grid">
-        <script>
-          const bLeaves = ["Actual Banana Leaf", "Round Cut Banana Leaf", "Square Cut Banana Leaf"];
-          bLeaves.forEach(item => {
-            document.write(`
-              <div class="card" data-product="${item}" data-keywords="${item.toLowerCase()} banana leaf leafs leaves green organic natural actual precision cut round square circular meals food wrapping packaging custom catering traditional bulk wholesale retail">
-                <div class="img-placeholder">[ Image: ${item} ]</div>
-                <div class="card-body">
-                  <div class="card-title">${item}</div>
-                  <div class="action-row" style="margin-top:auto;">
-                    <input type="number" min="1" placeholder="Qty" class="qty-input">
-                    <button class="add-btn" onclick="addToCart(this)">Add</button>
-                  </div>
-                </div>
-              </div>
-            `);
-          });
-        </script>
-      </div>
-    </section>
+  </div>
+</section>
 
-    <!-- 7. Sal Leaf Plates -->
-    <section class="category-section" id="sal-leaves">
-      <h2>Sal Leaf Plates</h2>
-      <div class="grid">
-        <script>
-          const sLeaves = ["Round Large Sal Leaf Plate", "Square Sal Leaf Plate"];
-          sLeaves.forEach(item => {
-            document.write(`
-              <div class="card" data-product="${item}" data-keywords="${item.toLowerCase()} sal leaf plate plates leafs leaves round large square dinner disposable item buffet traditional handmade natural organic eco standard">
-                <div class="img-placeholder">[ Image: ${item} ]</div>
-                <div class="card-body">
-                  <div class="card-title">${item}</div>
-                  <div class="action-row" style="margin-top:auto;">
-                    <input type="number" min="1" placeholder="Qty" class="qty-input">
-                    <button class="add-btn" onclick="addToCart(this)">Add</button>
-                  </div>
-                </div>
-              </div>
-            `);
-          });
-        </script>
+   <!-- 3. Areca Plates - Square -->
+<section class="category-section" id="areca-plates-square">
+  <h2>Areca Plates - Square</h2>
+  <div class="grid">
+    
+    <!-- PRODUCT 1: 6 Inch Square Plate -->
+    <div class="card" data-product="6 Inch Square Areca Plate" data-keywords="6 inch square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
+      <div class="img-placeholder">
+        <img src="6inc Square Plate.png" alt="6 Inch Square Areca Plate" style="width: 100%; height: auto;">
       </div>
-    </section>
+      <div class="card-body">
+        <div class="card-title">6" Square Areca Plate</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Select Quality</option>
+            <option>Domestic</option>
+            <option>Premium</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 2: 7 Inch Square Plate -->
+    <div class="card" data-product="7 Inch Square Areca Plate" data-keywords="7 inch square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
+      <div class="img-placeholder">
+        <img src="7inc Square Plate.png" alt="7 Inch Square Areca Plate" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">7" Square Areca Plate</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Select Quality</option>
+            <option>Domestic</option>
+            <option>Premium</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 3: 8 Inch Square Plate -->
+    <div class="card" data-product="8 Inch Square Areca Plate" data-keywords="8 inch square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
+      <div class="img-placeholder">
+        <img src="8inc Square Plate.png" alt="8 Inch Square Areca Plate" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">8" Square Areca Plate</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Select Quality</option>
+            <option>Domestic</option>
+            <option>Premium</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 4: 10 Inch Square Plate -->
+    <div class="card" data-product="10 Inch Square Areca Plate" data-keywords="10 inch square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
+      <div class="img-placeholder">
+        <img src="10inc Square Plate.png" alt="10 Inch Square Areca Plate" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">10" Square Areca Plate</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Select Quality</option>
+            <option>Domestic</option>
+            <option>Premium</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 4. Areca Specialty -->
+<section class="category-section" id="areca-specialty">
+  <h2>Oval & Specialty</h2>
+  <div class="grid">
+    
+    <!-- PRODUCT 1: 5 Inch Oval Areca -->
+    <div class="card" data-product="5 Inch Oval Areca" data-keywords="5 inch oval fancy areca plate plates bowl bowls leaf leafs leaves specialty love shape custom event wedding function designer">
+      <div class="img-placeholder">
+        <img src="5inc Oval Areca.png" alt="5 Inch Oval Areca" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">5" Oval Areca</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Select Quality</option>
+            <option>Domestic</option>
+            <option>Premium</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 2: 5 Inch Heart Shaped Areca -->
+    <div class="card" data-product="5 Inch Heart Shaped Areca" data-keywords="5 inch heart shaped fancy areca plate plates bowl bowls leaf leafs leaves specialty love shape custom event wedding function designer">
+      <div class="img-placeholder">
+        <img src="5inc Heart Shaped Areca.png" alt="5 Inch Heart Shaped Areca" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">5" Heart Shaped Areca</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Select Quality</option>
+            <option>Domestic</option>
+            <option>Premium</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 5. Containers -->
+<section class="category-section" id="containers">
+  <h2>Food Containers</h2>
+  <div class="grid">
+    
+    <!-- PRODUCT 1: 1 Kg Container -->
+    <div class="card" data-product="1 Kg Container" data-keywords="1 kg container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
+      <div class="img-placeholder">
+        <img src="1 Kg Container.png" alt="1 Kg Container" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">1 Kg Container</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Material</option>
+            <option>Areca Leaf</option>
+            <option>Plastic</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 2: 3/4 Kg Container -->
+    <div class="card" data-product="3/4 Kg Container" data-keywords="3/4 kg container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
+      <div class="img-placeholder">
+        <img src="3-4 Kg Container.png" alt="3/4 Kg Container" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">3/4 Kg Container</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Material</option>
+            <option>Areca Leaf</option>
+            <option>Plastic</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 3: Half Kg Container -->
+    <div class="card" data-product="Half Kg Container" data-keywords="half kg container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
+      <div class="img-placeholder">
+        <img src="Half Kg Container.png" alt="Half Kg Container" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Half Kg Container</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Material</option>
+            <option>Areca Leaf</option>
+            <option>Plastic</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 4: 1/4 Kg Container -->
+    <div class="card" data-product="1/4 Kilo Container" data-keywords="1/4 kg container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
+      <div class="img-placeholder">
+        <img src="1-4 Kilo Container.png" alt="1/4 Kg Container" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">1/4 Kg Container</div>
+        <div class="variant-group">
+          <select class="variant-select">
+            <option value="" disabled selected>Material</option>
+            <option>Areca Leaf</option>
+            <option>Plastic</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+   <!-- 6. Banana Leaves -->
+<section class="category-section" id="banana-leaves">
+  <h2>Banana Leaves</h2>
+  <div class="grid">
+    
+    <!-- PRODUCT 1: Actual Banana Leaf -->
+    <div class="card" data-product="Actual Banana Leaf" data-keywords="actual banana leaf banana leaf leafs leaves green organic natural actual precision cut round square circular meals food wrapping packaging custom catering traditional bulk wholesale retail">
+      <div class="img-placeholder">
+        <img src="Actual Banana Leaf.png" alt="Actual Banana Leaf" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Actual Banana Leaf</div>
+        <div class="action-row" style="margin-top:auto;">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 2: Round Cut Banana Leaf -->
+    <div class="card" data-product="Round Cut Banana Leaf" data-keywords="round cut banana leaf banana leaf leafs leaves green organic natural actual precision cut round square circular meals food wrapping packaging custom catering traditional bulk wholesale retail">
+      <div class="img-placeholder">
+        <img src="Round Cut Banana Leaf.png" alt="Round Cut Banana Leaf" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Round Cut Banana Leaf</div>
+        <div class="action-row" style="margin-top:auto;">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 3: Square Cut Banana Leaf -->
+    <div class="card" data-product="Square Cut Banana Leaf" data-keywords="square cut banana leaf banana leaf leafs leaves green organic natural actual precision cut round square circular meals food wrapping packaging custom catering traditional bulk wholesale retail">
+      <div class="img-placeholder">
+        <img src="Square Cut Banana Leaf.png" alt="Square Cut Banana Leaf" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Square Cut Banana Leaf</div>
+        <div class="action-row" style="margin-top:auto;">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+   <!-- 7. Sal Leaf Plates -->
+<section class="category-section" id="sal-leaves">
+  <h2>Sal Leaf Plates</h2>
+  <div class="grid">
+    
+    <!-- PRODUCT 1: Round Large Sal Leaf Plate -->
+    <div class="card" data-product="Round Large Sal Leaf Plate" data-keywords="round large sal leaf plate sal leaf plate plates leafs leaves round large square dinner disposable item buffet traditional handmade natural organic eco standard">
+      <div class="img-placeholder">
+        <img src="Round Large Sal Leaf Plate.png" alt="Round Large Sal Leaf Plate" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Round Large Sal Leaf Plate</div>
+        <div class="action-row" style="margin-top:auto;">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 2: Square Sal Leaf Plate -->
+    <div class="card" data-product="Square Sal Leaf Plate" data-keywords="square sal leaf plate sal leaf plate plates leafs leaves round large square dinner disposable item buffet traditional handmade natural organic eco standard">
+      <div class="img-placeholder">
+        <img src="Square Sal Leaf Plate.png" alt="Square Sal Leaf Plate" style="width: 100%; height: auto;">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Square Sal Leaf Plate</div>
+        <div class="action-row" style="margin-top:auto;">
+          <input type="number" min="1" placeholder="Qty" class="qty-input">
+          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
   </main>
 </div>
@@ -553,8 +836,26 @@
     <span id="mobile-cart-items">0 Items</span>
   </div>
   <button class="mobile-checkout-btn" onclick="goToOrder()">
-    Proceed to Order ➔
+    Edit & Order ➔
   </button>
+</div>
+
+<!-- ==========================================
+     CART EDIT MODAL (NEW ADDITION)
+     ========================================== -->
+<div class="cart-modal-overlay" id="cartModalOverlay">
+  <div class="cart-modal">
+    <div class="cart-modal-header">
+      <h3>Your Cart</h3>
+      <button class="close-modal-btn" onclick="closeCartModal()">&times;</button>
+    </div>
+    <div class="cart-modal-body" id="cartModalBody">
+      <!-- Cart items injected here via JS -->
+    </div>
+    <div class="cart-modal-footer">
+      <button class="checkout-btn" onclick="proceedToCheckoutPage()">Proceed to Order ➔</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -666,13 +967,87 @@
     document.getElementById('mobile-cart-items').innerText = `${cart.length} Items (${totalQty} Qty)`;
   }
 
+  // --- REVISED: Opens Modal instead of directly leaving page ---
   function goToOrder() {
+    openCartModal();
+  }
+
+  // ==========================================
+  // CART EDIT MODAL LOGIC (NEW ADDITION)
+  // ==========================================
+  
+  function openCartModal() {
+    document.getElementById('cartModalOverlay').style.display = 'flex';
+    renderCartItems();
+  }
+
+  function closeCartModal() {
+    document.getElementById('cartModalOverlay').style.display = 'none';
+  }
+
+  function renderCartItems() {
+    const body = document.getElementById('cartModalBody');
+    body.innerHTML = '';
+
     if (cart.length === 0) {
-      alert("Your cart is empty. Please choose some eco-products first!");
+      body.innerHTML = '<div class="empty-cart-msg">Your cart is empty. Please choose some eco-products first!</div>';
+      document.querySelector('.checkout-btn').style.display = 'none';
       return;
     }
+
+    document.querySelector('.checkout-btn').style.display = 'block';
+
+    cart.forEach((item, index) => {
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'cart-modal-item';
+      
+      let variantHtml = item.variant ? `<div class="cart-item-variant">Variant: ${item.variant}</div>` : '';
+
+      itemDiv.innerHTML = `
+        <div class="cart-item-info">
+          <div class="cart-item-title">${item.name}</div>
+          ${variantHtml}
+        </div>
+        <div class="cart-item-actions">
+          <div class="qty-control">
+            <button onclick="updateCartItemQty(${index}, -1)">-</button>
+            <span>${item.quantity}</span>
+            <button onclick="updateCartItemQty(${index}, 1)">+</button>
+          </div>
+          <button class="remove-item-btn" onclick="removeCartItem(${index})" title="Remove Item">🗑️</button>
+        </div>
+      `;
+      body.appendChild(itemDiv);
+    });
+  }
+
+  function updateCartItemQty(index, change) {
+    if (cart[index].quantity + change > 0) {
+      cart[index].quantity += change;
+    } else {
+      cart.splice(index, 1); // Remove if drops to 0
+    }
+    localStorage.setItem('soilLeafCart', JSON.stringify(cart));
+    updateCartBadge();
+    renderCartItems();
+  }
+
+  function removeCartItem(index) {
+    cart.splice(index, 1);
+    localStorage.setItem('soilLeafCart', JSON.stringify(cart));
+    updateCartBadge();
+    renderCartItems();
+  }
+
+  function proceedToCheckoutPage() {
     window.location.href = 'order.html';
   }
+  
+  // Close modal when clicking the dark overlay outside the box
+  document.getElementById('cartModalOverlay').addEventListener('click', function(e) {
+    if(e.target === this) closeCartModal();
+  });
+
 
   // --- Re-Calibrated Scroll Tracking Observer ---
   document.addEventListener('DOMContentLoaded', () => {
