@@ -8,7 +8,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="soil-leaf-logo.png">
 <link rel="apple-touch-icon" sizes="180x180" href="soil-leaf-logo.png">
 <title>Soil Leaf – Banana Leaf, Areca Plates & Eco Products, Bengaluru</title>
-<meta name="description" content="Soil Leaf supplies fresh banana leaves, areca leaf plates, containers and eco-friendly natural products in Bengaluru. Wholesale & retail. Farm-direct pricing. Buy 4 Get 1 Free daily offer.">
+<meta name="description" content="Soil Leaf supplies fresh banana leaves, areca leaf plates, containers and eco-friendly natural products in Bengaluru/Bangalore. Wholesale & retail. Farm-direct pricing.Banana Leaf Near Me">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -157,6 +157,9 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    text-decoration: none;
+    color: var(--text-dark);
+    cursor: pointer;
   }
   .product-card:hover { transform: translateY(-8px); box-shadow: var(--hover-shadow); }
   .product-img { width: 100%; height: 200px; background-size: cover; background-position: center; border-bottom: 3px solid var(--leaf); cursor: zoom-in; }
@@ -508,36 +511,35 @@
     <h2>Our Fresh Products</h2>
     <p>Every leaf hand-picked and delivered fresh — keeping tradition and nature alive.</p>
   </div>
+  
   <div class="products-grid">
+    
+    <a href="products.html#banana-leaves" class="product-card reveal delay-1">
+      <div class="product-img" style="background-image: url('banana leafs.png');"></div>
+      <div class="product-content">
+        <h3>Banana Leaf</h3>
+        <p>Large, fresh banana leaves perfect for serving traditional meals, pujas, and natural food wrapping. Available in full-size and PC-cut formats for retail and bulk orders.</p>
+        <span class="product-tag">Best Seller</span>
+      </div>
+    </a>
 
-   <div class="product-card reveal delay-1">
-  <div class="product-img" style="background-image: url('banana leafs.png');"></div>
-  <div class="product-content">
-    <h3>Banana Leaf</h3>
-    <p>Large, fresh banana leaves perfect for serving traditional meals, pujas, and natural food wrapping. Available in full-size and PC-cut formats for retail and bulk orders.</p>
-    <span class="product-tag">Best Seller</span>
-  </div>
-</div>
-
-    <div class="product-card reveal delay-2">
+    <a href="products.html#areca-plates-round" class="product-card reveal delay-2">
         <div class="product-img" style="background-image: url('areca leafs.png');"></div>
-
       <div class="product-content">
         <h3>Areca Leaf Plates</h3>
         <p>Naturally fallen areca palm sheaths crafted into sturdy, elegant plates. 100% biodegradable, waterproof, and food-safe — a premium alternative to plastic or thermocol.</p>
         <span class="product-tag">Eco Friendly</span>
       </div>
-    </div>
+    </a>
 
-    <div class="product-card reveal delay-3">
-              <div class="product-img" style="background-image: url('areca boxes.png');"></div>
-
+    <a href="products.html#containers" class="product-card reveal delay-3">
+      <div class="product-img" style="background-image: url('areca boxes.png');"></div>
       <div class="product-content">
         <h3>Containers</h3>
         <p>Eco-friendly natural containers for packaging, takeaways, and gifting. Ideal for caterers and event organizers looking for a sustainable, chemical-free option.</p>
         <span class="product-tag">Bulk Orders</span>
       </div>
-    </div>
+    </a>
 
     <a href="products.html" class="product-card-more reveal delay-4">
       <div class="more-icon">🌿</div>
@@ -679,7 +681,7 @@
             <label for="ftype">Order Type</label>
             <select id="ftype" name="ftype">
               <option value="" disabled selected>Select</option>
-              <option>For My Home</option><option>For My Business (Wholesale)</option><option>Event / Wedding</option><option>Hotels</option><option>Others</option>
+              <option>For Home/Puja</option><option>For Business (Wholesale)</option><option>Event / Wedding</option><option>Hotels and Restaurants</option><option>Others</option>
             </select>
           </div>
         </div>
@@ -741,7 +743,7 @@
 </a>
 
 <div class="img-zoom-overlay" id="imgZoomOverlay" onclick="closeImageZoom()">
-  <button class="close-zoom-btn" onclick="closeImageZoom()">&times;</button>
+  <button class="close-zoom-btn" onclick="closeImageZoom()">×</button>
   <img src="" alt="Zoomed Product" class="zoomed-img" id="zoomedImage" onclick="event.stopPropagation()">
 </div>
 
