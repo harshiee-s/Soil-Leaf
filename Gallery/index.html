@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="soil-leaf-logo.png">
+<link rel="apple-touch-icon" sizes="180x180" href="soil-leaf-logo.png">
+<title>Gallery – Soil Leaf | Banana Leaf & Eco Products, Bengaluru</title>
+<meta name="description" content="Browse our gallery of fresh banana leaves, areca leaf plates, containers and eco-friendly natural products. Soil Leaf, Bengaluru.">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest: #1B4D2E;
+    --forest-dark: #0D2B17;
+    --leaf: #4CAF50;
+    --bright: #6DD85A;
+    --gold: #C8A96E;
+    --gold-light: #F0C96A;
+    --bg-light: #FAFAFA;
+    --bg-soft: #F4F7F4;
+    --white: #FFFFFF;
+    --text-dark: #2A2A2A;
+    --text-gray: #666666;
+    --leaf-radius: 40px 4px 40px 4px;
+    --soft-shadow: 0 12px 40px rgba(27,77,46,0.08);
+    --hover-shadow: 0 16px 50px rgba(27,77,46,0.16);
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Lato', sans-serif; background: var(--bg-light); color: var(--text-dark); overflow-x: hidden; width: 100%; }
+  h1,h2,h3,h4,h5 { font-family: 'Lora', serif; }
+
+  /* WATERMARK */
+  .global-watermark {
+    position: fixed; top:0; left:0; right:0; bottom:0;
+    background: url('soil-leaf-logo.png') no-repeat center center;
+    background-size: 50vmin; opacity: 0.12; z-index: 9999; pointer-events: none;
+  }
+
+  /* REVEAL */
+  .reveal { opacity:0; transform:translateY(36px); transition: all 0.8s cubic-bezier(0.5,0,0,1); }
+  .reveal.active { opacity:1; transform:translateY(0); }
+  .d1{transition-delay:.05s} .d2{transition-delay:.12s} .d3{transition-delay:.2s}
+
+  /* ── NAV ─────────────────────────────── */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 48px;
+    background:rgba(13,27,17,0.95); backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(77,175,80,0.25);
+  }
+  .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .custom-logo-img { height:40px; width:auto; object-fit:contain; display:block; }
+  nav ul { list-style:none; display:flex; gap:32px; align-items:center; transition:all 0.3s; }
+  nav ul a { text-decoration:none; color:rgba(249,244,232,0.8); font-size:0.85rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; transition:color 0.2s; }
+  nav ul a:hover, nav ul a.active-link { color:var(--leaf); }
+  .nav-cta { background:var(--leaf) !important; color:#fff !important; padding:10px 24px; border-radius:30px; font-weight:700 !important; transition:all 0.2s !important; }
+  .nav-cta:hover { background:var(--bright) !important; color:#1A1A1A !important; }
+  .mobile-toggle { display:none; background:transparent; border:none; color:var(--gold-light); font-size:1.8rem; cursor:pointer; }
+
+  /* ── HERO ─────────────────────────────── */
+  .gallery-hero {
+    min-height: 42vh;
+    background: linear-gradient(135deg,#061810 0%,#0d2b17 40%,#1B4D2E 80%,#0f3520 100%);
+    display:flex; align-items:flex-end; position:relative; overflow:hidden;
+    padding: 130px 48px 60px;
+  }
+  .hero-bg-leaf {
+    position:absolute; right:-80px; top:-60px;
+    font-size:clamp(16rem,35vw,32rem); opacity:0.04; line-height:1;
+    animation:spinSlow 40s linear infinite; pointer-events:none;
+  }
+  @keyframes spinSlow { to { transform:rotate(360deg); } }
+  .gallery-hero-inner { max-width:1200px; margin:0 auto; width:100%; position:relative; z-index:2; }
+  .gallery-eyebrow { font-size:0.78rem; letter-spacing:3px; text-transform:uppercase; color:var(--gold-light); font-weight:700; margin-bottom:14px; display:block; }
+  .gallery-hero h1 { font-size:clamp(2rem,5vw,3.4rem); font-weight:700; color:#F9F4E8; line-height:1.15; margin-bottom:14px; }
+  .gallery-hero h1 em { color:var(--leaf); font-style:normal; }
+  .gallery-hero p { font-size:1rem; font-weight:300; color:rgba(249,244,232,0.65); max-width:520px; line-height:1.8; }
+
+  /* ── GALLERY SECTION WRAPPER ─────────── */
+  .gallery-section { background:var(--bg-soft); padding:64px 0 80px; position:relative; z-index:2; }
+
+  /* ── ROW STRUCTURE ───────────────────── */
+  .marquee-row {
+    margin-bottom: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  /* fade edges */
+  .marquee-row::before,
+  .marquee-row::after {
+    content:''; position:absolute; top:0; bottom:0; width:80px; z-index:4; pointer-events:none;
+  }
+  .marquee-row::before { left:0; background:linear-gradient(to right, var(--bg-soft), transparent); }
+  .marquee-row::after  { right:0; background:linear-gradient(to left,  var(--bg-soft), transparent); }
+
+  /* ── ROW LABEL ───────────────────────── */
+  .row-label-bar {
+    max-width: 1200px; margin: 0 auto 16px;
+    padding: 0 24px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .row-label {
+    font-family:'Lato',sans-serif; font-size:0.72rem; font-weight:700;
+    letter-spacing:2.5px; text-transform:uppercase;
+    color:var(--forest); white-space:nowrap;
+  }
+  .row-label-line {
+    flex:1; height:1px; background:rgba(27,77,46,0.12);
+  }
+  .row-label-count {
+    font-size:0.7rem; font-weight:700; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--text-gray);
+  }
+
+  /* ── MARQUEE TRACK ───────────────────── */
+  .marquee-track {
+    display: flex; gap: 14px; padding: 4px 7px;
+    width: max-content;
+    will-change: transform;
+  }
+  /* Direction A: left */
+  .dir-left  .marquee-track { animation: scrollLeft  var(--dur,38s) linear infinite; }
+  /* Direction B: right */
+  .dir-right .marquee-track { animation: scrollRight var(--dur,38s) linear infinite; }
+
+  @keyframes scrollLeft  { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+  @keyframes scrollRight { 0%{transform:translateX(-50%)} 100%{transform:translateX(0)} }
+
+  /* pause on hover */
+  .marquee-row:hover .marquee-track { animation-play-state:paused; }
+
+  /* ── GALLERY CARD ────────────────────── */
+  .g-card {
+    flex-shrink: 0;
+    width: var(--card-w, 280px);
+    border-radius: var(--leaf-radius);
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: var(--soft-shadow);
+    border: 1px solid rgba(27,77,46,0.06);
+    transition: transform 0.35s cubic-bezier(0.5,0,0,1), box-shadow 0.35s, border-color 0.25s;
+    cursor: zoom-in;
+    position: relative;
+  }
+  .g-card:hover {
+    transform: translateY(-6px) scale(1.025);
+    box-shadow: var(--hover-shadow);
+    border-color: rgba(77,175,80,0.3);
+    z-index: 5;
+  }
+  .g-card img {
+    width:100%; display:block; object-fit:cover;
+    height: var(--img-h, 200px);
+    transition: transform 0.45s cubic-bezier(0.5,0,0,1);
+    pointer-events: none;
+  }
+  .g-card:hover img { transform:scale(1.06); }
+
+  /* Hover overlay */
+  .g-overlay {
+    position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(13,27,17,0.72) 0%, transparent 55%);
+    opacity:0; transition:opacity 0.3s;
+    display:flex; align-items:flex-end; padding:16px;
+    pointer-events: none;
+  }
+  .g-card:hover .g-overlay { opacity:1; }
+  .g-caption { color:#F9F4E8; font-size:0.78rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+  .g-caption::before { content:'🔍 '; }
+
+  /* ── ROW-SPECIFIC HEIGHTS & SPEEDS ─────
+     Varying these gives a natural, organic feel
+  ───────────────────────────────────────── */
+  .row-banana    { --card-w:300px; --img-h:220px; --dur:42s; }
+  .row-areca     { --card-w:260px; --img-h:190px; --dur:36s; }
+  .row-containers{ --card-w:290px; --img-h:210px; --dur:40s; }
+  .row-coconut   { --card-w:250px; --img-h:200px; --dur:34s; }
+  .row-farm      { --card-w:320px; --img-h:230px; --dur:44s; }
+
+  /* ── CTA ─────────────────────────────── */
+  .gallery-cta {
+    background:linear-gradient(135deg,var(--forest-dark) 0%,var(--forest) 60%,#266840 100%);
+    padding:70px 24px; text-align:center; position:relative; overflow:hidden; z-index:2;
+  }
+  .gallery-cta::before {
+    content:'🍃'; position:absolute; font-size:20rem;
+    opacity:0.04; right:-60px; bottom:-60px; pointer-events:none;
+    animation:spinSlow 50s linear infinite;
+  }
+  .section-eyebrow { font-size:0.8rem; letter-spacing:3px; text-transform:uppercase; font-weight:700; color:var(--leaf); }
+  .gallery-cta .section-eyebrow { color:var(--gold-light); display:block; margin-bottom:14px; }
+  .gallery-cta h2 { font-size:clamp(2rem,3.5vw,2.6rem); color:var(--white); font-weight:700; margin-bottom:16px; }
+  .gallery-cta p { color:rgba(255,255,255,0.65); max-width:480px; margin:0 auto 36px; line-height:1.7; font-size:1rem; }
+  .cta-buttons { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .btn-primary { background:var(--leaf); color:#fff; padding:16px 36px; border-radius:50px; font-weight:700; font-size:0.95rem; text-decoration:none; transition:all 0.25s; box-shadow:0 8px 28px rgba(77,175,80,0.4); display:inline-block; }
+  .btn-primary:hover { background:var(--bright); transform:translateY(-2px); color:#1A1A1A; }
+  .btn-secondary { border:1px solid rgba(249,244,232,0.35); color:#F9F4E8; background:transparent; padding:16px 36px; border-radius:50px; font-size:0.95rem; text-decoration:none; transition:all 0.25s; display:inline-block; }
+  .btn-secondary:hover { border-color:var(--leaf); color:var(--leaf); }
+
+  /* TAGLINE BAR */
+  .tagline-bar { background:var(--leaf); padding:16px 24px; text-align:center; position:relative; z-index:2; }
+  .tagline-bar p { font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:#fff; }
+  @media(min-width:640px){ .tagline-bar p { font-size:0.85rem; letter-spacing:3px; } }
+
+  /* FOOTER */
+  footer { background:#06120B; padding:60px 24px 40px; color:var(--white); position:relative; z-index:2; }
+  .footer-inner { max-width:1200px; margin:0 auto; }
+  .footer-top { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:40px; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:24px; }
+  .footer-brand { grid-column:1/-1; }
+  @media(min-width:768px){ .footer-brand{grid-column:span 1;} .footer-top{grid-template-columns:2fr 1fr 1fr 1fr;} }
+  .footer-brand p { font-size:0.95rem; color:rgba(255,255,255,0.6); max-width:300px; margin-top:16px; line-height:1.7; }
+  .footer-logo-img { height:60px; width:auto; object-fit:contain; margin-bottom:12px; }
+  .footer-col h5 { font-family:'Lato',sans-serif; font-size:0.8rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold-light); margin-bottom:20px; }
+  .footer-col p,.footer-col a { font-size:0.95rem; color:rgba(255,255,255,0.6); line-height:2; text-decoration:none; display:block; transition:color 0.2s; }
+  .footer-col a:hover { color:var(--leaf); }
+  .footer-bottom { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; text-align:center; }
+  .footer-bottom p { font-size:0.85rem; color:rgba(255,255,255,0.4); width:100%; }
+  @media(min-width:640px){ .footer-bottom p{width:auto;} }
+  .footer-motto { font-size:0.8rem; letter-spacing:2px; text-transform:uppercase; color:var(--leaf); font-weight:700; width:100%; }
+  @media(min-width:640px){ .footer-motto{width:auto;} }
+
+  /* WHATSAPP FAB */
+  .fab-whatsapp { position:fixed; bottom:20px; right:20px; z-index:999; background:#25D366; color:white; width:55px; height:55px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:30px; box-shadow:0 10px 24px rgba(37,211,102,0.4); text-decoration:none; transition:transform 0.3s,box-shadow 0.3s; }
+  .fab-whatsapp:hover { transform:scale(1.1) rotate(-5deg); box-shadow:0 14px 32px rgba(37,211,102,0.5); }
+  @media(min-width:768px){ .fab-whatsapp{bottom:30px;right:30px;width:60px;height:60px;font-size:32px;} }
+
+  /* ── IMAGE ZOOM MODAL ────────────────── */
+  .img-zoom-overlay {
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,0.90); z-index:10005;
+    align-items:center; justify-content:center;
+    backdrop-filter:blur(6px); cursor:zoom-out;
+    opacity:0; transition:opacity 0.3s;
+  }
+  .img-zoom-overlay.show { display:flex; opacity:1; }
+  .zoom-stage {
+    position:relative; max-width:92%; max-height:92vh;
+    display:flex; flex-direction:column; align-items:center; gap:16px;
+  }
+  .zoomed-img {
+    max-width:100%; max-height:80vh; border-radius:12px;
+    box-shadow:0 24px 72px rgba(0,0,0,0.6); object-fit:contain;
+    transform:scale(0.84); transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .img-zoom-overlay.show .zoomed-img { transform:scale(1); }
+  .zoom-meta { display:flex; align-items:center; justify-content:space-between; width:100%; gap:12px; }
+  .zoom-caption { font-family:'Lora',serif; font-size:0.95rem; font-style:italic; color:rgba(255,255,255,0.75); }
+  .zoom-counter { font-size:0.75rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold-light); white-space:nowrap; }
+  .zoom-cat { font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--leaf); background:rgba(77,175,80,0.15); border:1px solid rgba(77,175,80,0.3); padding:4px 12px; border-radius:20px; }
+  .zoom-nav {
+    position:absolute; top:50%; transform:translateY(-50%);
+    background:rgba(0,0,0,0.5); color:#fff; border:1px solid rgba(255,255,255,0.2);
+    width:48px; height:48px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.3rem; cursor:pointer; transition:all 0.2s; user-select:none;
+  }
+  .zoom-nav:hover { background:var(--forest); transform:translateY(-50%) scale(1.08); }
+  .zoom-prev { left:-64px; }
+  .zoom-next { right:-64px; }
+  .close-zoom-btn {
+    position:absolute; top:-52px; right:0;
+    background:rgba(0,0,0,0.5); color:white; border:none;
+    font-size:1.6rem; width:42px; height:42px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:background 0.2s; line-height:1;
+  }
+  .close-zoom-btn:hover { background:rgba(200,0,0,0.7); }
+
+  /* MOBILE */
+  @media(max-width:768px){
+    nav { padding:12px 24px; }
+    .mobile-toggle { display:block; }
+    nav ul { position:absolute; top:100%; left:0; right:0; background:rgba(13,27,17,0.98); border-bottom:1px solid rgba(77,175,80,0.25); flex-direction:column; padding:24px; gap:20px; transform:translateY(-150%); opacity:0; pointer-events:none; }
+    nav ul.menu-open { transform:translateY(0); opacity:1; pointer-events:all; }
+    .nav-cta { width:100%; text-align:center; }
+    .gallery-hero { padding:110px 24px 48px; }
+    .zoom-prev,.zoom-next { display:none; }
+    .marquee-row::before,.marquee-row::after { width:40px; }
+  }
+  @media(max-width:640px){
+    .row-banana,.row-areca,.row-containers,.row-coconut,.row-farm { --card-w:200px; --img-h:160px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="global-watermark"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="your-logo.png" alt="Soil Leaf Logo" class="custom-logo-img"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+    <div style="display:none;color:var(--leaf);font-family:'Lora',serif;font-size:1.5rem;font-weight:700;">Soil<span style="color:#F9F4E8;">Leaf</span></div>
+  </a>
+  <button class="mobile-toggle" aria-label="Toggle navigation">☰</button>
+  <ul id="nav-menu">
+    <li><a href="index.html#products">Products</a></li>
+    <li><a href="index.html#usecases">We Serve</a></li>
+    <li><a href="index.html#why">Why Us</a></li>
+    <li><a href="gallery.html" class="active-link">Gallery</a></li>
+    <li><a href="index.html#location">Find Us</a></li>
+    <li><a href="products.html" class="nav-cta">Order Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="gallery-hero">
+  <div class="hero-bg-leaf">🍃</div>
+  <div class="gallery-hero-inner">
+    <span class="gallery-eyebrow reveal">Fresh From Our Farms</span>
+    <h1 class="reveal d1">Our <em>Gallery</em></h1>
+    <p class="reveal d2">A living showcase of freshness — every leaf, plate, and product captured as it leaves our farm and reaches your hands.</p>
+  </div>
+</section>
+
+<!-- GALLERY MARQUEE SECTION -->
+<section class="gallery-section">
+
+  <!-- ══ ROW 1 · BANANA LEAF ══ -->
+  <div class="row-label-bar reveal">
+    <span class="row-label">🍃 Banana Leaf</span>
+    <span class="row-label-line"></span>
+    <span class="row-label-count">Fresh Daily Supply</span>
+  </div>
+  <div class="marquee-row row-banana dir-left">
+    <div class="marquee-track" id="track-banana">
+      <div class="g-card" data-caption="Fresh Banana Leaves" data-cat="Banana Leaf"><img src="1.png" alt="Fresh banana leaves"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Round Cut Banana Leafs" data-cat="Banana Leaf"><img src="2.png" alt="Round Cut Banana Leafs"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="PC-Cut Banana Leaves" data-cat="Banana Leaf"><img src="3.png" alt="PC cut banana leaves"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Banana Leaf – Traditional Meal" data-cat="Banana Leaf"><img src="4.png" alt="Banana leaf traditional meal"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <!-- duplicates for seamless loop -->
+      <div class="g-card" data-caption="Fresh Banana Leaves" data-cat="Banana Leaf"><img src="1.png" alt="Fresh banana leaves"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Full-Size Banana Leaf" data-cat="Banana Leaf"><img src="2.png" alt="Full size banana leaf"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="PC-Cut Banana Leaves" data-cat="Banana Leaf"><img src="3.png" alt="PC cut banana leaves"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Banana Leaf – Traditional Meal" data-cat="Banana Leaf"><img src="4.png" alt="Banana leaf traditional meal"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+    </div>
+  </div>
+
+  <!-- ══ ROW 2 · ARECA PLATES ══ -->
+  <div class="row-label-bar reveal" style="margin-top:36px;">
+    <span class="row-label">🌿 Areca Leaf Plates</span>
+    <span class="row-label-line"></span>
+    <span class="row-label-count">Eco-Friendly & Biodegradable</span>
+  </div>
+  <div class="marquee-row row-areca dir-right">
+    <div class="marquee-track" id="track-areca">
+      <div class="g-card" data-caption="Areca Plates – Round" data-cat="Areca Plates"><img src="5.png" alt="Areca leaf plates round"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Areca Plates – Square" data-cat="Areca Plates"><img src="6.png" alt="Areca leaf plates square"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Areca Plates – Party Pack" data-cat="Areca Plates"><img src="7.png" alt="Areca plates party pack"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Areca Oval Plates" data-cat="Areca Plates"><img src="8.png" alt="Areca oval shaped plates"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <!-- duplicates -->
+      <div class="g-card" data-caption="Areca Plates – Round" data-cat="Areca Plates"><img src="5.png" alt="Areca leaf plates round"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Areca Plates – Square" data-cat="Areca Plates"><img src="6.png" alt="Areca leaf plates square"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Areca Plates – Party Pack" data-cat="Areca Plates"><img src="7.png" alt="Areca plates party pack"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Areca Oval Plates" data-cat="Areca Plates"><img src="8.png" alt="Areca oval shaped plates"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+    </div>
+  </div>
+
+  <!-- ══ ROW 3 · CONTAINERS ══ -->
+  <div class="row-label-bar reveal" style="margin-top:36px;">
+    <span class="row-label">📦 Containers</span>
+    <span class="row-label-line"></span>
+    <span class="row-label-count">Bulk & Retail Orders</span>
+  </div>
+  <div class="marquee-row row-containers dir-left">
+    <div class="marquee-track" id="track-containers">
+      <div class="g-card" data-caption="Eco Takeaway Containers" data-cat="Containers"><img src="9.png" alt="Eco takeaway containers"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Natural Gift Packaging" data-cat="Containers"><img src="10.png" alt="Natural gift packaging containers"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Catering Containers" data-cat="Containers"><img src="11.png" alt="Eco catering containers"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Biodegradable Box Range" data-cat="Containers"><img src="12.png" alt="Biodegradable containers range"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <!-- duplicates -->
+      <div class="g-card" data-caption="Eco Takeaway Containers" data-cat="Containers"><img src="9.png" alt="Eco takeaway containers"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Natural Gift Packaging" data-cat="Containers"><img src="10.png" alt="Natural gift packaging containers"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Catering Containers" data-cat="Containers"><img src="11.png" alt="Eco catering containers"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Biodegradable Box Range" data-cat="Containers"><img src="12.png" alt="Biodegradable containers range"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+    </div>
+  </div>
+
+  <!-- ══ ROW 4 · COCONUT ══ -->
+  <div class="row-label-bar reveal" style="margin-top:36px;">
+    <span class="row-label">🥥 Coconut</span>
+    <span class="row-label-line"></span>
+    <span class="row-label-count">Naturally Sourced & Pure</span>
+  </div>
+  <div class="marquee-row row-coconut dir-right">
+    <div class="marquee-track" id="track-coconut">
+      <div class="g-card" data-caption="Sal Leafs" data-cat="Coconut"><img src="13.png" alt="Sal Leafs"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Sal Leaf Bowls" data-cat="Coconut"><img src="14.png" alt="Sal Leaf Bowls"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Dry Coconut Supply" data-cat="Coconut"><img src="15.png" alt="Dry coconut bulk supply"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Coconut – Puja Grade" data-cat="Coconut"><img src="16.png" alt="Puja grade coconuts"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <!-- duplicates -->
+      <div class="g-card" data-caption="Fresh Tender Coconuts" data-cat="Coconut"><img src="13.png" alt="Fresh tender coconuts"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Coconut Products Collection" data-cat="Coconut"><img src="14.png" alt="Coconut products collection"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Dry Coconut Supply" data-cat="Coconut"><img src="15.png" alt="Dry coconut bulk supply"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Coconut – Puja Grade" data-cat="Coconut"><img src="16.png" alt="Puja grade coconuts"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+    </div>
+  </div>
+
+  <!-- ══ ROW 5 · FARM & NATURE ══ -->
+  <div class="row-label-bar reveal" style="margin-top:36px;">
+    <span class="row-label">🌾 Farm & Nature</span>
+    <span class="row-label-line"></span>
+    <span class="row-label-count">From Farm to Family</span>
+  </div>
+  <div class="marquee-row row-farm dir-left">
+    <div class="marquee-track" id="track-farm">
+      <div class="g-card" data-caption="Farm Direct Harvest" data-cat="Farm & Nature"><img src="17.png" alt="Farm direct harvest"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Banana Plantation" data-cat="Farm & Nature"><img src="18.png" alt="Banana plantation farm"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Making of Areca Products" data-cat="Farm & Nature"><img src="19.png" alt="Making of Areca Products"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Hygienic Sal Leafs" data-cat="Farm & Nature"><img src="20.png" alt="Hygienic Sal Leafs"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <!-- duplicates -->
+      <div class="g-card" data-caption="Farm Direct Harvest" data-cat="Farm & Nature"><img src="17.png" alt="Farm direct harvest"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Banana Plantation" data-cat="Farm & Nature"><img src="18.png" alt="Banana plantation farm"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Fresh Daily Harvest" data-cat="Farm & Nature"><img src="19.png" alt="Fresh daily harvest sorting"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+      <div class="g-card" data-caption="Nature & Green Fields" data-cat="Farm & Nature"><img src="20.png" alt="Green farm fields nature"><div class="g-overlay"><span class="g-caption">View</span></div></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- CTA -->
+<section class="gallery-cta reveal">
+  <span class="section-eyebrow">Ready to Order?</span>
+  <h2>Get Fresh Leaves Delivered Today</h2>
+  <p>Wholesale and retail orders welcome. Farm-direct pricing with our Buy 4 Get 1 Free daily offer.</p>
+  <div class="cta-buttons">
+    <a href="products.html" class="btn-primary">📦 Order Now</a>
+    <a href="index.html#location" class="btn-secondary">Send an Enquiry</a>
+  </div>
+</section>
+
+<div class="tagline-bar"><p>Choose Nature &nbsp;•&nbsp; Choose Health &nbsp;•&nbsp; Choose Soil Leaf</p></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="your-logo.png" alt="Soil Leaf Logo" class="footer-logo-img"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+        <div style="display:none;color:var(--leaf);font-family:'Lora',serif;font-size:1.8rem;font-weight:700;margin-bottom:8px;">Soil<span style="color:#FFF;">Leaf</span></div>
+        <div style="font-size:0.75rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);">Farmer Growth Together</div>
+        <p>100% Natural, Eco-Friendly banana leaf and coconut products. From farm to family, sustainably grown.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Products</h5>
+        <a href="index.html#products">Banana Leaf</a>
+        <a href="index.html#products">Areca Leaf Plates</a>
+        <a href="index.html#products">Containers</a>
+        <a href="products.html">View All Products</a>
+      </div>
+      <div class="footer-col">
+        <h5>We Serve</h5>
+        <a href="index.html#usecases">Restaurants & Hotels</a>
+        <a href="index.html#usecases">Weddings & Functions</a>
+        <a href="index.html#usecases">Temples & Pujas</a>
+        <a href="index.html#usecases">Retail & Wholesale</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:06360000986">063600 00986</a>
+        <a href="tel:9788566461">9788566461</a>
+        <p style="margin-top:10px;">Electronic City, Bengaluru<br>Karnataka 560100</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Soil Leaf. All rights reserved.</p>
+      <span class="footer-motto">Your Trust, Our Responsibility</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a href="https://wa.me/916360000986" target="_blank" class="fab-whatsapp" aria-label="Chat on WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.196.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+  </svg>
+</a>
+
+<!-- ZOOM MODAL -->
+<div class="img-zoom-overlay" id="imgZoomOverlay">
+  <div class="zoom-stage" onclick="event.stopPropagation()">
+    <button class="close-zoom-btn" id="closeZoomBtn">×</button>
+    <img src="" alt="" class="zoomed-img" id="zoomedImage">
+    <div class="zoom-meta">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span class="zoom-cat" id="zoomCat"></span>
+        <span class="zoom-caption" id="zoomCaption"></span>
+      </div>
+      <span class="zoom-counter" id="zoomCounter"></span>
+    </div>
+    <button class="zoom-nav zoom-prev" id="zoomPrev">&#8249;</button>
+    <button class="zoom-nav zoom-next" id="zoomNext">&#8250;</button>
+  </div>
+</div>
+
+<script>
+/* ── Mobile Nav ── */
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.querySelector('.mobile-toggle');
+  const menu   = document.getElementById('nav-menu');
+  toggle.addEventListener('click', () => {
+    menu.classList.toggle('menu-open');
+    toggle.textContent = menu.classList.contains('menu-open') ? '✕' : '☰';
+  });
+  document.querySelectorAll('#nav-menu a').forEach(a => a.addEventListener('click', () => {
+    menu.classList.remove('menu-open'); toggle.textContent = '☰';
+  }));
+});
+
+/* ── Scroll Reveal ── */
+document.addEventListener('DOMContentLoaded', () => {
+  const obs = new IntersectionObserver((entries, o) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('active'); o.unobserve(e.target); } });
+  }, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+});
+
+/* ── Image Zoom with Prev/Next ── */
+(function(){
+  const overlay   = document.getElementById('imgZoomOverlay');
+  const zoomedImg = document.getElementById('zoomedImage');
+  const captionEl = document.getElementById('zoomCaption');
+  const catEl     = document.getElementById('zoomCat');
+  const counterEl = document.getElementById('zoomCounter');
+  const closeBtn  = document.getElementById('closeZoomBtn');
+  const prevBtn   = document.getElementById('zoomPrev');
+  const nextBtn   = document.getElementById('zoomNext');
+
+  let allCards = [];
+  let current  = 0;
+
+  function buildCardList() {
+    // Collect only the first half of each track (originals, not duplicates)
+    const tracks = document.querySelectorAll('.marquee-track');
+    allCards = [];
+    tracks.forEach(track => {
+      const cards = track.querySelectorAll('.g-card');
+      const half  = cards.length / 2;
+      for(let i = 0; i < half; i++) allCards.push(cards[i]);
+    });
+  }
+
+  function openZoom(card) {
+    buildCardList();
+    // ✅ FIX: match by image src so duplicate cards resolve to the correct index
+    const src = card.querySelector('img').src;
+    current = allCards.findIndex(c => c.querySelector('img').src === src);
+    if(current === -1) current = 0;
+    renderZoom();
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => overlay.classList.add('show'));
+    document.body.style.overflow = 'hidden';
+  }
+
+  function renderZoom() {
+    const card = allCards[current];
+    const img  = card.querySelector('img');
+    zoomedImg.src = img.src;
+    zoomedImg.alt = img.alt;
+    captionEl.textContent = card.dataset.caption || '';
+    catEl.textContent     = card.dataset.cat     || '';
+    counterEl.textContent = (current + 1) + ' / ' + allCards.length;
+    // re-trigger entry animation
+    zoomedImg.style.transition = 'none';
+    zoomedImg.style.transform  = 'scale(0.84)';
+    requestAnimationFrame(() => {
+      zoomedImg.style.transition = '';
+      zoomedImg.style.transform  = '';
+    });
+  }
+
+  function closeZoom() {
+    overlay.classList.remove('show');
+    setTimeout(() => { overlay.style.display = 'none'; }, 320);
+    document.body.style.overflow = '';
+  }
+
+  // Attach click to ALL .g-card elements (originals + duplicates)
+  document.addEventListener('click', e => {
+    const card = e.target.closest('.g-card');
+    if(card) openZoom(card);
+  });
+
+  closeBtn.addEventListener('click', closeZoom);
+  overlay.addEventListener('click', closeZoom);
+
+  prevBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    current = (current - 1 + allCards.length) % allCards.length;
+    renderZoom();
+  });
+  nextBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    current = (current + 1) % allCards.length;
+    renderZoom();
+  });
+
+  document.addEventListener('keydown', e => {
+    if(!overlay.classList.contains('show')) return;
+    if(e.key === 'Escape')     closeZoom();
+    if(e.key === 'ArrowLeft')  { current = (current - 1 + allCards.length) % allCards.length; renderZoom(); }
+    if(e.key === 'ArrowRight') { current = (current + 1) % allCards.length; renderZoom(); }
+  });
+
+  // Touch swipe on modal
+  let tx = 0;
+  overlay.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive:true });
+  overlay.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if(Math.abs(dx) < 40){ closeZoom(); return; }
+    current = dx < 0
+      ? (current + 1) % allCards.length
+      : (current - 1 + allCards.length) % allCards.length;
+    renderZoom();
+  }, { passive:true });
+})();
+</script>
+</body>
+</html>
