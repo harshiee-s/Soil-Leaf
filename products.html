@@ -3,1116 +3,838 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="soil-leaf-logo.png">
-<link rel="icon" type="image/png" sizes="16x16" href="soil-leaf-logo.png">
-<link rel="apple-touch-icon" sizes="180x180" href="soil-leaf-logo.png"><title>Products | Soil Leaf – Eco-Friendly Products</title>
+<link rel="apple-touch-icon" sizes="180x180" href="soil-leaf-logo.png">
+<title>Products | Soil Leaf – Eco-Friendly Products</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:#1B4D2E;--forest-dark:#0D2B17;--leaf:#4CAF50;
+  --gold:#C8A96E;--gold-light:#F0C96A;
+  --cream:#F5EFE3;--cream-dark:#EAE0CC;--white:#FFFFFF;
+  --text-dark:#1B3A27;--text-mid:#5A6B5E;--text-light:#8B7355;
+  --border-soft:rgba(27,77,46,0.10);
+  --shadow-card:0 4px 20px rgba(27,77,46,0.07);
+  --shadow-hover:0 14px 40px rgba(27,77,46,0.15);
+  --sidebar-w:220px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--text-dark);padding-top:108px;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Lora',serif}
 
-  :root {
-    --forest: #1B4D2E;
-    --forest-dark: #0D2B17;
-    --leaf: #4CAF50;
-    --bright: #6DD85A;
-    --gold: #C8A96E;
-    --gold-light: #F0C96A;
-    
-    --bg-light: #FAFAFA;
-    --bg-soft: #F4F7F4;
-    --white: #FFFFFF;
-    
-    --text-dark: #2A2A2A;
-    --text-gray: #666666;
-    
-    --soft-shadow: 0 12px 40px rgba(27, 77, 46, 0.06);
-    --hover-shadow: 0 16px 50px rgba(27, 77, 46, 0.12);
-  }
+/* PRICING POPUP */
+.pricing-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:20000;align-items:center;justify-content:center;backdrop-filter:blur(5px);opacity:0;transition:opacity .35s ease}
+.pricing-overlay.show{display:flex;opacity:1}
+.pricing-modal{background:var(--white);width:90%;max-width:460px;border-radius:22px;overflow:hidden;box-shadow:0 32px 80px rgba(13,43,23,0.38);transform:translateY(28px) scale(.97);transition:transform .42s cubic-bezier(.34,1.56,.64,1)}
+.pricing-overlay.show .pricing-modal{transform:translateY(0) scale(1)}
+.pm-head{background:linear-gradient(140deg,var(--forest-dark),var(--forest));padding:28px 28px 22px;text-align:center}
+.pm-head .icon{font-size:2.4rem;display:block;margin-bottom:10px}
+.pm-head h2{color:#fff;font-size:1.45rem;font-weight:700}
+.pm-head .rule{display:block;width:48px;height:3px;background:var(--gold-light);border-radius:2px;margin:12px auto 0}
+.pm-body{padding:26px 30px 20px;text-align:center}
+.pm-body p{font-size:1rem;color:var(--text-dark);line-height:1.78}
+.pm-note{display:flex;align-items:flex-start;gap:10px;background:rgba(77,175,80,.08);border-left:3px solid var(--leaf);border-radius:0 10px 10px 0;padding:12px 16px;margin-top:16px;text-align:left}
+.pm-note span{font-size:1.1rem;flex-shrink:0}
+.pm-note p{font-size:.91rem;color:var(--forest-dark);font-weight:700;line-height:1.5}
+.pm-foot{padding:4px 30px 28px;display:flex;flex-direction:column;gap:10px}
+.pm-foot .btn-p{width:100%;background:var(--forest);color:#fff;border:none;padding:14px;border-radius:10px;font-family:'Lato';font-size:1rem;font-weight:700;cursor:pointer;transition:background .2s}
+.pm-foot .btn-p:hover{background:var(--leaf)}
+.pm-foot .btn-g{display:block;width:100%;text-align:center;text-decoration:none;padding:12px;border-radius:10px;border:1px solid rgba(27,77,46,0.2);font-family:'Lato';font-size:.9rem;font-weight:700;color:var(--text-mid);transition:all .2s}
+.pm-foot .btn-g:hover{border-color:var(--leaf);color:var(--forest)}
 
-  html { scroll-behavior: smooth; }
-  
-  body { 
-    font-family: 'Lato', sans-serif; 
-    background: var(--bg-light); 
-    color: var(--text-dark); 
-    margin: 0;
-    padding: 0;
-    padding-top: 104px;
-    overflow-x: hidden; 
-  }
+/* HEADER */
+.main-header{position:fixed;top:0;left:0;right:0;z-index:9999;background:var(--forest-dark);box-shadow:0 4px 24px rgba(0,0,0,0.2)}
+.top-banner{background:var(--leaf);color:#fff;text-align:center;font-size:.78rem;font-weight:700;padding:7px 16px;letter-spacing:1px}
+.main-nav{display:flex;align-items:center;gap:20px;padding:13px 40px 13px 24px;border-bottom:1px solid rgba(77,175,80,0.2)}
+.nav-left{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.mobile-menu-btn{display:none;background:transparent;border:none;color:#fff;font-size:1.6rem;cursor:pointer}
+.logo-link{display:inline-flex;align-items:center;text-decoration:none}
+.logo-img{height:42px;width:auto;object-fit:contain}
+.logo-fallback{display:none;color:#fff;font-family:'Lora',serif;font-size:1.5rem;font-weight:700}
+.logo-fallback span{color:var(--leaf)}
+.nav-search{flex-grow:1;max-width:520px;display:flex;background:rgba(255,255,255,0.95);border-radius:8px;overflow:hidden;height:40px}
+.nav-search input{flex:1;border:none;padding:0 14px;font-family:'Lato';font-size:.9rem;outline:none;color:var(--text-dark);min-width:0}
+.nav-search button{background:var(--gold-light);border:none;padding:0 18px;cursor:pointer;font-size:1.05rem;transition:background .2s}
+.nav-search button:hover{background:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:28px;flex-shrink:0;margin-left:auto}
+.nav-links{list-style:none;display:flex;gap:22px}
+.nav-links a{text-decoration:none;color:rgba(249,244,232,0.75);font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;transition:color .2s}
+.nav-links a:hover{color:var(--leaf)}
+.cart-btn{display:flex;align-items:center;gap:8px;background:transparent;color:#fff;padding:7px 16px;border:1px solid var(--leaf);border-radius:7px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s}
+.cart-btn:hover{background:var(--leaf)}
+.cart-count{background:var(--gold-light);color:var(--forest-dark);border-radius:50%;padding:2px 7px;font-size:.78rem;font-weight:900}
 
-  h1, h2, h3, h4, h5 { font-family: 'Lora', serif; }
+/* LAYOUT */
+.shop-wrap{display:flex;max-width:1420px;margin:0 auto;min-height:calc(100vh - 108px)}
 
-  /* GLOBAL WATERMARK */
-  .global-watermark {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: url('soil-leaf-logo.png') no-repeat center center;
-    background-size: 50vmin; opacity: 0.08; z-index: -1;
-    pointer-events: none;
-  }
+/* SIDEBAR — column always fills full height, no gap */
+.sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--forest-dark)}
+.sb-inner{position:sticky;top:108px;height:calc(100vh - 108px);display:flex;flex-direction:column;overflow:hidden}
+.sb-brand{padding:22px 18px 18px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.sb-logo{color:var(--gold);font-size:13px;font-weight:700;letter-spacing:2.5px;font-family:'Lato'}
+.sb-sub{color:rgba(255,255,255,0.28);font-size:10px;letter-spacing:1px;margin-top:3px;text-transform:uppercase}
+.sb-search{margin:14px 14px 0;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.06);border-radius:8px;padding:8px 12px;border:1px solid rgba(255,255,255,0.08)}
+.sb-search input{background:transparent;border:none;outline:none;flex:1;color:rgba(255,255,255,0.7);font-family:'Lato';font-size:12px;min-width:0}
+.sb-search input::placeholder{color:rgba(255,255,255,0.3)}
+.sb-search span{color:rgba(255,255,255,0.3);font-size:14px;flex-shrink:0}
+.sb-label{padding:18px 18px 8px;font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.28);text-transform:uppercase}
+.sb-nav{flex:1;overflow-y:auto;padding-bottom:12px}
+.sb-nav::-webkit-scrollbar{width:4px}
+.sb-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px}
+.sb-link{display:flex;align-items:center;gap:11px;padding:11px 18px;color:rgba(255,255,255,0.45);font-size:13px;font-weight:400;text-decoration:none;border:none;background:transparent;width:100%;text-align:left;cursor:pointer;border-left:3px solid transparent;transition:all .18s ease}
+.sb-link:hover{color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.04)}
+.sb-link.active{color:#fff;font-weight:700;border-left-color:var(--gold);background:rgba(200,169,110,0.12)}
+.sb-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:currentColor;opacity:.5}
+.sb-link.active .sb-dot{opacity:1;background:var(--gold)}
+.sb-count{margin-left:auto;font-size:10px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);padding:2px 7px;border-radius:20px}
+.sb-link.active .sb-count{background:rgba(200,169,110,0.2);color:var(--gold)}
+.sb-foot{padding:16px 14px;border-top:1px solid rgba(255,255,255,0.08);flex-shrink:0}
+.sb-cart{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:11px;background:rgba(200,169,110,0.12);border:1px solid rgba(200,169,110,0.3);border-radius:9px;color:var(--gold);font-size:13px;font-weight:700;cursor:pointer;font-family:'Lato';transition:all .2s}
+.sb-cart:hover{background:rgba(200,169,110,0.22)}
+.sb-cart-badge{background:var(--gold);color:var(--forest-dark);border-radius:20px;padding:2px 8px;font-size:11px;font-weight:900}
 
-  /* =========================================================
-     HEADER SECTION
-     ========================================================= */
-  .main-header {
-    position: fixed; 
-    top: 0; left: 0; right: 0; z-index: 9999;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.15); 
-    background: rgba(13,27,17,1); 
-  }
+/* PRODUCT AREA */
+.product-area{flex:1;min-width:0;padding:32px 36px 60px;background:var(--cream)}
 
-  .top-bar {
-    background: var(--leaf); color: #fff; text-align: center; font-size: 0.8rem; font-weight: 700;
-    padding: 8px 16px; letter-spacing: 1px; display: flex; align-items: center; justify-content: center;
-  }
+/* CATEGORY TOPBAR */
+.cat-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:14px}
+.ct-left{display:flex;align-items:center;gap:14px}
+.ct-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.ct-name{font-size:1.65rem;color:var(--forest-dark);font-weight:700;line-height:1.2}
+.ct-count{font-size:12px;color:var(--text-light);margin-top:2px}
+.quality-tabs{display:flex;gap:6px}
+.q-tab{padding:7px 16px;border-radius:7px;border:1px solid rgba(27,77,46,0.15);font-size:12px;font-weight:700;cursor:pointer;font-family:'Lato';transition:all .18s}
+.q-tab.dom{background:var(--white);color:var(--text-light)}
+.q-tab.prem{background:var(--forest-dark);color:#fff;border-color:var(--forest-dark)}
 
-  nav {
-    display: flex; align-items: center; justify-content: space-between; gap: 24px;
-    padding: 14px 48px; background: rgba(13,27,17,1); border-bottom: 1px solid rgba(77,175,80,0.25);
-  }
-  
-  .nav-left { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
-  .mobile-menu-btn { display: none; background: transparent; border: none; color: #fff; font-size: 1.6rem; cursor: pointer; }
-  
-  .logo-link { display: inline-flex; align-items: center; text-decoration: none; }
-  .custom-logo-img { height: 45px; width: auto; object-fit: contain; display: block; }
-  .logo-fallback { display: none; color: #fff; font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 700; letter-spacing: 0.5px; }
-  .logo-fallback span { color: var(--leaf); }
-  
-  .nav-search {
-    flex-grow: 1; max-width: 550px; min-width: 150px; display: flex; align-items: center;
-    background: #fff; border-radius: 6px; overflow: hidden; height: 42px;
-  }
-  .nav-search input {
-    flex-grow: 1; border: none; padding: 0 16px; font-family: 'Lato'; font-size: 0.95rem;
-    outline: none; color: var(--text-dark); height: 100%; min-width: 0;
-  }
-  .nav-search button {
-    background: var(--gold-light); border: none; padding: 0 20px; height: 100%; cursor: pointer;
-    font-size: 1.1rem; transition: background 0.2s; display: flex; align-items: center; justify-content: center;
-  }
-  .nav-search button:hover { background: var(--gold); }
+/* CATEGORY SECTION */
+.cat-section{scroll-margin-top:140px}
+.sec-divider{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid rgba(27,77,46,0.1)}
+.sec-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.sec-title{font-size:1.45rem;color:var(--forest-dark);font-weight:700}
 
-  .nav-right { display: flex; align-items: center; gap: 32px; flex-shrink: 0; }
-  .nav-links { list-style: none; display: flex; gap: 24px; align-items: center; margin: 0; padding: 0;}
-  .nav-links a { text-decoration: none; color: rgba(249,244,232,0.8); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--leaf); }
-  
-  .cart-btn {
-    background: transparent; color: #fff; padding: 8px 16px; border-radius: 6px; font-weight: 700; 
-    display: flex; align-items: center; gap: 8px; cursor: pointer; border: 1px solid var(--leaf); font-size: 0.95rem; transition: all 0.2s; 
-  }
-  .cart-btn:hover { background: var(--leaf); color: #fff; }
-  .cart-count { background: var(--gold-light); color: var(--forest-dark); border-radius: 50%; padding: 2px 8px; font-size: 0.8rem; font-weight: 900; }
+/* PRODUCT GRID */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px;margin-bottom:56px}
 
-  /* =========================================================
-     SHOP LAYOUT & PREMIUM SIDEBAR DESIGN
-     ========================================================= */
-  .shop-layout {
-    display: flex; max-width: 1400px; margin: 30px auto; padding: 0 24px; gap: 40px; min-height: 80vh; position: relative;
-  }
+/* PRODUCT CARD */
+.product-card{background:var(--white);border-radius:16px;overflow:hidden;border:1px solid var(--border-soft);box-shadow:var(--shadow-card);display:flex;flex-direction:column;transition:transform .28s ease,box-shadow .28s ease}
+.product-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-hover)}
 
-  .sidebar { 
-    width: 280px; flex-shrink: 0; position: sticky; 
-    top: 130px; 
-    height: fit-content; max-height: calc(100vh - 150px); 
-    overflow-y: auto; background: var(--white); padding: 26px; border-radius: 16px; box-shadow: var(--soft-shadow);
-    border: 1px solid rgba(27,77,46,0.06);
-  }
-  .sidebar h3 { font-size: 1.15rem; color: var(--forest-dark); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid var(--leaf); text-transform: uppercase; letter-spacing: 0.5px;}
-  
-  .category-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-  .category-list a { 
-    text-decoration: none; color: var(--text-gray); font-size: 0.95rem; font-weight: 600; 
-    display: block; padding: 11px 16px; border-radius: 8px; border-left: 4px solid transparent; transition: all 0.25s ease;
-  }
-  .category-list a:hover { background: rgba(77,175,80,0.04); color: var(--forest); border-left-color: rgba(77,175,80,0.4); padding-left: 20px; }
-  .category-list a.active { background: rgba(77,175,80,0.08); color: var(--forest-dark); border-left-color: var(--forest); font-weight: 700; }
+/* Card image */
+.card-img{width:100%;aspect-ratio:4/3;background-size:cover;background-position:center;background-repeat:no-repeat;cursor:zoom-in;position:relative;overflow:hidden;border-bottom:3px solid var(--leaf)}
+.card-img::after{content:'🔍';position:absolute;bottom:10px;right:10px;background:rgba(255,255,255,0.88);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.75rem;opacity:0;transition:opacity .2s}
+.product-card:hover .card-img::after{opacity:1}
 
-  /* PRODUCT CONTAINER AREA */
-  .product-area { flex-grow: 1; }
-  .category-section { margin-bottom: 80px; scroll-margin-top: 130px; }
-  .category-section h2 { font-size: 2rem; color: var(--forest-dark); margin-bottom: 24px; border-bottom: 1px solid #EFEFEF; padding-bottom: 12px;}
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
+/* Category colors */
+.cat-banana .card-img{background-color:#E8F5E9;border-bottom-color:#2E7D32}
+.cat-bowls  .card-img{background-color:#FBE9E7;border-bottom-color:#BF360C}
+.cat-round  .card-img{background-color:#E1F5FE;border-bottom-color:#0277BD}
+.cat-square .card-img{background-color:#F9FBE7;border-bottom-color:#558B2F}
+.cat-spec   .card-img{background-color:#FFF8E1;border-bottom-color:#F57F17}
+.cat-cont   .card-img{background-color:#ECEFF1;border-bottom-color:#546E7A}
+.cat-sal    .card-img{background-color:#F1F8E9;border-bottom-color:#33691E}
+.cat-coco   .card-img{background-color:#EFEBE9;border-bottom-color:#4E342E}
 
-  /* CARDS */
-  .card {
-    background: var(--white); border: 1px solid rgba(27,77,46,0.08); border-radius: 12px;
-    overflow: hidden; box-shadow: var(--soft-shadow); display: flex; flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; height: 100%;
-  }
-  .card:hover { transform: translateY(-6px); box-shadow: var(--hover-shadow); border-color: var(--leaf); }
-  
-  .product-img {
-    height: 240px; 
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat;
-    border-bottom: 3px solid var(--leaf);
-    background-color: #F8F9F8;
-    cursor: zoom-in; /* Indicates the image is clickable */
-  }
-  
-  .card-body { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
-  .card-title { font-family: 'Lato', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--forest-dark); margin-bottom: 16px; line-height: 1.3;}
-  
-  .variant-group { margin-bottom: 20px; }
-  .variant-select { 
-    width: 100%; padding: 10px 14px; border: 1px solid rgba(27,77,46,0.15); border-radius: 8px; font-family: 'Lato'; outline: none; background: var(--bg-soft); color: var(--text-dark); cursor: pointer; transition: border-color 0.2s;
-  }
-  .variant-select:focus { border-color: var(--leaf); }
+/* Section icon bg */
+.ic-banana{background:#E8F5E9}.ic-bowls{background:#FBE9E7}.ic-round{background:#E1F5FE}
+.ic-square{background:#F9FBE7}.ic-spec{background:#FFF8E1}.ic-cont{background:#ECEFF1}
+.ic-sal{background:#F1F8E9}.ic-coco{background:#EFEBE9}
 
-  .action-row { display: flex; gap: 12px; margin-top: auto; }
-  .qty-input {
-    width: 75px; padding: 12px; border: 1px solid rgba(27,77,46,0.15); border-radius: 8px; font-family: 'Lato'; text-align: center; font-weight: 700; outline: none; font-size: 1rem; color: var(--forest-dark); transition: border-color 0.2s;
-  }
-  .qty-input:focus { border-color: var(--leaf); }
-  .add-btn {
-    flex-grow: 1; background: var(--bg-soft); color: var(--forest); border: 1px solid rgba(27,77,46,0.2); border-radius: 50px;
-    font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; font-family: 'Lato'; display: flex; align-items: center; justify-content: center;
-  }
-  .add-btn:hover { background: var(--forest); color: #fff; border-color: var(--forest); }
-  .add-btn.success { background: var(--leaf); border-color: var(--leaf); color: #fff; }
+/* Card body */
+.card-body{padding:16px 16px 18px;display:flex;flex-direction:column;gap:12px;flex:1}
+.card-name{font-family:'Lora',serif;font-size:1rem;font-weight:700;color:var(--forest-dark);line-height:1.35}
+.card-controls{display:flex;flex-direction:column;gap:9px;margin-top:auto}
+.variant-select{width:100%;padding:9px 12px;border:1px solid rgba(27,77,46,0.15);border-radius:8px;font-family:'Lato';font-size:.85rem;outline:none;background:var(--cream);color:var(--text-dark);cursor:pointer;transition:border-color .2s}
+.variant-select:focus{border-color:var(--leaf)}
+.qty-row{display:flex;gap:8px}
+.qty-input{width:64px;padding:9px 8px;border:1px solid rgba(27,77,46,0.15);border-radius:8px;font-family:'Lato';text-align:center;font-weight:700;font-size:.9rem;color:var(--forest-dark);background:var(--cream);outline:none;transition:border-color .2s}
+.qty-input:focus{border-color:var(--leaf)}
+.add-btn{flex:1;padding:9px;border:none;border-radius:8px;font-weight:700;font-size:.85rem;cursor:pointer;font-family:'Lato';letter-spacing:.3px;transition:background .2s;color:#fff}
+/* default */
+.add-btn{background:var(--forest-dark)}
+.add-btn:hover{background:var(--leaf)}
+.cat-banana .add-btn{background:#2E7D32}.cat-banana .add-btn:hover{background:var(--leaf)}
+.cat-bowls  .add-btn{background:#BF360C}.cat-bowls  .add-btn:hover{background:#E64A19}
+.cat-round  .add-btn{background:#0277BD}.cat-round  .add-btn:hover{background:#0288D1}
+.cat-square .add-btn{background:#558B2F}.cat-square .add-btn:hover{background:#689F38}
+.cat-spec   .add-btn{background:#E65100}.cat-spec   .add-btn:hover{background:#F57C00}
+.cat-cont   .add-btn{background:#455A64}.cat-cont   .add-btn:hover{background:#546E7A}
+.cat-sal    .add-btn{background:#33691E}.cat-sal    .add-btn:hover{background:#558B2F}
+.cat-coco   .add-btn{background:#4E342E}.cat-coco   .add-btn:hover{background:#6D4C41}
+.add-btn.success{background:var(--leaf)!important}
 
-  #no-results-msg {
-    display: none; text-align: center; padding: 60px 20px; color: var(--text-gray);
-    font-size: 1.2rem; font-family: 'Lora', serif; font-style: italic; width: 100%;
-  }
+#no-results{display:none;text-align:center;padding:60px 20px;color:var(--text-light);font-family:'Lora',serif;font-style:italic;font-size:1.2rem}
 
-  .mobile-bottom-cart {
-    display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--white);
-    padding: 12px 20px; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 1000;
-    justify-content: space-between; align-items: center; border-top: 1px solid #EFEFEF;
-  }
-  .mobile-bottom-cart .cart-summary { display: flex; flex-direction: column; }
-  .mobile-bottom-cart .cart-summary span { font-weight: 700; color: var(--forest-dark); font-size: 1.1rem; }
-  .mobile-bottom-cart .cart-summary small { font-size: 0.75rem; color: var(--text-gray); }
-  .mobile-checkout-btn {
-    background: var(--leaf); color: #fff; border: none; padding: 12px 24px; border-radius: 50px; font-weight: 700;
-    font-family: 'Lato'; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(77, 175, 80, 0.3);
-  }
+/* IMAGE ZOOM */
+.zoom-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:10005;align-items:center;justify-content:center;backdrop-filter:blur(4px);cursor:zoom-out;opacity:0;transition:opacity .3s}
+.zoom-overlay.show{display:flex;opacity:1}
+.zoom-img{max-width:90%;max-height:90vh;border-radius:8px;object-fit:contain;transform:scale(.8);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.zoom-overlay.show .zoom-img{transform:scale(1)}
+.zoom-close{position:absolute;top:18px;right:24px;background:rgba(0,0,0,0.5);color:#fff;border:none;width:42px;height:42px;border-radius:50%;font-size:1.8rem;display:flex;align-items:center;justify-content:center;cursor:pointer}
 
-  /* IMAGE ZOOM MODAL */
-  .img-zoom-overlay {
-    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.85); z-index: 10005; align-items: center; justify-content: center;
-    backdrop-filter: blur(4px); cursor: zoom-out; opacity: 0; transition: opacity 0.3s ease;
-  }
-  .img-zoom-overlay.show { display: flex; opacity: 1; }
-  .zoomed-img {
-    max-width: 90%; max-height: 90vh; border-radius: 8px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5); object-fit: contain;
-    transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  .img-zoom-overlay.show .zoomed-img { transform: scale(1); }
-  .close-zoom-btn {
-    position: absolute; top: 20px; right: 30px; background: rgba(0,0,0,0.5);
-    color: white; border: none; font-size: 2rem; width: 45px; height: 45px;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: background 0.2s; line-height: 1;
-  }
-  .close-zoom-btn:hover { background: rgba(0,0,0,0.8); }
+/* CART MODAL */
+.cart-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.cart-modal{background:var(--white);width:90%;max-width:500px;max-height:85vh;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.25)}
+.cart-head{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;background:var(--forest-dark);color:#fff}
+.cart-head h3{font-family:'Lora',serif;font-size:1.3rem;margin:0}
+.cart-x{background:transparent;border:none;color:#fff;font-size:1.8rem;cursor:pointer;line-height:1}
+.cart-body{padding:20px 24px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:16px}
+.cart-item{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid #f0f0f0}
+.ci-name{font-weight:700;color:var(--forest-dark);font-size:.95rem}
+.ci-var{font-size:.82rem;color:var(--text-light);margin-top:3px}
+.ci-actions{display:flex;align-items:center;gap:14px}
+.qty-ctrl{display:flex;align-items:center;border:1px solid #eee;border-radius:8px;overflow:hidden}
+.qty-ctrl button{background:#f8f8f8;border:none;padding:7px 11px;cursor:pointer;font-weight:700;color:var(--forest);font-size:1.05rem}
+.qty-ctrl span{padding:0 10px;font-weight:700;font-size:.95rem;min-width:32px;text-align:center}
+.ci-del{background:transparent;border:none;color:#e74c3c;cursor:pointer;font-size:1.1rem;padding:4px}
+.cart-foot{padding:18px 24px;border-top:1px solid #eee;background:#fafafa}
+.checkout-btn{width:100%;background:var(--leaf);color:#fff;border:none;padding:13px;border-radius:9px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:'Lato';transition:background .2s}
+.checkout-btn:hover{background:var(--forest)}
+.cart-empty{text-align:center;color:var(--text-light);font-style:italic;padding:40px 0;font-size:1.05rem}
 
-  /* CART EDIT MODAL */
-  .cart-modal-overlay {
-    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.6); z-index: 10000; align-items: center; justify-content: center;
-    backdrop-filter: blur(3px);
-  }
-  .cart-modal {
-    background: var(--white); width: 90%; max-width: 500px; max-height: 85vh;
-    border-radius: 16px; display: flex; flex-direction: column; overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-  }
-  .cart-modal-header {
-    padding: 20px 24px; border-bottom: 1px solid #EFEFEF; display: flex; justify-content: space-between; align-items: center;
-    background: var(--forest); color: #fff;
-  }
-  .cart-modal-header h3 { margin: 0; font-family: 'Lora', serif; font-size: 1.4rem; }
-  .close-modal-btn { background: transparent; border: none; color: #fff; font-size: 2rem; cursor: pointer; line-height: 1; }
-  .cart-modal-body { padding: 20px 24px; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; gap: 16px; }
-  .cart-modal-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid #EFEFEF; }
-  .cart-item-info { flex-grow: 1; }
-  .cart-item-title { font-weight: 700; color: var(--forest-dark); margin-bottom: 4px; font-size: 1rem;}
-  .cart-item-variant { font-size: 0.85rem; color: var(--text-gray); }
-  .cart-item-actions { display: flex; align-items: center; gap: 16px; }
-  .qty-control { display: flex; align-items: center; border: 1px solid #EFEFEF; border-radius: 8px; overflow: hidden; }
-  .qty-control button { background: var(--bg-soft); border: none; padding: 8px 12px; cursor: pointer; font-weight: bold; color: var(--forest); font-size: 1.1rem;}
-  .qty-control span { padding: 0 12px; font-weight: 700; font-size: 1rem; min-width: 35px; text-align: center; }
-  .remove-item-btn { background: transparent; border: none; color: #E74C3C; cursor: pointer; font-size: 1.2rem; padding: 4px; }
-  .cart-modal-footer { padding: 20px 24px; border-top: 1px solid #EFEFEF; background: var(--bg-soft); }
-  .checkout-btn { width: 100%; background: var(--leaf); color: #fff; border: none; padding: 14px; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; font-family: 'Lato'; }
-  .empty-cart-msg { text-align: center; color: var(--text-gray); font-style: italic; padding: 40px 0; font-size: 1.1rem;}
+/* MOBILE DRAWER */
+.drawer-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10004;opacity:0;transition:opacity .3s}
+.drawer-ov.open{display:block;opacity:1}
+.drawer{position:fixed;top:0;left:-310px;width:300px;height:100vh;background:var(--white);z-index:10005;box-shadow:5px 0 25px rgba(0,0,0,0.15);transition:left .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.drawer.open{left:0}
+.drawer-head{padding:18px 20px;background:var(--forest-dark);display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--leaf)}
+.drawer-head img{height:38px;width:auto;object-fit:contain}
+.drawer-x{background:transparent;color:#fff;border:none;font-size:2rem;cursor:pointer;line-height:1}
+.drawer-body{flex:1;overflow-y:auto;padding:16px 0;display:flex;flex-direction:column;gap:20px}
+.dg h4{font-family:'Lato';font-size:.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-light);padding:0 22px 8px;border-bottom:1px solid #f0f0f0;margin-bottom:6px}
+.dl{list-style:none}
+.dl li a{display:block;padding:11px 22px;text-decoration:none;font-size:1.05rem;font-weight:700;color:var(--forest-dark);transition:background .15s}
+.dl li a:hover{background:var(--cream)}
+.dc{list-style:none}
+.dc li a{display:block;padding:9px 22px 9px 34px;text-decoration:none;font-size:.9rem;font-weight:600;color:var(--text-dark);border-left:3px solid transparent;transition:all .15s}
+.dc li a:hover,.dc li a.active{background:rgba(77,175,80,.07);color:var(--forest);border-left-color:var(--leaf)}
 
-  /* =========================================================
-     FIXED: OPTIMIZED MOBILE DRAWER AND HORIZONTAL NAVBAR
-     ========================================================= */
-  .mobile-menu-drawer {
-    position: fixed; top: 0; left: -310px; width: 300px; height: 100vh;
-    background: var(--white); z-index: 10005; box-shadow: 5px 0 25px rgba(0,0,0,0.15);
-    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column;
-  }
-  .mobile-menu-drawer.open { left: 0; }
-  .mobile-menu-header { padding: 20px; background: rgba(13,27,17,1); display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--leaf); }
-  .mobile-menu-header img { height: 40px; width: auto; object-fit: contain; }
-  .close-drawer-btn { background: transparent; color: #fff; border: none; font-size: 2.2rem; cursor: pointer; line-height: 1; }
-  
-  .mobile-drawer-body { flex-grow: 1; overflow-y: auto; padding: 20px 0; display: flex; flex-direction: column; gap: 24px; }
-  
-  /* Navigation Sections Inside Drawer */
-  .drawer-nav-group h4 { font-family: 'Lato', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-gray); padding: 0 24px 8px 24px; border-bottom: 1px solid #F0F0F0; margin-bottom: 8px;}
-  .mobile-drawer-links { list-style: none; display: flex; flex-direction: column; }
-  .mobile-drawer-links li a { display: block; padding: 12px 24px; text-decoration: none; font-size: 1.1rem; font-weight: 700; color: var(--forest-dark); transition: background 0.2s; }
-  .mobile-drawer-links li a:hover { background: var(--bg-soft); }
+/* MOBILE BAR */
+.mobile-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--white);padding:12px 20px;box-shadow:0 -4px 20px rgba(0,0,0,0.1);z-index:1000;justify-content:space-between;align-items:center;border-top:1px solid #eee}
+.mb-info{display:flex;flex-direction:column}
+.mb-info span{font-weight:700;color:var(--forest-dark);font-size:1.05rem}
+.mb-info small{font-size:.72rem;color:var(--text-light)}
+.mb-btn{background:var(--leaf);color:#fff;border:none;padding:11px 22px;border-radius:50px;font-weight:700;font-family:'Lato';font-size:.9rem;display:flex;align-items:center;gap:7px;box-shadow:0 4px 15px rgba(77,175,80,.3);cursor:pointer}
 
-  /* Connected Product Categories in Menu */
-  .mobile-drawer-categories { list-style: none; display: flex; flex-direction: column; }
-  .mobile-drawer-categories li a { display: block; padding: 10px 24px 10px 36px; text-decoration: none; font-size: 0.95rem; font-weight: 600; color: var(--text-dark); border-left: 3px solid transparent; }
-  .mobile-drawer-categories li a:hover, .mobile-drawer-categories li a.active { background: rgba(77,175,80,0.06); color: var(--forest); border-left-color: var(--leaf); }
-
-  .mobile-drawer-overlay {
-    display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.5); z-index: 10004; opacity: 0; transition: opacity 0.3s ease;
-  }
-  .mobile-drawer-overlay.open { display: block; opacity: 1; }
-
-  /* RESPONSIVE SUB-DECK */
-  @media (max-width: 900px) {
-    .shop-layout { flex-direction: column; margin-top: 0; padding-top: 10px; padding-bottom: 80px; }
-    
-    /* Top horizontal slider remaining for quick category navigation on body layout */
-    .sidebar { 
-      position: sticky; top: 110px; z-index: 90; width: calc(100% + 48px); margin-left: -24px; padding: 12px 24px;
-      display: flex; flex-direction: row; align-items: center; overflow-x: auto; 
-      border-radius: 0; border-left: none; border-right: none; border-top: none; border-bottom: 1px solid rgba(0,0,0,0.05);
-      background: rgba(255,255,255,0.98); scrollbar-width: none;
-    }
-    .sidebar::-webkit-scrollbar { display: none; }
-    .sidebar h3 { display: none; } 
-    
-    .category-list { flex-direction: row; flex-wrap: nowrap; gap: 8px; }
-    .category-list a { 
-      border-left: none; border: 1px solid #E0E0E0; border-radius: 30px; 
-      white-space: nowrap; padding: 8px 16px; background: var(--bg-light); color: var(--text-dark);
-      font-size: 0.85rem; font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-    }
-    .category-list a:hover { padding-left: 16px; }
-    .category-list a.active { border-color: var(--leaf); background: rgba(77,175,80,0.1); color: var(--forest-dark); border-left: none; font-weight: 700; }
-  }
-
-  @media (max-width: 600px) {
-    body { padding-top: 115px; }
-    .top-bar { font-size: 0.7rem; padding: 6px 10px; }
-    nav { flex-direction: column; align-items: stretch; padding: 12px 16px; gap: 12px; }
-    .nav-left { justify-content: space-between; }
-    .mobile-menu-btn { display: block; }
-    .logo-fallback { font-size: 1.4rem; }
-    .custom-logo-img { height: 35px; }
-    .nav-right { display: none; } 
-    
-    .nav-search { max-width: 100%; border-radius: 4px; height: 38px; }
-    .nav-search input { padding: 0 12px; font-size: 0.9rem; }
-    .nav-search button { padding: 0 16px; }
-    
-    .mobile-bottom-cart { display: flex; }
-    
-    .shop-layout { padding: 0 10px 80px 10px; gap: 20px; }
-    .sidebar { top: 110px; width: calc(100% + 20px); margin-left: -10px; padding: 10px 10px; }
-    
-    .category-section { margin-bottom: 40px; scroll-margin-top: 165px; }
-    .category-section h2 { font-size: 1.3rem; margin-bottom: 16px; padding-left: 4px; border-bottom: none; }
-    
-    .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    
-    .card { border-radius: 8px; box-shadow: none; border: 1px solid #E5E5E5; }
-    .card:hover { transform: none; box-shadow: none; }
-    .product-img { height: 160px; border-width: 2px; }
-    .card-body { padding: 12px; }
-    .card-title { font-size: 0.85rem; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.6em; }
-    
-    .variant-group { margin-bottom: 12px; }
-    .variant-select { padding: 6px 8px; font-size: 0.75rem; border-radius: 6px; }
-    
-    .action-row { flex-direction: row; gap: 6px; align-items: stretch; }
-    .qty-input { width: 45px; padding: 6px; font-size: 0.85rem; border-radius: 6px; }
-    .add-btn { font-size: 0.8rem; padding: 6px; border-radius: 6px; background: var(--bg-soft); color: var(--forest); border: 1px solid #ccc; }
-  }
+/* RESPONSIVE */
+@media(max-width:1060px){.product-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}}
+@media(max-width:900px){
+  body{padding-top:116px}
+  .shop-wrap{flex-direction:column}
+  .sidebar{width:100%;position:sticky;top:116px;z-index:90;border-bottom:2px solid rgba(200,169,110,0.2)}
+  .sb-inner{position:static;height:auto;flex-direction:row;padding:0 16px;overflow-x:auto;overflow-y:visible;scrollbar-width:none}
+  .sb-inner::-webkit-scrollbar{display:none}
+  .sb-brand,.sb-search,.sb-label,.sb-foot{display:none}
+  .sb-nav{display:flex;flex-direction:row;flex:none;gap:4px;padding:10px 0;overflow:visible}
+  .sb-link{flex-direction:row;white-space:nowrap;border:1px solid rgba(255,255,255,0.12);border-left:none;border-radius:30px;padding:6px 14px;font-size:12px;font-weight:600;flex-shrink:0}
+  .sb-link.active{border-color:var(--gold);background:rgba(200,169,110,0.18);border-left:none}
+  .sb-dot,.sb-count{display:none}
+  .product-area{padding:18px 20px 60px}
+  .cat-topbar{display:none}
+  .cat-section{scroll-margin-top:172px}
+  .product-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:36px}
+}
+@media(max-width:600px){
+  body{padding-top:122px}
+  .top-banner{font-size:.68rem;padding:6px 10px}
+  .main-nav{flex-direction:column;align-items:stretch;padding:10px 14px;gap:10px}
+  .nav-left{justify-content:space-between}
+  .mobile-menu-btn{display:block}
+  .logo-img{height:36px}
+  .nav-right{display:none}
+  .nav-search{max-width:100%;height:38px}
+  .mobile-bar{display:flex}
+  .product-area{padding:14px 14px 70px}
+  .product-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .card-body{padding:12px 12px 14px;gap:8px}
+  .card-name{font-size:.9rem}
+  .variant-select{font-size:.8rem;padding:7px 9px}
+  .qty-input{width:50px;font-size:.82rem}
+  .add-btn{font-size:.82rem;padding:7px}
+  .sec-title{font-size:1.2rem}
+  .sidebar{top:122px}
+  .sb-inner{top:122px}
+  .cat-section{scroll-margin-top:182px}
+}
 </style>
 </head>
 <body>
 
-<div class="global-watermark"></div>
-
-<div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="closeMobileMenu()"></div>
-<div class="mobile-menu-drawer" id="mobileMenuDrawer">
-  <div class="mobile-menu-header">
-    <img src="soil-leaf-logo.png" alt="Soil Leaf" onerror="this.style.display='none';">
-    <button class="close-drawer-btn" onclick="closeMobileMenu()">&times;</button>
+<!-- PRICING POPUP -->
+<div class="pricing-overlay" id="pricingOv">
+  <div class="pricing-modal" role="dialog" aria-modal="true" aria-labelledby="ptitle">
+    <div class="pm-head">
+      <span class="icon">🌿</span>
+      <h2 id="ptitle">Pricing Information</h2>
+      <span class="rule"></span>
+    </div>
+    <div class="pm-body">
+      <p>Our pricing varies based on the order quantity. We offer affordable and competitive rates, and a customized quotation will be provided once we receive your order requirements.</p>
+      <div class="pm-note">
+        <span>📦</span>
+        <p>Add your items to the cart and we'll send you a tailored quote!</p>
+      </div>
+    </div>
+    <div class="pm-foot">
+      <button class="btn-p" onclick="closePricing()">Browse Products →</button>
+      <a href="https://harshiee-s.github.io/Soil-Leaf/#location" class="btn-g" onclick="closePricing()">Contact Us for a Quote</a>
+    </div>
   </div>
-  <div class="mobile-drawer-body">
-    <div class="drawer-nav-group">
+</div>
+
+<!-- MOBILE DRAWER -->
+<div class="drawer-ov" id="drawOv" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <img src="soil-leaf-logo.png" alt="Soil Leaf" onerror="this.style.display='none'">
+    <button class="drawer-x" onclick="closeDrawer()">&times;</button>
+  </div>
+  <div class="drawer-body">
+    <div class="dg">
       <h4>Navigation</h4>
-      <ul class="mobile-drawer-links">
-        <li><a href="https://harshiee-s.github.io/Soil-Leaf/" onclick="closeMobileMenu()">Home</a></li>
-        <li><a href="https://harshiee-s.github.io/Soil-Leaf/#why" onclick="closeMobileMenu()">Why Us</a></li>
-        <li><a href="https://harshiee-s.github.io/Soil-Leaf/#location" onclick="closeMobileMenu()">Contact</a></li>
+      <ul class="dl">
+        <li><a href="https://harshiee-s.github.io/Soil-Leaf/" onclick="closeDrawer()">Home</a></li>
+        <li><a href="https://harshiee-s.github.io/Soil-Leaf/#why" onclick="closeDrawer()">Why Us</a></li>
+        <li><a href="https://harshiee-s.github.io/Soil-Leaf/#location" onclick="closeDrawer()">Contact</a></li>
       </ul>
     </div>
-
-    <div class="drawer-nav-group">
-      <h4>Product Categories</h4>
-      <ul class="mobile-drawer-categories">
-        <li><a href="#areca-bowls" class="drawer-cat-link active" onclick="closeMobileMenu()">Areca Bowls</a></li>
-        <li><a href="#areca-plates-round" class="drawer-cat-link" onclick="closeMobileMenu()">Plates (Round)</a></li>
-        <li><a href="#areca-plates-square" class="drawer-cat-link" onclick="closeMobileMenu()">Plates (Square)</a></li>
-        <li><a href="#areca-specialty" class="drawer-cat-link" onclick="closeMobileMenu()">Specialty</a></li>
-        <li><a href="#containers" class="drawer-cat-link" onclick="closeMobileMenu()">Food Containers</a></li>
-        <li><a href="#banana-leaves" class="drawer-cat-link" onclick="closeMobileMenu()">Banana Leaves</a></li>
-        <li><a href="#sal-leaves" class="drawer-cat-link" onclick="closeMobileMenu()">Sal Leaf Plates</a></li>
+    <div class="dg">
+      <h4>Categories</h4>
+      <ul class="dc">
+        <li><a href="#banana-leaves" class="dcat active" onclick="closeDrawer()">Banana Leaves</a></li>
+        <li><a href="#areca-bowls" class="dcat" onclick="closeDrawer()">Areca Bowls</a></li>
+        <li><a href="#areca-plates-round" class="dcat" onclick="closeDrawer()">Plates (Round)</a></li>
+        <li><a href="#areca-plates-square" class="dcat" onclick="closeDrawer()">Plates (Square)</a></li>
+        <li><a href="#areca-specialty" class="dcat" onclick="closeDrawer()">Specialty</a></li>
+        <li><a href="#containers" class="dcat" onclick="closeDrawer()">Food Containers</a></li>
+        <li><a href="#sal-leaves" class="dcat" onclick="closeDrawer()">Sal Leaf Plates</a></li>
+        <li><a href="#coconut" class="dcat" onclick="closeDrawer()">Coconuts</a></li>
       </ul>
     </div>
   </div>
 </div>
 
+<!-- HEADER -->
 <header class="main-header">
-  <div class="top-bar">
-    🌿 BUY 4 GET 1 FREE ON ALL PRODUCTS | 📞 +91 63600 00986
-  </div>
-
-  <nav>
+  <div class="top-banner">🌿 BUY 4 GET 1 FREE ON ALL PRODUCTS &nbsp;|&nbsp; 📞 +91 63600 00986</div>
+  <nav class="main-nav">
     <div class="nav-left">
-      <button class="mobile-menu-btn" onclick="openMobileMenu()">☰</button>
+      <button class="mobile-menu-btn" onclick="openDrawer()">☰</button>
       <a href="https://harshiee-s.github.io/Soil-Leaf/" class="logo-link">
-        <img src="soil-leaf-logo.png" alt="Soil Leaf Logo" class="custom-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <img src="soil-leaf-logo.png" alt="Soil Leaf" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
         <div class="logo-fallback">Soil<span>Leaf</span></div>
       </a>
     </div>
-
     <div class="nav-search">
-      <input type="text" id="searchInput" placeholder="Search banana leaves, plates, containers..." onkeyup="performSearch()">
-      <button onclick="performSearch()">🔍</button>
+      <input type="text" id="searchInput" placeholder="Search banana leaves, plates, containers…" onkeyup="doSearch()">
+      <button onclick="doSearch()">🔍</button>
     </div>
-
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="https://harshiee-s.github.io/Soil-Leaf/">Home</a></li>
         <li><a href="https://harshiee-s.github.io/Soil-Leaf/#why">Why Us</a></li>
         <li><a href="https://harshiee-s.github.io/Soil-Leaf/#location">Contact</a></li>
       </ul>
-      <button class="cart-btn" onclick="goToOrder()">
-        🛒 Cart <span class="cart-count" id="cart-count-badge">0</span>
-      </button>
+      <button class="cart-btn" onclick="openCart()">🛒 Cart <span class="cart-count" id="cartBadge">0</span></button>
     </div>
   </nav>
 </header>
 
-<div class="shop-layout">
-  
-  <aside class="sidebar" id="shop-sidebar">
-    <h3>Categories</h3>
-    <ul class="category-list">
-      <li><a href="#banana-leaves" class="nav-link">Banana Leaves</a></li>
-      <li><a href="#areca-bowls" class="nav-link active">Areca Bowls</a></li>
-      <li><a href="#areca-plates-round" class="nav-link">Plates (Round)</a></li>
-      <li><a href="#areca-plates-square" class="nav-link">Plates (Square)</a></li>
-      <li><a href="#areca-specialty" class="nav-link">Specialty</a></li>
-      <li><a href="#containers" class="nav-link">Containers</a></li>
-      <li><a href="#sal-leaves" class="nav-link">Sal Leaf Plates</a></li>
-    </ul>
+<!-- MAIN LAYOUT -->
+<div class="shop-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-inner">
+    <div class="sb-brand">
+      <div class="sb-logo">SOIL LEAF</div>
+      <div class="sb-sub">Eco-friendly products</div>
+    </div>
+    <div class="sb-search">
+      <span>🔍</span>
+      <input type="text" placeholder="Search products…" oninput="doSearch(this.value)" id="sideSearch">
+    </div>
+    <div class="sb-label">Categories</div>
+    <nav class="sb-nav">
+      <a href="#banana-leaves" class="sb-link active" data-sec="banana-leaves"><div class="sb-dot"></div>Banana Leaves<span class="sb-count">3</span></a>
+      <a href="#areca-bowls" class="sb-link" data-sec="areca-bowls"><div class="sb-dot"></div>Areca Bowls<span class="sb-count">2</span></a>
+      <a href="#areca-plates-round" class="sb-link" data-sec="areca-plates-round"><div class="sb-dot"></div>Plates (Round)<span class="sb-count">4</span></a>
+      <a href="#areca-plates-square" class="sb-link" data-sec="areca-plates-square"><div class="sb-dot"></div>Plates (Square)<span class="sb-count">4</span></a>
+      <a href="#areca-specialty" class="sb-link" data-sec="areca-specialty"><div class="sb-dot"></div>Specialty<span class="sb-count">2</span></a>
+      <a href="#containers" class="sb-link" data-sec="containers"><div class="sb-dot"></div>Containers<span class="sb-count">4</span></a>
+      <a href="#sal-leaves" class="sb-link" data-sec="sal-leaves"><div class="sb-dot"></div>Sal Leaf Plates<span class="sb-count">2</span></a>
+      <a href="#coconut" class="sb-link" data-sec="coconut"><div class="sb-dot"></div>Coconuts<span class="sb-count">1</span></a>
+    </nav>
+    <div class="sb-foot">
+      <button class="sb-cart" onclick="openCart()">🛒 View Cart <span class="sb-cart-badge" id="sbBadge">0</span></button>
+    </div>
+    </div>
   </aside>
 
+  <!-- PRODUCT AREA -->
   <main class="product-area">
-    
-    <div id="no-results-msg">
-      No products found matching your search. Please try another term.
-    </div>
-<section class="category-section" id="banana-leaves">
-  <h2>Banana Leaves</h2>
-  <div class="grid">
-    
-    <div class="card" data-product="Actual Banana Leaf" data-keywords="actual banana leaf banana leaf leafs leaves green organic natural actual precision cut round square circular meals food wrapping packaging custom catering traditional bulk wholesale retail">
-      <div class="product-img" style="background-image: url('Actual Banana Leaf.png');" title="Actual Banana Leaf"></div>
-      <div class="card-body">
-        <div class="card-title">Actual Banana Leaf</div>
-        <div class="action-row" style="margin-top:auto;">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
+
+    <div class="cat-topbar" id="catTopbar">
+      <div class="ct-left">
+        <div class="ct-icon ic-banana" id="ctIcon">🍃</div>
+        <div>
+          <div class="ct-name" id="ctName">Organic Products</div>
+          <div class="ct-count" id="ctCount">22 products</div>
         </div>
+      </div>
+      <div class="quality-tabs">
+        <button class="q-tab dom">Domestic</button>
+        <button class="q-tab prem">Premium</button>
       </div>
     </div>
 
-    <div class="card" data-product="Round Cut Banana Leaf" data-keywords="round cut banana leaf banana leaf leafs leaves green organic natural actual precision cut round square circular meals food wrapping packaging custom catering traditional bulk wholesale retail">
-      <div class="product-img" style="background-image: url('Round Cut Banana Leaf.png');" title="Round Cut Banana Leaf"></div>
-      <div class="card-body">
-        <div class="card-title">Round Cut Banana Leaf</div>
-        <div class="action-row" style="margin-top:auto;">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
-        </div>
-      </div>
-    </div>
+    <div id="no-results">No products found. Please try another search term.</div>
 
-    <div class="card" data-product="Square Cut Banana Leaf" data-keywords="square cut banana leaf banana leaf leafs leaves green organic natural actual precision cut round square circular meals food wrapping packaging custom catering traditional bulk wholesale retail">
-      <div class="product-img" style="background-image: url('Square Cut Banana Leaf.png');" title="Square Cut Banana Leaf"></div>
-      <div class="card-body">
-        <div class="card-title">Square Cut Banana Leaf</div>
-        <div class="action-row" style="margin-top:auto;">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
-        </div>
+    <!-- BANANA LEAVES -->
+    <section class="cat-section" id="banana-leaves" data-icon="🍃" data-name="Organic Products" data-count="22" data-ic="ic-banana">
+      <div class="sec-divider">
+        <div class="sec-icon ic-banana">🍃</div>
+        <h2 class="sec-title">Banana Leaves</h2>
       </div>
-    </div>
-
-  </div>
-</section>
-    <section class="category-section" id="areca-bowls">
-      <h2>Areca Bowls</h2>
-     <div class="grid">
-        <div class="card" data-product="5 Inch Areca Bowl" data-keywords="5 inch areca bowl bowls plates cup cups mini small small round organic packaging">
-          <div class="product-img" style="background-image: url('5inc Arece Bowl.png');" title="5 Inch Areca Bowl"></div>
+      <div class="product-grid">
+        <div class="product-card cat-banana" data-product="Actual Banana Leaf" data-keywords="actual banana leaf leaves green organic natural food wrapping packaging catering traditional bulk wholesale retail">
+          <div class="card-img" style="background-image:url('Actual Banana Leaf.png')"></div>
           <div class="card-body">
-            <div class="card-title">5" Areca Bowl</div>
-            <div class="variant-group">
-              <select class="variant-select">
-                <option value="" disabled selected>Select Quality</option>
-                <option>Domestic</option>
-                <option>Premium</option>
-              </select>
-            </div>
-            <div class="action-row">
-              <input type="number" min="1" placeholder="Qty" class="qty-input">
-              <button class="add-btn" onclick="addToCart(this)">Add</button>
+            <div class="card-name">Actual Banana Leaf</div>
+            <div class="card-controls">
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
             </div>
           </div>
         </div>
-        
-        <div class="card" data-product="6 Inch Areca Bowl" data-keywords="6 inch areca bowl bowls plates cup cups medium round organic packaging">
-          <div class="product-img" style="background-image: url('6inc Arece Bowl.png');" title="6 Inch Areca Bowl"></div>
+        <div class="product-card cat-banana" data-product="Round Cut Banana Leaf" data-keywords="round cut banana leaf leaves green organic natural food wrapping packaging catering traditional">
+          <div class="card-img" style="background-image:url('Round Cut Banana Leaf.png')"></div>
           <div class="card-body">
-            <div class="card-title">6" Areca Bowl</div>
-            <div class="variant-group">
-              <select class="variant-select">
-                <option value="" disabled selected>Select Quality</option>
-                <option>Domestic</option>
-                <option>Premium</option>
-              </select>
+            <div class="card-name">Round Cut Banana Leaf</div>
+            <div class="card-controls">
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
             </div>
-            <div class="action-row">
-              <input type="number" min="1" placeholder="Qty" class="qty-input">
-              <button class="add-btn" onclick="addToCart(this)">Add</button>
+          </div>
+        </div>
+        <div class="product-card cat-banana" data-product="Square Cut Banana Leaf" data-keywords="square cut banana leaf leaves green organic natural food wrapping packaging catering traditional">
+          <div class="card-img" style="background-image:url('Square Cut Banana Leaf.png')"></div>
+          <div class="card-body">
+            <div class="card-name">Square Cut Banana Leaf</div>
+            <div class="card-controls">
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="category-section" id="areca-plates-round">
-  <h2>Areca Plates - Round</h2>
-  <div class="grid">
-    
-    <div class="card" data-product="6 Inch Areca Plate" data-keywords="6 inch areca plate plates small round organic packaging">
-      <div class="product-img" style="background-image: url('6inc Round Plate.png');" title="6 Inch Round Areca Plate"></div>
-      <div class="card-body">
-        <div class="card-title">6" Areca Plate</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Select Quality</option>
-            <option>Domestic</option>
-            <option>Premium</option>
-          </select>
+    <!-- ARECA BOWLS -->
+    <section class="cat-section" id="areca-bowls" data-icon="🥣" data-name="Areca Bowls" data-count="2" data-ic="ic-bowls">
+      <div class="sec-divider">
+        <div class="sec-icon ic-bowls">🥣</div>
+        <h2 class="sec-title">Areca Bowls</h2>
+      </div>
+      <div class="product-grid">
+        <div class="product-card cat-bowls" data-product="5 Inch Areca Bowl" data-keywords="5 inch areca bowl bowls cups mini small round organic packaging">
+          <div class="card-img" style="background-image:url('5inc Arece Bowl.png')"></div>
+          <div class="card-body">
+            <div class="card-name">5" Areca Bowl</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Quality</option><option>Domestic</option><option>Premium</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
         </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        <div class="product-card cat-bowls" data-product="6 Inch Areca Bowl" data-keywords="6 inch areca bowl bowls cups medium round organic packaging">
+          <div class="card-img" style="background-image:url('6inc Arece Bowl.png')"></div>
+          <div class="card-body">
+            <div class="card-name">6" Areca Bowl</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Quality</option><option>Domestic</option><option>Premium</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="card" data-product="8 Inch Areca Plate" data-keywords="8 inch areca plate plates medium round organic packaging">
-      <div class="product-img" style="background-image: url('8inc Round Plate.png');" title="8 Inch Round Areca Plate"></div>
-      <div class="card-body">
-        <div class="card-title">8" Areca Plate</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Select Quality</option>
-            <option>Domestic</option>
-            <option>Premium</option>
-          </select>
+    <!-- ARECA PLATES ROUND -->
+    <section class="cat-section" id="areca-plates-round" data-icon="🍽️" data-name="Areca Plates — Round" data-count="4" data-ic="ic-round">
+      <div class="sec-divider">
+        <div class="sec-icon ic-round">🍽️</div>
+        <h2 class="sec-title">Areca Plates — Round</h2>
+      </div>
+      <div class="product-grid">
+        <div class="product-card cat-round" data-product="6 Inch Areca Plate" data-keywords="6 inch areca plate plates small round organic packaging">
+          <div class="card-img" style="background-image:url('6inc Round Plate.png')"></div>
+          <div class="card-body">
+            <div class="card-name">6" Areca Plate</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Quality</option><option>Domestic</option><option>Premium</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
         </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        <div class="product-card cat-round" data-product="8 Inch Areca Plate" data-keywords="8 inch areca plate plates medium round organic packaging">
+          <div class="card-img" style="background-image:url('8inc Round Plate.png')"></div>
+          <div class="card-body">
+            <div class="card-name">8" Areca Plate</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Quality</option><option>Domestic</option><option>Premium</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="product-card cat-round" data-product="10 Inch Areca Plate" data-keywords="10 inch areca plate plates large round organic dinner packaging">
+          <div class="card-img" style="background-image:url('10inc Round Plate.png')"></div>
+          <div class="card-body">
+            <div class="card-name">10" Areca Plate</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Quality</option><option>Domestic</option><option>Premium</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="product-card cat-round" data-product="12 Inch Areca Plate" data-keywords="12 inch areca plate plates extra large round organic dinner packaging">
+          <div class="card-img" style="background-image:url('12inc Round Plate.png')"></div>
+          <div class="card-body">
+            <div class="card-name">12" Areca Plate</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Quality</option><option>Domestic</option><option>Premium</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="card" data-product="10 Inch Areca Plate" data-keywords="10 inch areca plate plates large round organic dinner packaging">
-      <div class="product-img" style="background-image: url('10inc Round Plate.png');" title="10 Inch Round Areca Plate"></div>
-      <div class="card-body">
-        <div class="card-title">10" Areca Plate</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Select Quality</option>
-            <option>Domestic</option>
-            <option>Premium</option>
-          </select>
+    <!-- ARECA PLATES SQUARE -->
+    <section class="cat-section" id="areca-plates-square" data-icon="⬜" data-name="Areca Plates — Square" data-count="4" data-ic="ic-square">
+      <div class="sec-divider">
+        <div class="sec-icon ic-square">⬜</div>
+        <h2 class="sec-title">Areca Plates — Square</h2>
+      </div>
+      <div class="product-grid">
+        <div class="product-card cat-square" data-product="6 Inch Square Areca Plate" data-keywords="6 inch square areca plate plates catering premium dinner">
+          <div class="card-img" style="background-image:url('6inc Square Plate.png')"></div>
+          <div class="card-body">
+            <div class="card-name">6" Square Areca Plate</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Quality</option><option>Domestic</option><option>Premium</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
         </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        <div class="product-card cat-square" data-product="7 Inch Square Areca Plate" data-keywords="7 inch square areca plate plates catering premium dinner">
+          <div class="card-img" style="background-image:url('7inc Square Plate.png')"></div>
+          <div class="card-body">
+            <div class="card-name">7" Square Areca Plate</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Quality</option><option>Domestic</option><option>Premium</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="product-card cat-square" data-product="8 Inch Square Areca Plate" data-keywords="8 inch square areca plate plates catering premium dinner">
+          <div class="card-img" style="background-image:url('8inc Square Plate.png')"></div>
+          <div class="card-body">
+            <div class="card-name">8" Square Areca Plate</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Quality</option><option>Domestic</option><option>Premium</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="product-card cat-square" data-product="10 Inch Square Areca Plate" data-keywords="10 inch square areca plate plates catering premium dinner">
+          <div class="card-img" style="background-image:url('10inc Square Plate.png')"></div>
+          <div class="card-body">
+            <div class="card-name">10" Square Areca Plate</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Quality</option><option>Domestic</option><option>Premium</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="card" data-product="12 Inch Areca Plate" data-keywords="12 inch areca plate plates extra large round organic dinner packaging">
-      <div class="product-img" style="background-image: url('12inc Round Plate.png');" title="12 Inch Round Areca Plate"></div>
-      <div class="card-body">
-        <div class="card-title">12" Areca Plate</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Select Quality</option>
-            <option>Domestic</option>
-            <option>Premium</option>
-          </select>
+    <!-- SPECIALTY -->
+    <section class="cat-section" id="areca-specialty" data-icon="✨" data-name="Oval &amp; Specialty" data-count="2" data-ic="ic-spec">
+      <div class="sec-divider">
+        <div class="sec-icon ic-spec">✨</div>
+        <h2 class="sec-title">Oval &amp; Specialty</h2>
+      </div>
+      <div class="product-grid">
+        <div class="product-card cat-spec" data-product="5 Inch Oval Areca" data-keywords="5 inch oval fancy areca plate bowl specialty event wedding function designer">
+          <div class="card-img" style="background-image:url('5inc Oval Areca.png')"></div>
+          <div class="card-body">
+            <div class="card-name">5" Oval Areca</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Quality</option><option>Domestic</option><option>Premium</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
         </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        <div class="product-card cat-spec" data-product="5 Inch Heart Shaped Areca" data-keywords="5 inch heart shaped fancy areca plate bowl specialty love wedding function designer">
+          <div class="card-img" style="background-image:url('5inc Heart Shaped Areca.png')"></div>
+          <div class="card-body">
+            <div class="card-name">5" Heart Shaped Areca</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Quality</option><option>Domestic</option><option>Premium</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-  </div>
-</section>
-
-   <section class="category-section" id="areca-plates-square">
-  <h2>Areca Plates - Square</h2>
-  <div class="grid">
-    
-    <div class="card" data-product="6 Inch Square Areca Plate" data-keywords="6 inch square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
-      <div class="product-img" style="background-image: url('6inc Square Plate.png');" title="6 Inch Square Areca Plate"></div>
-      <div class="card-body">
-        <div class="card-title">6" Square Areca Plate</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Select Quality</option>
-            <option>Domestic</option>
-            <option>Premium</option>
-          </select>
+    <!-- CONTAINERS -->
+    <section class="cat-section" id="containers" data-icon="📦" data-name="Food Containers" data-count="4" data-ic="ic-cont">
+      <div class="sec-divider">
+        <div class="sec-icon ic-cont">📦</div>
+        <h2 class="sec-title">Food Containers</h2>
+      </div>
+      <div class="product-grid">
+        <div class="product-card cat-cont" data-product="1 Kg Container" data-keywords="1 kg container plastic areca leaf boxes packing takeaway delivery parcel storage 1kg wholesale">
+          <div class="card-img" style="background-image:url('1 Kg Container.png')"></div>
+          <div class="card-body">
+            <div class="card-name">1 Kg Container</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Material</option><option>Areca Leaf</option><option>Plastic</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
         </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        <div class="product-card cat-cont" data-product="3/4 Kg Container" data-keywords="3/4 kg container plastic areca leaf boxes packing takeaway delivery parcel storage wholesale">
+          <div class="card-img" style="background-image:url('3-4 Kg Container.png')"></div>
+          <div class="card-body">
+            <div class="card-name">3/4 Kg Container</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Material</option><option>Areca Leaf</option><option>Plastic</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="product-card cat-cont" data-product="Half Kg Container" data-keywords="half kg container plastic areca leaf boxes packing takeaway delivery parcel storage 500g wholesale">
+          <div class="card-img" style="background-image:url('Half Kg Container.png')"></div>
+          <div class="card-body">
+            <div class="card-name">Half Kg Container</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Material</option><option>Areca Leaf</option><option>Plastic</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="product-card cat-cont" data-product="1/4 Kilo Container" data-keywords="1/4 kg container plastic areca leaf boxes packing takeaway delivery parcel storage 250g wholesale">
+          <div class="card-img" style="background-image:url('1-4 Kilo Container.png')"></div>
+          <div class="card-body">
+            <div class="card-name">1/4 Kg Container</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Material</option><option>Areca Leaf</option><option>Plastic</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="card" data-product="7 Inch Square Areca Plate" data-keywords="7 inch square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
-      <div class="product-img" style="background-image: url('7inc Square Plate.png');" title="7 Inch Square Areca Plate"></div>
-      <div class="card-body">
-        <div class="card-title">7" Square Areca Plate</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Select Quality</option>
-            <option>Domestic</option>
-            <option>Premium</option>
-          </select>
+    <!-- SAL LEAVES -->
+    <section class="cat-section" id="sal-leaves" data-icon="🌿" data-name="Sal Leaf Plates" data-count="2" data-ic="ic-sal">
+      <div class="sec-divider">
+        <div class="sec-icon ic-sal">🌿</div>
+        <h2 class="sec-title">Sal Leaf Plates</h2>
+      </div>
+      <div class="product-grid">
+        <div class="product-card cat-sal" data-product="Round Large Sal Leaf Plate" data-keywords="round large sal leaf plate plates leaves dinner disposable buffet traditional handmade natural organic eco">
+          <div class="card-img" style="background-image:url('Round Large Sal Leaf Plate.png')"></div>
+          <div class="card-body">
+            <div class="card-name">Round Large Sal Leaf Plate</div>
+            <div class="card-controls">
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
         </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
+        <div class="product-card cat-sal" data-product="Square Sal Leaf Plate" data-keywords="square sal leaf plate plates leaves dinner disposable buffet traditional handmade natural organic eco">
+          <div class="card-img" style="background-image:url('Square Sal Leaf Plate.png')"></div>
+          <div class="card-body">
+            <div class="card-name">Square Sal Leaf Plate</div>
+            <div class="card-controls">
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="card" data-product="8 Inch Square Areca Plate" data-keywords="8 inch square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
-      <div class="product-img" style="background-image: url('8inc Square Plate.png');" title="8 Inch Square Areca Plate"></div>
-      <div class="card-body">
-        <div class="card-title">8" Square Areca Plate</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Select Quality</option>
-            <option>Domestic</option>
-            <option>Premium</option>
-          </select>
-        </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
+    <!-- COCONUTS -->
+    <section class="cat-section" id="coconut" data-icon="🥥" data-name="Coconuts" data-count="1" data-ic="ic-coco">
+      <div class="sec-divider">
+        <div class="sec-icon ic-coco">🥥</div>
+        <h2 class="sec-title">Coconuts</h2>
+      </div>
+      <div class="product-grid">
+        <div class="product-card cat-coco" data-product="Coconut" data-keywords="fresh coconut farm bangalore small medium large">
+          <div class="card-img" style="background-image:url('coconut.png')"></div>
+          <div class="card-body">
+            <div class="card-name">Fresh Coconut</div>
+            <div class="card-controls">
+              <select class="variant-select"><option value="" disabled selected>Select Size</option><option>Small</option><option>Medium</option><option>Large</option></select>
+              <div class="qty-row"><input type="number" min="1" placeholder="Qty" class="qty-input"><button class="add-btn" onclick="addToCart(this)">+ Add</button></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="card" data-product="10 Inch Square Areca Plate" data-keywords="10 inch square boxes box areca plate plates leaf leafs leaves catering premium structural dinner">
-      <div class="product-img" style="background-image: url('10inc Square Plate.png');" title="10 Inch Square Areca Plate"></div>
-      <div class="card-body">
-        <div class="card-title">10" Square Areca Plate</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Select Quality</option>
-            <option>Domestic</option>
-            <option>Premium</option>
-          </select>
-        </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section class="category-section" id="areca-specialty">
-  <h2>Oval & Specialty</h2>
-  <div class="grid">
-    
-    <div class="card" data-product="5 Inch Oval Areca" data-keywords="5 inch oval fancy areca plate plates bowl bowls leaf leafs leaves specialty love shape custom event wedding function designer">
-      <div class="product-img" style="background-image: url('5inc Oval Areca.png');" title="5 Inch Oval Areca"></div>
-      <div class="card-body">
-        <div class="card-title">5" Oval Areca</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Select Quality</option>
-            <option>Domestic</option>
-            <option>Premium</option>
-          </select>
-        </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" data-product="5 Inch Heart Shaped Areca" data-keywords="5 inch heart shaped fancy areca plate plates bowl bowls leaf leafs leaves specialty love shape custom event wedding function designer">
-      <div class="product-img" style="background-image: url('5inc Heart Shaped Areca.png');" title="5 Inch Heart Shaped Areca"></div>
-      <div class="card-body">
-        <div class="card-title">5" Heart Shaped Areca</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Select Quality</option>
-            <option>Domestic</option>
-            <option>Premium</option>
-          </select>
-        </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section class="category-section" id="containers">
-  <h2>Food Containers</h2>
-  <div class="grid">
-    
-    <div class="card" data-product="1 Kg Container" data-keywords="1 kg container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
-      <div class="product-img" style="background-image: url('1 Kg Container.png');" title="1 Kg Container"></div>
-      <div class="card-body">
-        <div class="card-title">1 Kg Container</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Material</option>
-            <option>Areca Leaf</option>
-            <option>Plastic</option>
-          </select>
-        </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" data-product="3/4 Kg Container" data-keywords="3/4 kg container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
-      <div class="product-img" style="background-image: url('3-4 Kg Container.png');" title="3/4 Kg Container"></div>
-      <div class="card-body">
-        <div class="card-title">3/4 Kg Container</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Material</option>
-            <option>Areca Leaf</option>
-            <option>Plastic</option>
-          </select>
-        </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" data-product="Half Kg Container" data-keywords="half kg container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
-      <div class="product-img" style="background-image: url('Half Kg Container.png');" title="Half Kg Container"></div>
-      <div class="card-body">
-        <div class="card-title">Half Kg Container</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Material</option>
-            <option>Areca Leaf</option>
-            <option>Plastic</option>
-          </select>
-        </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" data-product="1/4 Kilo Container" data-keywords="1/4 kg container containers plastic areca leaf boxes box packing takeaway delivery parcel storage lids lid 1kg 500g 250g kilo half quarter wholesale">
-      <div class="product-img" style="background-image: url('1-4 Kilo Container.png');" title="1/4 Kg Container"></div>
-      <div class="card-body">
-        <div class="card-title">1/4 Kg Container</div>
-        <div class="variant-group">
-          <select class="variant-select">
-            <option value="" disabled selected>Material</option>
-            <option>Areca Leaf</option>
-            <option>Plastic</option>
-          </select>
-        </div>
-        <div class="action-row">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-   
-
-   <section class="category-section" id="sal-leaves">
-  <h2>Sal Leaf Plates</h2>
-  <div class="grid">
-    
-    <div class="card" data-product="Round Large Sal Leaf Plate" data-keywords="round large sal leaf plate sal leaf plate plates leafs leaves round large square dinner disposable item buffet traditional handmade natural organic eco standard">
-      <div class="product-img" style="background-image: url('Round Large Sal Leaf Plate.png');" title="Round Large Sal Leaf Plate"></div>
-      <div class="card-body">
-        <div class="card-title">Round Large Sal Leaf Plate</div>
-        <div class="action-row" style="margin-top:auto;">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" data-product="Square Sal Leaf Plate" data-keywords="square sal leaf plate sal leaf plate plates leafs leaves round large square dinner disposable item buffet traditional handmade natural organic eco standard">
-      <div class="product-img" style="background-image: url('Square Sal Leaf Plate.png');" title="Square Sal Leaf Plate"></div>
-      <div class="card-body">
-        <div class="card-title">Square Sal Leaf Plate</div>
-        <div class="action-row" style="margin-top:auto;">
-          <input type="number" min="1" placeholder="Qty" class="qty-input">
-          <button class="add-btn" onclick="addToCart(this)">Add</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
+    </section>
 
   </main>
 </div>
 
-<div class="mobile-bottom-cart">
-  <div class="cart-summary">
-    <small>Cart Total</small>
-    <span id="mobile-cart-items">0 Items</span>
-  </div>
-  <button class="mobile-checkout-btn" onclick="goToOrder()">
-    Edit & Order ➔
-  </button>
+<!-- MOBILE BOTTOM BAR -->
+<div class="mobile-bar">
+  <div class="mb-info"><small>Cart Total</small><span id="mbLabel">0 Items</span></div>
+  <button class="mb-btn" onclick="openCart()">Edit &amp; Order ➔</button>
 </div>
 
-<div class="img-zoom-overlay" id="imgZoomOverlay" onclick="closeImageZoom()">
-  <button class="close-zoom-btn" onclick="closeImageZoom()">&times;</button>
-  <img src="" alt="Zoomed Product" class="zoomed-img" id="zoomedImage" onclick="event.stopPropagation()">
+<!-- IMAGE ZOOM -->
+<div class="zoom-overlay" id="zoomOv" onclick="closeZoom()">
+  <button class="zoom-close" onclick="closeZoom()">&times;</button>
+  <img src="" alt="Product" class="zoom-img" id="zoomImg" onclick="event.stopPropagation()">
 </div>
 
-<div class="cart-modal-overlay" id="cartModalOverlay">
+<!-- CART MODAL -->
+<div class="cart-overlay" id="cartOv">
   <div class="cart-modal">
-    <div class="cart-modal-header">
-      <h3>Your Cart</h3>
-      <button class="close-modal-btn" onclick="closeCartModal()">&times;</button>
+    <div class="cart-head">
+      <h3>Your Cart 🛒</h3>
+      <button class="cart-x" onclick="closeCart()">&times;</button>
     </div>
-    <div class="cart-modal-body" id="cartModalBody"></div>
-    <div class="cart-modal-footer">
-      <button class="checkout-btn" onclick="proceedToCheckoutPage()">Proceed to Order ➔</button>
+    <div class="cart-body" id="cartBody"></div>
+    <div class="cart-foot">
+      <button class="checkout-btn" onclick="goToOrder()">Proceed to Order ➔</button>
     </div>
   </div>
 </div>
 
 <script>
-  // --- Image Zoom Logic ---
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.product-img').forEach(img => {
-      img.addEventListener('click', function() {
-        const bgImage = this.style.backgroundImage;
-        // Extract the URL from the background-image CSS property
-        const url = bgImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
-        
-        if(url && url !== 'none') {
-          document.getElementById('zoomedImage').src = url;
-          const overlay = document.getElementById('imgZoomOverlay');
-          overlay.style.display = 'flex';
-          
-          // Slight timeout to allow transition to trigger properly
-          setTimeout(() => overlay.classList.add('show'), 10);
-        }
-      });
+/* SYNC SIDEBAR TO REAL HEADER HEIGHT — eliminates gap */
+function syncOffset(){
+  const h=document.querySelector('.main-header').offsetHeight;
+  document.body.style.paddingTop=h+'px';
+  const inner=document.querySelector('.sb-inner');
+  if(inner&&window.innerWidth>900){inner.style.top=h+'px';inner.style.height='calc(100vh - '+h+'px)'}
+}
+syncOffset();
+window.addEventListener('resize',syncOffset);
+
+/* PRICING POPUP */
+function closePricing(){const o=document.getElementById('pricingOv');o.style.opacity='0';setTimeout(()=>o.style.display='none',360)}
+window.addEventListener('DOMContentLoaded',()=>{const o=document.getElementById('pricingOv');o.style.display='flex';requestAnimationFrame(()=>requestAnimationFrame(()=>o.classList.add('show')))});
+document.getElementById('pricingOv').addEventListener('click',e=>{if(e.target===e.currentTarget)closePricing()});
+
+/* IMAGE ZOOM */
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.card-img').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const url=el.style.backgroundImage.replace(/^url\(["']?/,'').replace(/["']?\)$/,'');
+      if(url&&url!=='none'){document.getElementById('zoomImg').src=url;const ov=document.getElementById('zoomOv');ov.style.display='flex';setTimeout(()=>ov.classList.add('show'),10)}
     });
   });
+});
+function closeZoom(){const ov=document.getElementById('zoomOv');ov.classList.remove('show');setTimeout(()=>ov.style.display='none',300)}
 
-  function closeImageZoom() {
-    const overlay = document.getElementById('imgZoomOverlay');
-    overlay.classList.remove('show');
-    // Wait for the scale/opacity transition before completely hiding
-    setTimeout(() => { overlay.style.display = 'none'; }, 300);
-  }
+/* DRAWER */
+function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('drawOv').classList.add('open')}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('drawOv').classList.remove('open')}
 
-  // --- Mobile Side Menu Open/Close Handling ---
-  function openMobileMenu() {
-    document.getElementById('mobileMenuDrawer').classList.add('open');
-    document.getElementById('mobileDrawerOverlay').classList.add('open');
-  }
-
-  function closeMobileMenu() {
-    document.getElementById('mobileMenuDrawer').classList.remove('open');
-    document.getElementById('mobileDrawerOverlay').classList.remove('open');
-  }
-
-  // --- Live Sorting Filter ---
-  function performSearch() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-    
-    const normalizedSearch = searchTerm
-      .replace(/leaves/g, 'leaf')
-      .replace(/leafs/g, 'leaf')
-      .replace(/plates/g, 'plate')
-      .replace(/bowls/g, 'bowl')
-      .replace(/containers/g, 'container')
-      .replace(/inches/g, 'inch');
-
-    const sections = document.querySelectorAll('.category-section');
-    let totalVisibleCards = 0;
-
-    sections.forEach(section => {
-      let hasVisibleCardsInSection = false;
-      const cards = section.querySelectorAll('.card');
-
-      cards.forEach(card => {
-        const productName = card.getAttribute('data-product').toLowerCase();
-        const keywords = card.getAttribute('data-keywords').toLowerCase();
-        
-        if (
-          productName.includes(searchTerm) || 
-          keywords.includes(searchTerm) ||
-          productName.includes(normalizedSearch) ||
-          keywords.includes(normalizedSearch)
-        ) {
-          card.style.display = 'flex';
-          hasVisibleCardsInSection = true;
-          totalVisibleCards++;
-        } else {
-          card.style.display = 'none';
-        }
-      });
-
-      if (hasVisibleCardsInSection) {
-        section.style.display = 'block';
-      } else {
-        section.style.display = 'none';
-      }
+/* SEARCH */
+function doSearch(val){
+  const raw=val!==undefined?val:document.getElementById('searchInput').value;
+  const term=raw.toLowerCase().trim();
+  const norm=term.replace(/leaves/g,'leaf').replace(/plates/g,'plate').replace(/bowls/g,'bowl').replace(/containers/g,'container').replace(/inches/g,'inch');
+  const sections=document.querySelectorAll('.cat-section');
+  let total=0;
+  sections.forEach(sec=>{
+    let has=false;
+    sec.querySelectorAll('.product-card').forEach(card=>{
+      const n=card.getAttribute('data-product').toLowerCase();
+      const k=card.getAttribute('data-keywords').toLowerCase();
+      const match=!term||n.includes(term)||k.includes(term)||n.includes(norm)||k.includes(norm);
+      card.style.display=match?'flex':'none';
+      if(match){has=true;total++}
     });
-
-    const noResultsMsg = document.getElementById('no-results-msg');
-    if (totalVisibleCards === 0) {
-      noResultsMsg.style.display = 'block';
-    } else {
-      noResultsMsg.style.display = 'none';
-    }
-  }
-
-  // --- Cart Core Engine ---
-  let cart = JSON.parse(localStorage.getItem('soilLeafCart')) || [];
-  updateCartBadge();
-
-  function addToCart(button) {
-    const card = button.closest('.card');
-    const productName = card.getAttribute('data-product');
-    const qtyInput = card.querySelector('.qty-input');
-    const variantSelect = card.querySelector('.variant-select');
-    
-    const qty = parseInt(qtyInput.value);
-
-    if (isNaN(qty) || qty <= 0) {
-      alert("Please enter a valid quantity.");
-      qtyInput.focus();
-      return;
-    }
-
-    let variant = "";
-    if (variantSelect) {
-      if(variantSelect.value === "") {
-        alert("Please select a variant option first.");
-        variantSelect.focus();
-        return;
-      }
-      variant = variantSelect.value;
-    }
-
-    const existingItemIndex = cart.findIndex(item => item.name === productName && item.variant === variant);
-
-    if (existingItemIndex > -1) {
-      cart[existingItemIndex].quantity += qty;
-    } else {
-      cart.push({ name: productName, variant: variant, quantity: qty });
-    }
-
-    localStorage.setItem('soilLeafCart', JSON.stringify(cart));
-    updateCartBadge();
-    qtyInput.value = '';
-
-    const originalText = button.innerHTML;
-    button.innerHTML = "✓";
-    button.classList.add("success");
-    
-    setTimeout(() => {
-      button.innerHTML = originalText;
-      button.classList.remove("success");
-    }, 1500);
-  }
-
-  function updateCartBadge() {
-    document.getElementById('cart-count-badge').innerText = cart.length; 
-    const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
-    document.getElementById('mobile-cart-items').innerText = `${cart.length} Items (${totalQty} Qty)`;
-  }
-
-  function goToOrder() {
-    openCartModal();
-  }
-
-  function openCartModal() {
-    document.getElementById('cartModalOverlay').style.display = 'flex';
-    renderCartItems();
-  }
-
-  function closeCartModal() {
-    document.getElementById('cartModalOverlay').style.display = 'none';
-  }
-
-  function renderCartItems() {
-    const body = document.getElementById('cartModalBody');
-    body.innerHTML = '';
-
-    if (cart.length === 0) {
-      body.innerHTML = '<div class="empty-cart-msg">Your cart is empty. Please choose some eco-products first!</div>';
-      document.querySelector('.checkout-btn').style.display = 'none';
-      return;
-    }
-
-    document.querySelector('.checkout-btn').style.display = 'block';
-
-    cart.forEach((item, index) => {
-      const itemDiv = document.createElement('div');
-      itemDiv.className = 'cart-modal-item';
-      let variantHtml = item.variant ? `<div class="cart-item-variant">Variant: ${item.variant}</div>` : '';
-
-      itemDiv.innerHTML = `
-        <div class="cart-item-info">
-          <div class="cart-item-title">${item.name}</div>
-          ${variantHtml}
-        </div>
-        <div class="cart-item-actions">
-          <div class="qty-control">
-            <button onclick="updateCartItemQty(${index}, -1)">-</button>
-            <span>${item.quantity}</span>
-            <button onclick="updateCartItemQty(${index}, 1)">+</button>
-          </div>
-          <button class="remove-item-btn" onclick="removeCartItem(${index})">🗑️</button>
-        </div>
-      `;
-      body.appendChild(itemDiv);
-    });
-  }
-
-  function updateCartItemQty(index, change) {
-    if (cart[index].quantity + change > 0) {
-      cart[index].quantity += change;
-    } else {
-      cart.splice(index, 1);
-    }
-    localStorage.setItem('soilLeafCart', JSON.stringify(cart));
-    updateCartBadge();
-    renderCartItems();
-  }
-
-  function removeCartItem(index) {
-    cart.splice(index, 1);
-    localStorage.setItem('soilLeafCart', JSON.stringify(cart));
-    updateCartBadge();
-    renderCartItems();
-  }
-
-  function proceedToCheckoutPage() {
-    window.location.href = 'order.html';
-  }
-  
-  document.getElementById('cartModalOverlay').addEventListener('click', function(e) {
-    if(e.target === this) closeCartModal();
+    sec.style.display=has?'block':'none';
   });
+  document.getElementById('no-results').style.display=total===0?'block':'none';
+  if(val!==undefined)document.getElementById('searchInput').value=val;
+}
 
-  // --- Two-Way Linked Scroll Position Sync Engine ---
-  document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('.category-section');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const drawerLinks = document.querySelectorAll('.drawer-cat-link');
-
-    const isMobile = window.innerWidth <= 900;
-    const trackingTopMargin = isMobile ? -170 : -130;
-
-    const observerOptions = {
-      root: null,
-      rootMargin: `${trackingTopMargin}px 0px -65% 0px`, 
-      threshold: 0
-    };
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          navLinks.forEach(link => link.classList.remove('active'));
-          drawerLinks.forEach(link => link.classList.remove('active'));
-          
-          const activeId = entry.target.getAttribute('id');
-          const activeLink = document.querySelector(`.nav-link[href="#${activeId}"]`);
-          const activeDrawerLink = document.querySelector(`.drawer-cat-link[href="#${activeId}"]`);
-          
-          if (activeLink) {
-            activeLink.classList.add('active');
-            if (isMobile) {
-              activeLink.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            }
-          }
-          if (activeDrawerLink) {
-            activeDrawerLink.classList.add('active');
-          }
-        }
-      });
-    }, observerOptions);
-
-    sections.forEach(section => {
-      observer.observe(section);
+/* SCROLL SPY */
+document.addEventListener('DOMContentLoaded',()=>{
+  const sections=document.querySelectorAll('.cat-section');
+  const sbLinks=document.querySelectorAll('.sb-link');
+  const dcLinks=document.querySelectorAll('.dcat');
+  const isMob=()=>window.innerWidth<=900;
+  const ctIcon=document.getElementById('ctIcon');
+  const ctName=document.getElementById('ctName');
+  const ctCount=document.getElementById('ctCount');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting)return;
+      const id=entry.target.id;
+      const sec=entry.target;
+      sbLinks.forEach(l=>l.classList.remove('active'));
+      dcLinks.forEach(l=>l.classList.remove('active'));
+      const sl=document.querySelector(`.sb-link[data-sec="${id}"]`);
+      const dl=document.querySelector(`.dcat[href="#${id}"]`);
+      if(sl){sl.classList.add('active');if(isMob())sl.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}
+      if(dl)dl.classList.add('active');
+      if(ctIcon){ctIcon.textContent=sec.dataset.icon||'';ctIcon.className='ct-icon '+(sec.dataset.ic||'');ctName.textContent=sec.dataset.name||'';ctCount.textContent=(sec.dataset.count||'0')+' products'}
     });
+  },{root:null,rootMargin:'-120px 0px -60% 0px',threshold:0});
+  sections.forEach(s=>obs.observe(s));
+});
+
+/* CART */
+let cart=JSON.parse(localStorage.getItem('soilLeafCart'))||[];
+updateUI();
+function addToCart(btn){
+  const card=btn.closest('.product-card');
+  const name=card.getAttribute('data-product');
+  const qty=parseInt(card.querySelector('.qty-input').value);
+  const sel=card.querySelector('.variant-select');
+  if(isNaN(qty)||qty<=0){alert('Please enter a valid quantity.');return}
+  let variant='';
+  if(sel){if(!sel.value){alert('Please select a variant first.');sel.focus();return}variant=sel.value}
+  const idx=cart.findIndex(c=>c.name===name&&c.variant===variant);
+  if(idx>-1)cart[idx].quantity+=qty;else cart.push({name,variant,quantity:qty});
+  localStorage.setItem('soilLeafCart',JSON.stringify(cart));
+  updateUI();
+  card.querySelector('.qty-input').value='';
+  const orig=btn.innerHTML;btn.innerHTML='✓ Added';btn.classList.add('success');
+  setTimeout(()=>{btn.innerHTML=orig;btn.classList.remove('success')},1500);
+}
+function updateUI(){
+  const total=cart.reduce((s,i)=>s+i.quantity,0);
+  document.getElementById('cartBadge').textContent=cart.length;
+  document.getElementById('sbBadge').textContent=cart.length;
+  document.getElementById('mbLabel').textContent=`${cart.length} Items (${total} Qty)`;
+}
+function openCart(){document.getElementById('cartOv').style.display='flex';renderCart()}
+function closeCart(){document.getElementById('cartOv').style.display='none'}
+document.getElementById('cartOv').addEventListener('click',e=>{if(e.target===e.currentTarget)closeCart()});
+function renderCart(){
+  const body=document.getElementById('cartBody');body.innerHTML='';
+  if(!cart.length){body.innerHTML='<div class="cart-empty">Your cart is empty. Add some eco-products first!</div>';document.querySelector('.checkout-btn').style.display='none';return}
+  document.querySelector('.checkout-btn').style.display='block';
+  cart.forEach((item,i)=>{
+    const d=document.createElement('div');d.className='cart-item';
+    d.innerHTML=`<div><div class="ci-name">${item.name}</div>${item.variant?`<div class="ci-var">Variant: ${item.variant}</div>`:''}</div><div class="ci-actions"><div class="qty-ctrl"><button onclick="adjQty(${i},-1)">−</button><span>${item.quantity}</span><button onclick="adjQty(${i},1)">+</button></div><button class="ci-del" onclick="remItem(${i})">🗑️</button></div>`;
+    body.appendChild(d);
   });
+}
+function adjQty(i,d){if(cart[i].quantity+d>0)cart[i].quantity+=d;else cart.splice(i,1);localStorage.setItem('soilLeafCart',JSON.stringify(cart));updateUI();renderCart()}
+function remItem(i){cart.splice(i,1);localStorage.setItem('soilLeafCart',JSON.stringify(cart));updateUI();renderCart()}
+function goToOrder(){window.location.href='order.html'}
 </script>
-
 </body>
 </html>
