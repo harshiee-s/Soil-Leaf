@@ -3,444 +3,529 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="soil-leaf-logo.png">
-<link rel="icon" type="image/png" sizes="16x16" href="soil-leaf-logo.png">
 <link rel="apple-touch-icon" sizes="180x180" href="soil-leaf-logo.png">
 <title>Checkout | Soil Leaf – Eco-Friendly Products</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-  :root {
-    --forest: #1B4D2E;
-    --forest-dark: #0D2B17;
-    --leaf: #4CAF50;
-    --bright: #6DD85A;
-    --gold: #C8A96E;
-    --gold-light: #F0C96A;
-    --bg-light: #FAFAFA;
-    --bg-soft: #F4F7F4;
-    --white: #FFFFFF;
-    --text-dark: #2A2A2A;
-    --text-gray: #666666;
-    --soft-shadow: 0 12px 40px rgba(27, 77, 46, 0.06);
-  }
+:root{
+  --forest:#1B4D2E;
+  --forest-dark:#0D2B17;
+  --leaf:#4CAF50;
+  --gold:#C8A96E;
+  --gold-light:#F0C96A;
+  --cream:#F5EFE3;
+  --cream-dark:#EAE0CC;
+  --white:#FFFFFF;
+  --text-dark:#1B3A27;
+  --text-mid:#5A6B5E;
+  --text-light:#8B7355;
+  --border-soft:rgba(27,77,46,0.10);
+  --shadow-card:0 4px 20px rgba(27,77,46,0.07);
+  --shadow-hover:0 14px 40px rgba(27,77,46,0.15);
+}
 
-  body { 
-    font-family: 'Lato', sans-serif; 
-    background: var(--bg-light); 
-    color: var(--text-dark); 
-    margin: 0;
-    padding-top: 90px; 
-  }
+html{scroll-behavior:smooth}
+body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--text-dark);padding-top:108px;min-height:100vh}
+h1,h2,h3,h4{font-family:'Lora',serif}
 
-  h1, h2, h3, h4 { font-family: 'Lora', serif; }
+/* ── HEADER ── */
+.main-header{position:fixed;top:0;left:0;right:0;z-index:9999;background:var(--forest-dark);box-shadow:0 4px 24px rgba(0,0,0,0.2)}
+.top-banner{background:var(--leaf);color:#fff;text-align:center;font-size:.78rem;font-weight:700;padding:7px 16px;letter-spacing:1px}
+.main-nav{display:flex;align-items:center;justify-content:space-between;padding:13px 40px;border-bottom:1px solid rgba(77,175,80,0.2)}
+.nav-logo-group{display:flex;align-items:center;gap:16px}
+.logo-link{display:inline-flex;align-items:center;text-decoration:none}
+.logo-img{height:42px;width:auto;object-fit:contain}
+.logo-fallback{display:none;color:#fff;font-family:'Lora',serif;font-size:1.5rem;font-weight:700}
+.logo-fallback span{color:var(--leaf)}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px}
+.breadcrumb a{color:rgba(255,255,255,0.45);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--gold)}
+.breadcrumb .sep{opacity:.4}
+.breadcrumb .current{color:var(--gold)}
+.nav-right-group{display:flex;align-items:center;gap:16px}
+.back-nav-btn{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.6);font-size:.85rem;font-weight:700;text-decoration:none;padding:7px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:7px;transition:all .2s}
+.back-nav-btn:hover{background:rgba(255,255,255,0.08);color:#fff}
+.secure-badge{display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.5px}
+.secure-dot{width:6px;height:6px;border-radius:50%;background:var(--leaf)}
 
-  /* GLOBAL WATERMARK */
-  .global-watermark {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: url('soil-leaf-logo.png') no-repeat center center;
-    background-size: 50vmin; opacity: 0.08; z-index: -1;
-    pointer-events: none;
-  }
+/* ── STEP INDICATOR ── */
+.steps-wrap{background:var(--cream-dark);border-bottom:1px solid rgba(27,77,46,0.1);padding:14px 40px}
+.steps{display:flex;align-items:center;gap:0;max-width:1100px;margin:0 auto}
+.step{display:flex;align-items:center;gap:10px;flex:1}
+.step-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.step.done .step-num{background:var(--leaf);color:#fff}
+.step.active .step-num{background:var(--forest-dark);color:#fff;box-shadow:0 0 0 3px rgba(27,77,46,0.15)}
+.step.inactive .step-num{background:rgba(27,77,46,0.1);color:var(--text-light)}
+.step-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+.step.done .step-label{color:var(--leaf)}
+.step.active .step-label{color:var(--forest-dark)}
+.step.inactive .step-label{color:var(--text-light)}
+.step-line{height:2px;background:rgba(27,77,46,0.1);flex:1;margin:0 10px;border-radius:2px}
+.step-line.done{background:var(--leaf)}
 
-  /* STRICTLY FIXED HEADER */
-  header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
-    background: var(--forest-dark);
-    padding: 16px 48px;
-    text-align: center;
-    border-bottom: 3px solid var(--leaf);
-    box-shadow: 0 4px 25px rgba(0,0,0,0.15);
-  }
-  
-  /* LOGO STYLES */
-  .logo-link { display: inline-block; text-decoration: none; }
-  .custom-logo-img { height: 45px; width: auto; object-fit: contain; display: block; margin: 0 auto; }
-  .logo-fallback { display: none; color: #fff; font-family: 'Lora', serif; font-size: 1.8rem; font-weight: 700; letter-spacing: 0.5px; }
-  .logo-fallback span { color: var(--leaf); }
+/* ── PAGE LAYOUT ── */
+.page-wrap{max-width:1100px;margin:0 auto;padding:36px 24px 60px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
 
-  /* LAYOUT */
-  .checkout-container {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 0 24px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: flex-start;
-    position: relative;
-    z-index: 2;
-  }
+/* ── ORDER SUMMARY CARD ── */
+.summary-card{background:var(--white);border-radius:18px;overflow:hidden;border:1px solid var(--border-soft);box-shadow:var(--shadow-card)}
+.summary-card-head{background:var(--forest-dark);padding:22px 28px;display:flex;align-items:center;gap:12px}
+.summary-card-head h2{color:#fff;font-size:1.3rem;font-weight:700;margin:0}
+.summary-head-icon{width:36px;height:36px;border-radius:9px;background:rgba(200,169,110,0.2);border:1px solid rgba(200,169,110,0.3);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.summary-head-count{margin-left:auto;background:rgba(200,169,110,0.18);border:1px solid rgba(200,169,110,0.3);color:var(--gold);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.5px}
+.summary-body{padding:24px 28px}
 
-  /* ORDER SUMMARY (LEFT) */
-  .order-summary {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 32px;
-    box-shadow: var(--soft-shadow);
-    border: 1px solid rgba(27,77,46,0.08);
-  }
-  .order-summary h2 { color: var(--forest-dark); margin-bottom: 24px; font-size: 1.6rem; border-bottom: 2px solid var(--bg-soft); padding-bottom: 12px; }
-  
-  #cart-items-list { list-style: none; margin-bottom: 24px; }
-  .cart-item {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 16px 0; border-bottom: 1px solid #EFEFEF;
-  }
-  .item-info h4 { font-family: 'Lato', sans-serif; font-size: 1rem; color: var(--forest-dark); margin-bottom: 4px; }
-  .item-info p { font-size: 0.8rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
-  .item-qty { font-weight: 700; color: var(--forest); background: var(--bg-soft); padding: 6px 12px; border-radius: 6px; }
+/* Cart items */
+.cart-item-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+.cart-item{display:flex;align-items:center;gap:14px;background:var(--cream);border-radius:10px;padding:14px 16px;border-left:3px solid var(--leaf)}
+.ci-icon{width:36px;height:36px;border-radius:8px;background:#E8F5E9;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.ci-info{flex:1;min-width:0}
+.ci-name{font-size:.92rem;font-weight:700;color:var(--text-dark);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci-variant{font-size:.78rem;color:var(--text-light);margin-top:2px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.ci-qty{background:var(--forest-dark);color:#fff;padding:5px 12px;border-radius:6px;font-size:.82rem;font-weight:700;flex-shrink:0;white-space:nowrap}
 
-  .cart-total { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700; color: var(--forest-dark); padding-top: 16px; }
-  
-  .back-link { display: inline-block; margin-top: 20px; color: var(--forest); font-weight: 700; text-decoration: none; font-size: 0.95rem; }
-  .back-link:hover { color: var(--leaf); text-decoration: underline; }
+.summary-total{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:var(--cream-dark);border-radius:10px;margin-bottom:20px}
+.st-label{font-size:.8rem;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:1px}
+.st-value{font-size:1.1rem;font-weight:700;color:var(--forest-dark);font-family:'Lora',serif}
+.st-note{font-size:.75rem;color:var(--text-light);margin-top:3px}
 
-  /* CONTACT FORM (RIGHT) */
-  .form-card {
-    background: var(--bg-soft);
-    border-radius: 16px;
-    padding: 32px;
-    border: 1px solid rgba(27,77,46,0.08);
-    box-shadow: var(--soft-shadow);
-  }
-  .form-card h2 { color: var(--forest-dark); margin-bottom: 8px; font-size: 1.6rem; }
-  .form-card > p { color: var(--text-gray); font-size: 0.95rem; margin-bottom: 24px; line-height: 1.6; }
+.summary-pricing-note{display:flex;align-items:flex-start;gap:10px;background:rgba(200,169,110,0.1);border:1px solid rgba(200,169,110,0.25);border-radius:10px;padding:14px 16px;margin-bottom:20px}
+.spn-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+.spn-text{font-size:.85rem;color:var(--text-dark);line-height:1.6}
+.spn-text strong{color:var(--forest-dark)}
 
-  .form-group { margin-bottom: 16px; }
-  .form-group label { display: block; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--forest); font-weight: 700; margin-bottom: 8px; }
-  .form-group input, .form-group select, .form-group textarea { 
-    width: 100%; background: var(--white); border: 1px solid rgba(27,77,46,0.15); border-radius: 8px; 
-    padding: 14px 16px; color: var(--text-dark); font-family: 'Lato', sans-serif; font-size: 1rem; transition: all 0.2s; outline: none; 
-  }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--leaf); box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1); }
-  .form-group textarea { resize: vertical; min-height: 100px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--forest);font-weight:700;font-size:.88rem;text-decoration:none;padding:9px 16px;border:1px solid rgba(27,77,46,0.2);border-radius:8px;transition:all .2s}
+.back-btn:hover{background:rgba(27,77,46,0.05);border-color:var(--leaf);color:var(--forest-dark)}
 
-  .form-submit {
-    width: 100%; background: var(--leaf); color: #fff; border: none; border-radius: 50px; 
-    padding: 16px 24px; font-family: 'Lato', sans-serif; font-size: 1.05rem; font-weight: 700; 
-    cursor: pointer; transition: all 0.25s; box-shadow: 0 8px 24px rgba(76, 175, 80, 0.3); margin-top: 12px;
-  }
-  .form-submit:hover { background: var(--forest); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(27, 77, 46, 0.2); }
-  .form-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+/* ── FORM CARD ── */
+.form-card{background:var(--white);border-radius:18px;overflow:hidden;border:1px solid var(--border-soft);box-shadow:var(--shadow-card)}
+.form-card-head{background:linear-gradient(135deg,var(--forest-dark),var(--forest));padding:22px 28px;display:flex;align-items:center;gap:12px}
+.form-card-head h2{color:#fff;font-size:1.3rem;font-weight:700;margin:0}
+.form-head-sub{color:rgba(255,255,255,0.5);font-size:.8rem;margin-top:3px}
+.form-body{padding:28px}
 
-  /* EMPTY CART STATE */
-  #empty-cart-msg { display: none; text-align: center; padding: 40px 0; }
-  #empty-cart-msg h3 { color: var(--forest); margin-bottom: 12px; }
-  #empty-cart-msg a { display: inline-block; background: var(--forest); color: white; padding: 10px 24px; border-radius: 50px; text-decoration: none; margin-top: 16px; font-weight: 700; }
+.section-label{font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(27,77,46,0.08)}
 
-  /* ===================== */
-  /* SUCCESS OVERLAY       */
-  /* ===================== */
-  #success-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-    background: rgba(13, 43, 23, 0.7);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    align-items: center;
-    justify-content: center;
-  }
-  #success-overlay.visible {
-    display: flex;
-  }
-  .success-card {
-    background: var(--white);
-    border-radius: 20px;
-    padding: 48px 40px;
-    max-width: 460px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.25);
-    animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  }
-  @keyframes popIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to   { transform: scale(1);   opacity: 1; }
-  }
-  .success-icon {
-    width: 72px;
-    height: 72px;
-    background: linear-gradient(135deg, var(--leaf), var(--forest));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 24px;
-  }
-  .success-icon svg { width: 38px; height: 38px; }
-  .success-card h2 {
-    color: var(--forest-dark);
-    font-size: 1.6rem;
-    margin-bottom: 12px;
-  }
-  .success-card p {
-    color: var(--text-gray);
-    font-size: 1rem;
-    line-height: 1.65;
-    margin-bottom: 8px;
-  }
-  .success-card .redirect-note {
-    font-size: 0.85rem;
-    color: var(--leaf);
-    font-weight: 700;
-    margin-top: 20px;
-  }
-  .success-progress {
-    height: 4px;
-    background: var(--bg-soft);
-    border-radius: 99px;
-    margin-top: 16px;
-    overflow: hidden;
-  }
-  .success-progress-bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--leaf), var(--forest));
-    border-radius: 99px;
-    transition: width linear;
-  }
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:0}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:.75rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--forest);font-weight:700;margin-bottom:8px}
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;background:var(--cream);border:1px solid rgba(27,77,46,0.15);border-radius:9px;
+  padding:13px 16px;color:var(--text-dark);font-family:'Lato',sans-serif;font-size:.95rem;
+  transition:all .2s;outline:none;-webkit-appearance:none;appearance:none
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{border-color:var(--leaf);background:var(--white);box-shadow:0 0 0 4px rgba(76,175,80,0.1)}
+.form-group input::placeholder,
+.form-group textarea::placeholder{color:rgba(27,58,39,0.28)}
+.form-group select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B7355' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer}
+.form-group textarea{resize:vertical;min-height:100px;line-height:1.6}
 
-  @media (max-width: 900px) {
-    .checkout-container { grid-template-columns: 1fr; }
-    .form-row { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 600px) {
-    header { padding: 16px; }
-    body { padding-top: 75px; }
-    .checkout-container { padding: 0 16px; margin: 24px auto; }
-    .order-summary, .form-card { padding: 24px; }
-    .success-card { padding: 36px 24px; }
-  }
+.form-divider{height:1px;background:rgba(27,77,46,0.07);margin:6px 0 20px}
+
+.submit-btn{
+  width:100%;background:var(--forest-dark);color:#fff;border:none;border-radius:50px;
+  padding:16px 24px;font-family:'Lato',sans-serif;font-size:1rem;font-weight:700;
+  cursor:pointer;transition:all .25s;box-shadow:0 8px 24px rgba(27,77,46,0.2);
+  display:flex;align-items:center;justify-content:center;gap:10px;margin-top:6px;letter-spacing:.3px
+}
+.submit-btn:hover{background:var(--leaf);transform:translateY(-2px);box-shadow:0 12px 32px rgba(76,175,80,0.3)}
+.submit-btn:disabled{opacity:.65;cursor:not-allowed;transform:none;box-shadow:none}
+.submit-btn .wa-icon{font-size:1.15rem}
+
+.wa-note{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;font-size:.78rem;color:var(--text-light);text-align:center}
+.wa-note span{width:4px;height:4px;border-radius:50%;background:var(--text-light);display:inline-block}
+
+/* ── EMPTY CART ── */
+.empty-state{display:none;text-align:center;padding:60px 30px}
+.empty-state-icon{font-size:3rem;margin-bottom:16px;opacity:.5}
+.empty-state h3{color:var(--forest-dark);font-size:1.3rem;margin-bottom:8px}
+.empty-state p{color:var(--text-light);margin-bottom:24px;font-size:.95rem}
+.empty-state a{display:inline-flex;align-items:center;gap:8px;background:var(--forest-dark);color:#fff;padding:12px 24px;border-radius:50px;text-decoration:none;font-weight:700;font-size:.9rem;transition:all .2s}
+.empty-state a:hover{background:var(--leaf)}
+
+/* ── SUCCESS OVERLAY ── */
+.success-overlay{
+  display:none;position:fixed;inset:0;z-index:99999;
+  background:rgba(13,43,23,0.75);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center
+}
+.success-overlay.visible{display:flex}
+.success-card{
+  background:var(--white);border-radius:22px;padding:48px 40px;
+  max-width:460px;width:90%;text-align:center;
+  box-shadow:0 24px 60px rgba(0,0,0,0.3);
+  animation:popIn .38s cubic-bezier(.34,1.56,.64,1) both
+}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.success-icon-ring{
+  width:76px;height:76px;
+  background:linear-gradient(135deg,var(--leaf),var(--forest));
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 22px;box-shadow:0 8px 24px rgba(77,175,80,0.35)
+}
+.success-icon-ring svg{width:38px;height:38px}
+.success-card h2{color:var(--forest-dark);font-size:1.55rem;margin-bottom:10px}
+.success-card p{color:var(--text-mid);font-size:.97rem;line-height:1.7;margin-bottom:6px}
+.success-card .redirect-note{font-size:.83rem;color:var(--leaf);font-weight:700;margin-top:18px;display:flex;align-items:center;justify-content:center;gap:6px}
+.success-progress{height:5px;background:var(--cream-dark);border-radius:99px;margin-top:14px;overflow:hidden}
+.success-progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--leaf),var(--forest));border-radius:99px;transition:width linear}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  body{padding-top:100px}
+  .page-wrap{grid-template-columns:1fr;gap:24px;padding:24px 20px 60px}
+  .steps-wrap{padding:12px 20px}
+  .main-nav{padding:12px 20px}
+}
+@media(max-width:600px){
+  body{padding-top:116px}
+  .top-banner{font-size:.68rem;padding:6px 10px}
+  .main-nav{flex-direction:column;align-items:stretch;padding:10px 14px;gap:10px}
+  .nav-logo-group{justify-content:space-between}
+  .nav-right-group{justify-content:center}
+  .secure-badge{display:none}
+  .breadcrumb{display:none}
+  .steps-wrap{padding:10px 14px}
+  .form-row{grid-template-columns:1fr}
+  .summary-card-head,.form-card-head{padding:18px 20px}
+  .summary-body,.form-body{padding:20px}
+  .success-card{padding:36px 24px}
+  .page-wrap{padding:20px 14px 60px}
+}
 </style>
 </head>
 <body>
 
-<div class="global-watermark"></div>
-
-<header>
-  <a href="https://harshiee-s.github.io/Soil-Leaf" class="logo-link">
-    <img src="your-logo.png" alt="Soil Leaf Logo" class="custom-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-    <div class="logo-fallback">Soil<span>Leaf</span></div>
-  </a>
-</header>
-
-<div id="success-overlay">
+<!-- ── SUCCESS OVERLAY ── -->
+<div class="success-overlay" id="successOverlay">
   <div class="success-card">
-    <div class="success-icon">
+    <div class="success-icon-ring">
       <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8 19.5L15.5 27L30 12" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
     <h2>Order Received! 🌿</h2>
-    <p>Thanks, we have received your order.<br>Our team will contact you shortly.</p>
-    <p class="redirect-note">Redirecting you to WhatsApp for confirmation…</p>
+    <p>Thank you! We've received your order.<br>Our team will contact you shortly with pricing.</p>
+    <p style="font-size:.85rem;color:var(--text-light)">Redirecting you to WhatsApp for confirmation…</p>
+    <div class="redirect-note">
+      <span>🟢</span> Connecting to WhatsApp…
+    </div>
     <div class="success-progress">
-      <div class="success-progress-bar" id="progress-bar"></div>
+      <div class="success-progress-bar" id="progressBar"></div>
     </div>
   </div>
 </div>
 
-<div class="checkout-container" id="checkout-content">
-  
-  <div class="order-summary">
-    <h2>Your Order Summary</h2>
-    
-    <div id="empty-cart-msg">
-      <h3>Your cart is empty!</h3>
-      <p>Looks like you haven't added any products yet.</p>
-      <a href="products.html">← Back to Products</a>
-    </div>
-
-    <div id="cart-content">
-      <ul id="cart-items-list">
-        </ul>
-      <div class="cart-total">
-        <span>Total Items:</span>
-        <span id="total-qty-display">0</span>
+<!-- ── HEADER ── -->
+<header class="main-header">
+  <div class="top-banner">🌿 BUY 4 GET 1 FREE ON ALL PRODUCTS &nbsp;|&nbsp; 📞 +91 63600 00986</div>
+  <nav class="main-nav">
+    <div class="nav-logo-group">
+      <a href="https://harshiee-s.github.io/Soil-Leaf/" class="logo-link">
+        <img src="soil-leaf-logo.png" alt="Soil Leaf" class="logo-img"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <div class="logo-fallback">Soil<span>Leaf</span></div>
+      </a>
+      <div class="breadcrumb">
+        <a href="products.html">Products</a>
+        <span class="sep">›</span>
+        <span class="current">Checkout</span>
       </div>
-      <a href="products.html" class="back-link">← Add more products</a>
+    </div>
+    <div class="nav-right-group">
+      <a href="products.html" class="back-nav-btn">← Back to Products</a>
+      <div class="secure-badge">
+        <div class="secure-dot"></div>
+        Secure Order
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ── STEP INDICATOR ── -->
+<div class="steps-wrap">
+  <div class="steps">
+    <div class="step done">
+      <div class="step-num">✓</div>
+      <div class="step-label">Browse</div>
+    </div>
+    <div class="step-line done"></div>
+    <div class="step done">
+      <div class="step-num">✓</div>
+      <div class="step-label">Add to Cart</div>
+    </div>
+    <div class="step-line done"></div>
+    <div class="step active">
+      <div class="step-num">3</div>
+      <div class="step-label">Checkout</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step inactive">
+      <div class="step-num">4</div>
+      <div class="step-label">WhatsApp Confirm</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="page-wrap" id="pageWrap">
+
+  <!-- ORDER SUMMARY -->
+  <div class="summary-card">
+    <div class="summary-card-head">
+      <div class="summary-head-icon">🛒</div>
+      <div>
+        <h2>Order Summary</h2>
+      </div>
+      <div class="summary-head-count" id="headCount">0 items</div>
+    </div>
+    <div class="summary-body">
+
+      <!-- Empty state -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-state-icon">🛒</div>
+        <h3>Your cart is empty</h3>
+        <p>You haven't added any products yet.</p>
+        <a href="products.html">← Browse Products</a>
+      </div>
+
+      <!-- Cart items -->
+      <div id="cartContent">
+        <ul class="cart-item-list" id="cartItemsList"></ul>
+
+        <div class="summary-total">
+          <div>
+            <div class="st-label">Total Quantity</div>
+            <div class="st-note">Across all products</div>
+          </div>
+          <div class="st-value" id="totalQtyDisplay">0 units</div>
+        </div>
+
+        <div class="summary-pricing-note">
+          <span class="spn-icon">💡</span>
+          <div class="spn-text">
+            <strong>Pricing is quantity-based.</strong> After you submit your order, our team will send you a customized quote on WhatsApp.
+          </div>
+        </div>
+
+        <a href="products.html" class="back-btn">← Add more products</a>
+      </div>
+
     </div>
   </div>
 
-  <div class="form-card" id="checkout-form-container">
-    <h2>Delivery Details</h2>
-    <p>Fill in your details below. Your order will be sent securely to our WhatsApp for final confirmation.</p>
-    
-    <form id="orderForm" onsubmit="submitOrder(event)">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="fname">Your Name *</label>
-          <input type="text" id="fname" required placeholder="e.g. Ravi Kumar">
-        </div>
-        <div class="form-group">
-          <label for="fphone">Phone Number *</label>
-          <input type="tel" id="fphone" required placeholder="e.g. 98765 43210">
-        </div>
+  <!-- DELIVERY DETAILS FORM -->
+  <div class="form-card" id="formContainer">
+    <div class="form-card-head">
+      <div style="width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0">📋</div>
+      <div>
+        <h2>Delivery Details</h2>
+        <div class="form-head-sub">Your order goes directly to our WhatsApp</div>
       </div>
-      
-      <div class="form-row">
-        <div class="form-group">
-          <label for="ftype">Order Type *</label>
-          <select id="ftype" required>
-            <option value="" disabled selected>Select an option</option>
-            <option>For Home/Puja</option>
-            <option>For My Business (Wholesale)</option>
-            <option>Event / Wedding</option>
-            <option>Hotels / Restaurants</option>
-            <option>Others</option>
-          </select>
+    </div>
+    <div class="form-body">
+
+      <form id="orderForm" onsubmit="submitOrder(event)">
+
+        <div class="section-label">Contact Information</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">Your Name *</label>
+            <input type="text" id="fname" required placeholder="e.g. Ravi Kumar">
+          </div>
+          <div class="form-group">
+            <label for="fphone">Phone Number *</label>
+            <input type="tel" id="fphone" required placeholder="e.g. 98765 43210">
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="fdate">Delivery Date *</label>
-          <input type="date" id="fdate" required>
+        <div class="form-divider"></div>
+        <div class="section-label">Order Information</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ftype">Order Type *</label>
+            <select id="ftype" required>
+              <option value="" disabled selected>Select an option</option>
+              <option>For Home / Puja</option>
+              <option>For My Business (Wholesale)</option>
+              <option>Event / Wedding</option>
+              <option>Hotels / Restaurants</option>
+              <option>Others</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fdate">Delivery Date *</label>
+            <input type="date" id="fdate" required>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="fpincode">Delivery Pincode *</label>
-        <input type="text" id="fpincode" required placeholder="e.g. 560100" maxlength="6" pattern="\d{6}">
-      </div>
+        <div class="form-divider"></div>
+        <div class="section-label">Delivery Address</div>
+        <div class="form-group">
+          <label for="fpincode">Delivery Pincode *</label>
+          <input type="text" id="fpincode" required placeholder="e.g. 560100" maxlength="6" pattern="\d{6}">
+        </div>
+        <div class="form-group">
+          <label for="fmsg">Full Address *</label>
+          <textarea id="fmsg" required placeholder="House No, Building, Street, Area, City…"></textarea>
+        </div>
 
-      <div class="form-group">
-        <label for="fmsg">Full Delivery Address *</label>
-        <textarea id="fmsg" required placeholder="House No, Building, Street, Area..."></textarea>
-      </div>
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span class="wa-icon">💬</span>
+          Confirm Order via WhatsApp →
+        </button>
 
-      <button type="submit" class="form-submit" id="submitBtn">Confirm Order via WhatsApp →</button>
-    </form>
+        <div class="wa-note">
+          <span></span> Your cart details will be sent securely to our team
+          <span></span> No payment required now
+        </div>
+
+      </form>
+    </div>
   </div>
 
 </div>
 
 <script>
-  let cart = [];
-  let totalQuantity = 0;
+let cart = [];
+let totalQuantity = 0;
 
-  // 1. Load Cart Data on Page Load
-  document.addEventListener('DOMContentLoaded', () => {
-    cart = JSON.parse(localStorage.getItem('soilLeafCart')) || [];
-    
-    if (cart.length === 0) {
-      document.getElementById('cart-content').style.display = 'none';
-      document.getElementById('checkout-form-container').style.display = 'none';
-      document.getElementById('empty-cart-msg').style.display = 'block';
-      return;
-    }
+/* ── PRODUCT ICON MAP (matches products page categories) ── */
+const productIcons = {
+  'banana leaf': '🍃', 'banana': '🍃',
+  'bowl': '🥣', 'areca bowl': '🥣',
+  'round plate': '🍽️', 'areca plate': '🍽️',
+  'square plate': '⬜', 'square areca': '⬜',
+  'oval': '✨', 'heart': '✨', 'specialty': '✨',
+  'container': '📦',
+  'sal leaf': '🌿', 'sal': '🌿',
+  'coconut': '🥥',
+};
 
-    renderCartItems();
+function getIcon(name) {
+  const n = name.toLowerCase();
+  for (const [key, icon] of Object.entries(productIcons)) {
+    if (n.includes(key)) return icon;
+  }
+  return '🌿';
+}
+
+/* ── LOAD CART ── */
+document.addEventListener('DOMContentLoaded', () => {
+  cart = JSON.parse(localStorage.getItem('soilLeafCart')) || [];
+
+  if (cart.length === 0) {
+    document.getElementById('emptyState').style.display = 'block';
+    document.getElementById('cartContent').style.display = 'none';
+    document.getElementById('formContainer').style.display = 'none';
+    document.getElementById('headCount').textContent = '0 items';
+    return;
+  }
+
+  renderCart();
+
+  /* Set min delivery date to tomorrow */
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  document.getElementById('fdate').min = tomorrow.toISOString().split('T')[0];
+});
+
+/* ── RENDER CART ── */
+function renderCart() {
+  const list = document.getElementById('cartItemsList');
+  list.innerHTML = '';
+  totalQuantity = 0;
+
+  cart.forEach(item => {
+    totalQuantity += item.quantity;
+    const li = document.createElement('li');
+    li.className = 'cart-item';
+    li.innerHTML = `
+      <div class="ci-icon">${getIcon(item.name)}</div>
+      <div class="ci-info">
+        <div class="ci-name">${item.name}</div>
+        ${item.variant ? `<div class="ci-variant">${item.variant}</div>` : ''}
+      </div>
+      <div class="ci-qty">× ${item.quantity}</div>`;
+    list.appendChild(li);
   });
 
-  // 2. Render Cart Items to the DOM
-  function renderCartItems() {
-    const listElement = document.getElementById('cart-items-list');
-    listElement.innerHTML = '';
-    totalQuantity = 0;
+  document.getElementById('totalQtyDisplay').textContent = `${totalQuantity} unit${totalQuantity !== 1 ? 's' : ''}`;
+  document.getElementById('headCount').textContent = `${cart.length} item${cart.length !== 1 ? 's' : ''}`;
+}
 
-    cart.forEach(item => {
-      totalQuantity += item.quantity;
-      const variantHtml = item.variant ? `<p>Variant: ${item.variant}</p>` : '';
-      
-      const li = document.createElement('li');
-      li.className = 'cart-item';
-      li.innerHTML = `
-        <div class="item-info">
-          <h4>${item.name}</h4>
-          ${variantHtml}
-        </div>
-        <div class="item-qty">Qty: ${item.quantity}</div>
-      `;
-      listElement.appendChild(li);
+/* ── SUCCESS + REDIRECT ── */
+function showSuccessAndRedirect(waUrl) {
+  const overlay = document.getElementById('successOverlay');
+  const bar = document.getElementById('progressBar');
+  const DELAY = 3000;
+
+  overlay.classList.add('visible');
+  requestAnimationFrame(() => {
+    bar.style.transition = `width ${DELAY}ms linear`;
+    bar.style.width = '100%';
+  });
+
+  setTimeout(() => {
+    localStorage.removeItem('soilLeafCart');
+    window.location.href = waUrl;
+  }, DELAY);
+}
+
+/* ── SUBMIT ORDER ── */
+function submitOrder(e) {
+  e.preventDefault();
+
+  const name    = document.getElementById('fname').value.trim();
+  const phone   = document.getElementById('fphone').value.trim();
+  const type    = document.getElementById('ftype').value;
+  const date    = document.getElementById('fdate').value;
+  const pincode = document.getElementById('fpincode').value.trim();
+  const msg     = document.getElementById('fmsg').value.trim();
+
+  const btn = document.getElementById('submitBtn');
+  btn.innerHTML = '<span>⏳</span> Processing Order…';
+  btn.disabled = true;
+
+  let sheetsProducts = '';
+  let waProducts = '';
+
+  cart.forEach(item => {
+    const v = item.variant ? ` (${item.variant})` : '';
+    sheetsProducts += `${item.quantity}x ${item.name}${v}, `;
+    waProducts     += `\n  • ${item.quantity}x ${item.name}${v}`;
+  });
+  sheetsProducts = sheetsProducts.replace(/, $/, '');
+
+  const formData = new FormData();
+  formData.append('name',    name);
+  formData.append('phone',   phone);
+  formData.append('product', sheetsProducts);
+  formData.append('qty',     totalQuantity.toString());
+  formData.append('type',    type);
+  formData.append('pincode', pincode);
+  formData.append('date',    date);
+  formData.append('msg',     msg);
+  formData.append('source',  'Order Page Enquiry');
+
+  const waText = `Hi Soil Leaf team! 🌿\n\nI'd like to place an order:${waProducts}\n\n*Order Type:* ${type}\n*Delivery Date:* ${date}\n*Pincode:* ${pincode}\n*Address:* ${msg}\n\nPlease share pricing details. Thank you!`;
+  const waUrl  = `https://wa.me/916360000986?text=${encodeURIComponent(waText)}`;
+
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwe7YpMMip9R83cdP524Mc4OhY6P98_ET0HuJkW4UFjvDNhZaiB0TMMrNbKFOpPMrI3/exec';
+
+  fetch(scriptURL, { method: 'POST', body: formData })
+    .then(() => showSuccessAndRedirect(waUrl))
+    .catch(err => {
+      console.error('Sheet logging failed, proceeding anyway:', err);
+      showSuccessAndRedirect(waUrl);
     });
-
-    document.getElementById('total-qty-display').innerText = totalQuantity;
-  }
-
-  // 3. Show success overlay with a progress bar, then redirect
-  function showSuccessAndRedirect(waUrl) {
-    const overlay = document.getElementById('success-overlay');
-    const bar = document.getElementById('progress-bar');
-    const DELAY = 3000; // 3 seconds
-
-    overlay.classList.add('visible');
-
-    // Animate the progress bar over DELAY ms
-    requestAnimationFrame(() => {
-      bar.style.transition = `width ${DELAY}ms linear`;
-      bar.style.width = '100%';
-    });
-
-    setTimeout(() => {
-      localStorage.removeItem('soilLeafCart');
-      window.location.href = waUrl;
-    }, DELAY);
-  }
-
-  // 4. Handle Form Submission & Google Sheets logging
-  function submitOrder(e) {
-    e.preventDefault();
-
-    const name = document.getElementById('fname').value.trim();
-    const phone = document.getElementById('fphone').value.trim();
-    const type = document.getElementById('ftype').value;
-    const date = document.getElementById('fdate').value; // Grab Date
-    const pincode = document.getElementById('fpincode').value.trim(); // Grab Pincode
-    const msg = document.getElementById('fmsg').value.trim();
-
-    // UI Feedback
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.innerHTML = 'Processing Order… ⏳';
-    submitBtn.disabled = true;
-
-    // Build the product strings
-    let sheetsProductString = "";
-    let whatsappProductString = "";
-
-    cart.forEach(item => {
-      const variantText = item.variant ? ` (${item.variant})` : "";
-      sheetsProductString += `${item.quantity}x ${item.name}${variantText}, `;
-      whatsappProductString += `\n- ${item.quantity}x ${item.name}${variantText}`;
-    });
-
-    sheetsProductString = sheetsProductString.replace(/, $/, "");
-
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('phone', phone);
-    formData.append('product', sheetsProductString); 
-    formData.append('qty', totalQuantity.toString());
-    formData.append('type', type);
-    formData.append('pincode', pincode); // Send Pincode
-    formData.append('date', date); // Send Date
-    formData.append('msg', msg);
-    formData.append('source', 'Order Page Enquiry');
-
-    // Updated WhatsApp message to include Date and Pincode
-    const waText = `Hi Soil Leaf team, ${whatsappProductString}\n\n*Delivery Date:* ${date}\n*Delivery Pincode:* ${pincode}\n\nCan I get more info on this?`;
-    const waUrl = `https://wa.me/916360000986?text=${encodeURIComponent(waText)}`;
-
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwe7YpMMip9R83cdP524Mc4OhY6P98_ET0HuJkW4UFjvDNhZaiB0TMMrNbKFOpPMrI3/exec';
-
-    fetch(scriptURL, { method: 'POST', body: formData })
-      .then(() => {
-        showSuccessAndRedirect(waUrl);
-      })
-      .catch(error => {
-        console.error('Sheet logging failed, but proceeding:', error);
-        showSuccessAndRedirect(waUrl);
-      });
-  }
+}
 </script>
-
 </body>
 </html>
