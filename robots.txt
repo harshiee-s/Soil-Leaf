@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /products.html
+Allow: /Gallery/
+
+Disallow: /cgi-bin/
+Disallow: /*.json$
+
+Sitemap: https://soilleaf.in/sitemap.xml
